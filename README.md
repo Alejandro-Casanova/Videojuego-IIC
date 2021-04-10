@@ -5,3 +5,5 @@ Integrantes:
 Alejandro Casanova Martín - 53872
 
 Diego Martín de Paz - 54067
+
+Alejandro Novo Ferrer - 52515
