@@ -4,12 +4,4 @@ Trabajo final para la asignatura de Informática Industrial y Comunicaciones
 Integrantes:
 Alejandro Casanova Martín - 53872
 
-prueba jorge
-
-adasdasdas
-
-prueba jorge2
-
-test diego
-
-PRUEBA JORGE 3
+Diego Martín de Paz - 54067
