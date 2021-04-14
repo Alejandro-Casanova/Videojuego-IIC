@@ -1,6 +1,10 @@
 .vs
 tmp
 
+#Vaciar bin
+bin/*
+!bin/README.md
+
 # Prerequisites
 *.d
 
