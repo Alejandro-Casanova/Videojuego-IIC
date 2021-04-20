@@ -1,5 +1,6 @@
 .vs
 tmp
+deps
 
 #Vaciar bin
 bin/*

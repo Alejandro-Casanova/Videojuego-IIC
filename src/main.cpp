@@ -1,8 +1,13 @@
 #include "freeglut.h"
+#include "Mundo.h"
+//#include "ETSIDI.h"
 
 void OnDraw(void); //esta funcion sera llamada para dibujar
 void OnTimer(int value); //esta funcion sera llamada cuando transcurra una temporizacion
 void OnKeyboardDown(unsigned char key, int x, int y); //cuando se pulse una tecla	
+
+Mundo mundo;
+//ETSIDI::Sprite* sprite;
 
 int main(int argc, char* argv[]){
 	//Inicializar el gestor de ventanas GLUT
@@ -27,6 +32,8 @@ int main(int argc, char* argv[]){
 
 
 	///INICIALIZACIONES
+	//sprite = new ETSIDI::Sprite("Bubble_Big.png", 0.05, 0.05, 10, 10);
+	mundo.inicializa();
 
 
 	//pasarle el control a GLUT,que llamara a los callbacks
@@ -44,6 +51,8 @@ void OnDraw(void){
 	glLoadIdentity();
 
 	///LLAMADA A FUNCION DE DIBUJO
+	mundo.dibuja();
+	//sprite->draw();
 
 	//no borrar esta linea ni poner nada despues
 	glutSwapBuffers();
@@ -52,6 +61,7 @@ void OnDraw(void){
 void OnKeyboardDown(unsigned char key, int x_t, int y_t){
 	
 	//LLAMADAS DE TECLADO
+	mundo.tecla(key);
 
 	glutPostRedisplay();
 }
@@ -59,6 +69,7 @@ void OnKeyboardDown(unsigned char key, int x_t, int y_t){
 void OnTimer(int value){
 
 	//CÓDIGO DE ANIMACION
+	mundo.mueve();
 
 	//no borrar estas lineas
 	glutTimerFunc(25, OnTimer, 0);
