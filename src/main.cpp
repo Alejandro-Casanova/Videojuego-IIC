@@ -32,7 +32,7 @@ int main(int argc, char* argv[]){
 
 
 	///INICIALIZACIONES
-	sprite = new ETSIDI::Sprite("res/a.png", 0.05, 0.05, 10, 10);
+	sprite = new ETSIDI::Sprite("res/a.png", 0.0f, 0.0f, 10, 10);
 	mundo.inicializa();
 
 
