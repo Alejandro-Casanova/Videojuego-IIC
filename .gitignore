@@ -1,5 +1,14 @@
 .vs
 tmp
+deps
+
+#Vaciar bin
+bin/*
+!bin/README.md
+
+#Vaciar lib
+lib/*
+!lib/README.md
 
 # Prerequisites
 *.d
