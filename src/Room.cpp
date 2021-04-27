@@ -2,15 +2,17 @@
 #include <iostream>
 #include <fstream>
 #include "freeglut.h"
+#include "ETSIDI.h"
 
 Room::Room()
 {
 	inicializa();
 }
 
-Room::Room(const char* ruta_de_archivo)
+Room::Room(const char* ruta_de_layout, const char* ruta_de_textura)
 {
-	cargaLayout(ruta_de_archivo);
+	cargaLayout(ruta_de_layout);
+	cargaTextura(ruta_de_textura);
 	inicializa();
 }
 
@@ -25,6 +27,19 @@ void Room::dibuja()
 	_pared_sup.dibuja();
 	_pared_der.dibuja();
 	_pared_inf.dibuja();
+	
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("res/texturas/Basement1.png").id);
+	glDisable(GL_LIGHTING);
+	glBegin(GL_POLYGON);
+	glColor3f(1, 1, 1);
+	glTexCoord2d(0, 1); glVertex3f(-_ancho / 2.0f - _bordeText, _alto/2.0f + _bordeText, 0.0f);
+	glTexCoord2d(1, 1); glVertex3f(_ancho / 2.0f + _bordeText, _alto / 2.0f + _bordeText, 0.0f);
+	glTexCoord2d(1, 0); glVertex3f(_ancho / 2.0f + _bordeText, -_alto / 2.0f - _bordeText, 0.0f);
+	glTexCoord2d(0, 0); glVertex3f(-_ancho / 2.0f - _bordeText, -_alto / 2.0f - _bordeText, 0.0f);
+	glEnd();
+	glEnable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
 }
 
 void Room::inicializa()
@@ -56,4 +71,9 @@ void Room::cargaLayout(const char* ruta_de_archivo)
 	for (auto i : _layout) {
 		std::cout << i << std::endl;
 	}
+}
+
+void Room::cargaTextura(const char* ruta_de_textura)
+{
+
 }
