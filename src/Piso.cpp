@@ -1,6 +1,6 @@
 #include "Piso.h"
 
-Piso::Piso() : _room("res/rooms/test.txt")
+Piso::Piso() : _room("res/rooms/test.txt", "res/texturas/Basement1.png")
 {
 
 }
