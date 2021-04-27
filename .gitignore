@@ -1,6 +1,7 @@
 .vs
 tmp
 deps
+res/full/
 
 #Vaciar bin
 bin/*
@@ -9,6 +10,9 @@ bin/*
 #Vaciar lib
 lib/*
 !lib/README.md
+
+#Zip
+*.zip
 
 # Prerequisites
 *.d
