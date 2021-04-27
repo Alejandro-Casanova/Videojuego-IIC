@@ -1,9 +1,11 @@
 #pragma once
 #include "Pared.h"
+#include "Piso.h"
 
 class Mundo
 {
 public: 
+	Mundo();
 	void tecla(unsigned char key);
 	void inicializa();
 	void mueve();
@@ -14,5 +16,6 @@ private:
 	float y_ojo = 0;
 	float z_ojo = 0;
 
-	Pared pared_izq, pared_sup, pared_der, pared_inf;
+	Piso piso;
+	
 };
