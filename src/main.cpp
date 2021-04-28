@@ -6,8 +6,9 @@ void OnDraw(void); //esta funcion sera llamada para dibujar
 void OnTimer(int value); //esta funcion sera llamada cuando transcurra una temporizacion
 void OnKeyboardDown(unsigned char key, int x, int y); //cuando se pulse una tecla	
 
+Mundo mundo;
+
 int main(int argc, char* argv[]){
-	Mundo mundo;
 	//Inicializar el gestor de ventanas GLUT
 	//y crear la ventana
 	glutInit(&argc, argv);
