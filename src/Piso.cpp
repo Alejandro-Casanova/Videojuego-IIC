@@ -12,7 +12,9 @@ void Piso::mueve()
 
 void Piso::dibuja()
 {
+	_room.dibujaHitBox();
 	_room.dibuja();
+	
 }
 
 void Piso::inicializa()
