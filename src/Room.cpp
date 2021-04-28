@@ -9,21 +9,24 @@ Room::Room()
 
 }
 
+Room::~Room()
+{
+}
+
 void Room::mueve()
 {
 
 }
 
-void Room::dibuja()
+void Room::dibujaHitBox() const
 {
 	//Dibuja las lineas blancas (provisional)
-	_pared_izq.dibuja();
-	_pared_sup.dibuja();
-	_pared_der.dibuja();
-	_pared_inf.dibuja();
-	
+	_paredes.dibuja();
+}
+
+void Room::dibuja() const
+{
 	glEnable(GL_TEXTURE_2D);
-	//glBindTexture(GL_TEXTURE_2D, ETSIDI::getTexture("res/texturas/Basement1.png").id);
 	glBindTexture(GL_TEXTURE_2D, _textura.id);
 	glDisable(GL_LIGHTING);
 	glBegin(GL_POLYGON);
@@ -49,7 +52,7 @@ void Room::cargaLayout(const char* ruta_de_archivo)
 	std::ifstream file;
 	file.open(ruta_de_archivo);
 
-	//Comprobación
+	//Comprobación (ruta de archivo válida)
 	if (file.fail()) {
 		std::cout << "No se pudo abrir el archivo: " << ruta_de_archivo << "\n";
 		exit(0);
@@ -61,7 +64,7 @@ void Room::cargaLayout(const char* ruta_de_archivo)
 		_layout.emplace_back(temp);
 	}
 
-	//Comprobación
+	//Comprobación por terminal
 	for (auto i : _layout) {
 		std::cout << i << std::endl;
 	}
@@ -74,8 +77,5 @@ void Room::cargaTextura(const char* ruta_de_textura)
 
 void Room::setParedes(float ancho, float alto)
 {
-	_pared_izq.setLimites(-ancho / 2.0f, -alto / 2.0f, -ancho / 2.0f, alto / 2.0f);
-	_pared_sup.setLimites(-ancho / 2.0f, alto / 2.0f, ancho / 2.0f, alto / 2.0f);
-	_pared_der.setLimites(ancho / 2.0f, alto / 2.0f, ancho / 2.0f, -alto / 2.0f);
-	_pared_inf.setLimites(-ancho / 2.0f, -alto / 2.0f, ancho / 2.0f, -alto / 2.0f);
+	_paredes.setParedes(Vector2D(-ancho / 2.0f, -alto / 2.0f), Vector2D(ancho / 2.0f, alto / 2.0f));
 }
