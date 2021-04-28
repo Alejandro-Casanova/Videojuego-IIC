@@ -1,6 +1,6 @@
 #include "Piso.h"
 
-Piso::Piso() : _room("res/rooms/test.txt", "res/texturas/Basement1.png")
+Piso::Piso()
 {
 
 }
@@ -17,5 +17,5 @@ void Piso::dibuja()
 
 void Piso::inicializa()
 {
-	_room.inicializa();
+	_room.inicializa("res/rooms/test.txt", "res/texturas/Basement1.png");
 }
