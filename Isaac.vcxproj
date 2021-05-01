@@ -19,8 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Objeto.cpp" />
-    <ClCompile Include="Proyectil.cpp" />
     <ClCompile Include="src\Caja.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Mundo.cpp" />
@@ -28,12 +26,11 @@
     <ClCompile Include="src\Pared.cpp" />
     <ClCompile Include="src\Personaje.cpp" />
     <ClCompile Include="src\Piso.cpp" />
+    <ClCompile Include="src\Proyectil.cpp" />
     <ClCompile Include="src\Room.cpp" />
     <ClCompile Include="src\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Objeto.h" />
-    <ClInclude Include="Proyectil.h" />
     <ClInclude Include="src\Caja.h" />
     <ClInclude Include="src\ColorRGB.h" />
     <ClInclude Include="src\Mundo.h" />
@@ -41,6 +38,7 @@
     <ClInclude Include="src\Pared.h" />
     <ClInclude Include="src\Personaje.h" />
     <ClInclude Include="src\Piso.h" />
+    <ClInclude Include="src\Proyectil.h" />
     <ClInclude Include="src\Room.h" />
     <ClInclude Include="src\Vector2D.h" />
   </ItemGroup>
