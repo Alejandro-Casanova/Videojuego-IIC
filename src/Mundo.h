@@ -1,15 +1,19 @@
 #pragma once
 #include "Pared.h"
 #include "Piso.h"
+#include "Proyectil.h"
 #include"Personaje.h"
 
-class Mundo
-{
-	Personaje personaje;
+
+class Mundo{
+Proyectil proyectil1;
+Personaje personaje;
+
 
 public: 
 	Mundo();
 	void tecla(unsigned char key);
+	void tecla_disparo(unsigned char key);
 	void inicializa();
 	void mueve();
 	void dibuja();

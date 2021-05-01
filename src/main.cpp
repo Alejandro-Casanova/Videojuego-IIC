@@ -59,6 +59,7 @@ void OnKeyboardDown(unsigned char key, int x_t, int y_t){
 	
 	//LLAMADAS DE TECLADO
 	mundo.tecla(key);
+	mundo.tecla_disparo(key);
 
 	glutPostRedisplay();
 }
