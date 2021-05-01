@@ -2,12 +2,13 @@
 #include "Pared.h"
 #include "Piso.h"
 #include "Proyectil.h"
+#include"Personaje.h"
 
 
+class Mundo{
+Proyectil proyectil1;
+Personaje personaje;
 
-class Mundo
-{
-	Proyectil proyectil1;
 
 public: 
 	Mundo();

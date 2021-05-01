@@ -12,6 +12,7 @@ void Mundo::dibuja()
 	///LLAMADAS PARA DIBUJAR
 	piso.dibuja();
 	proyectil1.dibuja();
+	personaje.dibuja();
 }
 
 void Mundo::mueve()
@@ -19,6 +20,7 @@ void Mundo::mueve()
 	//LLAMADAS DE ANIMACION
 	piso.mueve();
 	proyectil1.mueve(0.025f);
+	personaje.mueve(0.025f);
 }
 
 
@@ -46,6 +48,23 @@ void Mundo::tecla_disparo(unsigned char key)			//Creacion de proyectil de dispar
 }
 
 
+void Mundo::tecla(unsigned char key){
+	switch (key) {
+	case 'w':
+		personaje.setVel(0, 5);
+		break;
+	case 's':
+		personaje.setVel(0, -5);
+		break;
+	case 'd':
+		personaje.setVel(5,0);
+		break;
+	case 'a':
+		personaje.setVel(-5, 0);
+		break;
+	}
+}
+
 
 void Mundo::inicializa()
 {
@@ -55,16 +74,14 @@ void Mundo::inicializa()
 
 	//LLAMADAS DE INICIALIZACION
 	piso.inicializa();
-	//Proyectil proyectil1;
 
+	//Proyectil proyectil1;
 	proyectil1.inicializa();
+	personaje.inicializa();
 }
 
 Mundo::Mundo()
 {
 }
 
-void Mundo::tecla(unsigned char key)
-{
 
-}
