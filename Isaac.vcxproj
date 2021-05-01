@@ -19,11 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Objeto.cpp" />
-    <ClCompile Include="Proyectil.cpp" />
     <ClCompile Include="src\Caja.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Mundo.cpp" />
+    <ClCompile Include="src\Objeto.cpp" />
     <ClCompile Include="src\Obstaculo.cpp" />
     <ClCompile Include="src\Pared.cpp" />
     <ClCompile Include="src\Personaje.cpp" />
@@ -32,11 +31,10 @@
     <ClCompile Include="src\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Objeto.h" />
-    <ClInclude Include="Proyectil.h" />
     <ClInclude Include="src\Caja.h" />
     <ClInclude Include="src\ColorRGB.h" />
     <ClInclude Include="src\Mundo.h" />
+    <ClInclude Include="src\Objeto.h" />
     <ClInclude Include="src\Obstaculo.h" />
     <ClInclude Include="src\Pared.h" />
     <ClInclude Include="src\Personaje.h" />
