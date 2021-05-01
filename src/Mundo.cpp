@@ -1,5 +1,6 @@
 #include "Mundo.h"
 #include "freeglut.h"
+#include "Proyectil.h"
 #include <math.h>
 
 void Mundo::dibuja()
@@ -10,13 +11,41 @@ void Mundo::dibuja()
 
 	///LLAMADAS PARA DIBUJAR
 	piso.dibuja();
+	proyectil1.dibuja();
 }
 
 void Mundo::mueve()
 {
 	//LLAMADAS DE ANIMACION
 	piso.mueve();
+	proyectil1.mueve(0.025f);
 }
+
+
+
+void Mundo::tecla_disparo(unsigned char key)			//Creacion de proyectil de disparo del jugador
+{
+	// Creacion de un proyectil
+	//	proyectil.setOrigen(Vector2D.player)
+
+	switch (key)
+	{
+	case GLUT_KEY_LEFT:
+		proyectil1.setVel(-5.0f, 0.0f);
+		break;
+	case GLUT_KEY_RIGHT:
+		proyectil1.setVel(5.0f, 0.0f);
+		break;
+	case GLUT_KEY_UP:
+		proyectil1.setVel(0.0f, 5.0f);
+		break;
+	case GLUT_KEY_DOWN:
+		proyectil1.setVel(0.0f, -5.0f);
+		break;
+	}
+}
+
+
 
 void Mundo::inicializa()
 {
@@ -26,6 +55,9 @@ void Mundo::inicializa()
 
 	//LLAMADAS DE INICIALIZACION
 	piso.inicializa();
+	//Proyectil proyectil1;
+
+	proyectil1.inicializa();
 }
 
 Mundo::Mundo()

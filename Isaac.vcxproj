@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ListaProyectil.cpp" />
     <ClCompile Include="src\Caja.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Mundo.cpp" />
@@ -34,6 +35,7 @@
   <ItemGroup>
     <ClInclude Include="src\Caja.h" />
     <ClInclude Include="src\ColorRGB.h" />
+    <ClInclude Include="src\ListaProyectil.h" />
     <ClInclude Include="src\Mundo.h" />
     <ClInclude Include="src\Objeto.h" />
     <ClInclude Include="src\Obstaculo.h" />
