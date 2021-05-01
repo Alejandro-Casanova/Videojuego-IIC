@@ -10,12 +10,14 @@ void Mundo::dibuja()
 
 	///LLAMADAS PARA DIBUJAR
 	piso.dibuja();
+	personaje.dibuja();
 }
 
 void Mundo::mueve()
 {
 	//LLAMADAS DE ANIMACION
 	piso.mueve();
+	personaje.mueve(0.025f);
 }
 
 void Mundo::inicializa()
@@ -26,6 +28,7 @@ void Mundo::inicializa()
 
 	//LLAMADAS DE INICIALIZACION
 	piso.inicializa();
+	personaje.inicializa();
 }
 
 Mundo::Mundo()
@@ -34,5 +37,23 @@ Mundo::Mundo()
 
 void Mundo::tecla(unsigned char key)
 {
+	switch (key) {
 
+	case 'w':
+		personaje.setVel(0, 5);
+		break;
+
+	case 's':
+		personaje.setVel(0, -5);
+		break;
+
+	case 'd':
+		personaje.setVel(5,0);
+		break;
+
+	case 'a':
+		personaje.setVel(-5, 0);
+		break;
+
+	}
 }

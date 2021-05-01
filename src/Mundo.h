@@ -1,9 +1,12 @@
 #pragma once
 #include "Pared.h"
 #include "Piso.h"
+#include"Personaje.h"
 
 class Mundo
 {
+	Personaje personaje;
+
 public: 
 	Mundo();
 	void tecla(unsigned char key);
