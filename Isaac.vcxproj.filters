@@ -12,7 +12,8 @@
     <ClCompile Include="src\Vector2D.cpp" />
     <ClCompile Include="src\Objeto.cpp" />
     <ClCompile Include="src\Proyectil.cpp" />
-    <ClCompile Include="ListaProyectil.cpp" />
+    <ClCompile Include="src\ListaProyectil.cpp" />
+    <ClCompile Include="src\Entidad.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Caja.h" />
@@ -27,5 +28,6 @@
     <ClInclude Include="src\Objeto.h" />
     <ClInclude Include="src\Proyectil.h" />
     <ClInclude Include="src\ListaProyectil.h" />
+    <ClInclude Include="src\Entidad.h" />
   </ItemGroup>
 </Project>

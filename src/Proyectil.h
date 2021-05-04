@@ -1,27 +1,32 @@
 #include "Vector2D.h"
+#include "Entidad.h"
 #pragma once
 
 
-class Proyectil
+class Proyectil : public Entidad
 {
 public:
 	Proyectil(void);
 	~Proyectil(void);
-	void dibuja(void);
+
+	void dibuja() override;
+	/*void mueve(float t);*/
+	void inicializa() override;
+
 	void setOrigen(float ox, float oy);
-	void setPos(float x, float y);
+
+	/*void setPos(float x, float y);
 	void setVel(float vx, float vy);
-	void setAcel(float ax, float ay);
-	void mueve(float t);
-	void inicializa(void);
+	void setAcel(float ax, float ay);*/
+	
 
 
 private:
-	float radio;
+	/*float radio;
 	Vector2D posicion;
 	Vector2D velocidad;
-	Vector2D aceleracion;
-	Vector2D origen;
+	Vector2D aceleracion;*/
+	Vector2D _origen;
 
 	float GetPosX(Vector2D);
 	float GetPosY(Vector2D);

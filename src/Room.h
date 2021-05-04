@@ -5,6 +5,7 @@
 #include <string>
 #include "ETSIDI.h"
 #include <Caja.h>
+#include "Obstaculo.h"
 
 class Room
 {
@@ -18,6 +19,8 @@ public:
 	void inicializa(const char* ruta_de_layout, const char* ruta_de_textura);
 	void cargaLayout(const char* ruta_de_archivo);
 	void cargaTextura(const char* ruta_de_textura);
+	
+	void setObstaculos();
 
 	void setParedes(float ancho, float alto);
 	void setAncho(float ancho) { _ancho = ancho; }
@@ -31,6 +34,7 @@ private:
 	Caja _paredes; //Hit-box de las paredes
 	
 	std::vector<std::string> _layout; //Dimensiones de la habitación 7x13
+	std::vector<Obstaculo> _obstaculos;
 	ETSIDI::GLTexture _textura = { 0, 0, 0 };
 };
 

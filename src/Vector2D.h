@@ -13,7 +13,8 @@ public:
 	Vector2D operator + (Vector2D);
 	float operator *(Vector2D); 
 	Vector2D operator *(float); 
-	void setPos(float x, float y);
+	Vector2D operator +(float);
+	void set(float x, float y);
 
 //ATRIBUTOS
 	float x = 0;

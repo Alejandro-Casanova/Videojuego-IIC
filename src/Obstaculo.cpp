@@ -2,10 +2,24 @@
 
 Obstaculo::Obstaculo()
 {
+	
+}
+
+Obstaculo::Obstaculo(Vector2D posicion) {
+	_hitBox.setParedes(posicion, posicion + Vector2D(_ancho, _alto));
 }
 
 Obstaculo::Obstaculo(const char* ruta_de_textura, Caja hitBox)
 {
+	_hitBox = hitBox;
+	cargaTextura(ruta_de_textura);
+
+
+}
+
+Obstaculo::Obstaculo(Caja hitBox)
+{
+	_hitBox = hitBox;
 }
 
 void Obstaculo::dibuja() const
@@ -24,6 +38,7 @@ void Obstaculo::dibuja() const
 	glEnd();
 	glEnable(GL_LIGHTING);
 	glDisable(GL_TEXTURE_2D);*/
+	_hitBox.dibuja();
 }
 
 void Obstaculo::cargaTextura(const char* ruta_de_textura)
