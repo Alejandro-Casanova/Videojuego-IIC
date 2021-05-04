@@ -1,5 +1,7 @@
 #pragma once
-class Objeto
+#include "Entidad.h"
+
+class Objeto : public Entidad
 {
 
 

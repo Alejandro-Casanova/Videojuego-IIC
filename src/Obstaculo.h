@@ -9,7 +9,9 @@ class Obstaculo
 {
 public:
 	Obstaculo();
+	Obstaculo(Vector2D posicion);
 	Obstaculo(const char* ruta_de_textura, Caja hitBox);
+	Obstaculo(Caja hitBox);
 
 	void dibuja() const;
 
@@ -19,9 +21,9 @@ public:
 
 private:
 	Caja _hitBox;
-	float _ancho = 0, _alto = 0; ///??????
+	bool _playerFlag = true, _bulletFlag = true; //Define si se realiza colisión con jugador o proyectil
+	float _ancho = 10, _alto = 10; //Dimensiones predeterminadas
 	float _bordeTextura = 0.0f; //Por si la hit-box es menor que la textura
 	ETSIDI::GLTexture _textura = { 0, 0, 0 };
-	Vector2D _posicion;
 };
 

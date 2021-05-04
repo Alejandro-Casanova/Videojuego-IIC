@@ -54,7 +54,13 @@ Vector2D Vector2D::operator * (float escalar) {
 	return resultado;
 }
 
-void Vector2D::setPos(float x, float y)
+Vector2D Vector2D::operator+(float escalar)
+{
+
+	return Vector2D(x + escalar, y + escalar);
+}
+
+void Vector2D::set(float x, float y)
 {
 	x = x;
 	y = y;
