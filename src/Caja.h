@@ -5,6 +5,7 @@
 class Vector2D;
 
 class Caja{ //Útil para las hit-box
+	friend class Interaccion;
 public:
 	Caja();
 	Caja(Vector2D vert1, Vector2D vert2); //Construye la caja a partir de los dos vértices opuestos

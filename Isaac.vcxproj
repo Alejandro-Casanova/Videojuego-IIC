@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\Caja.cpp" />
     <ClCompile Include="src\Entidad.cpp" />
+    <ClCompile Include="src\Interaccion.cpp" />
     <ClCompile Include="src\ListaProyectil.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Mundo.cpp" />
@@ -37,6 +38,7 @@
     <ClInclude Include="src\Caja.h" />
     <ClInclude Include="src\ColorRGB.h" />
     <ClInclude Include="src\Entidad.h" />
+    <ClInclude Include="src\Interaccion.h" />
     <ClInclude Include="src\ListaProyectil.h" />
     <ClInclude Include="src\Mundo.h" />
     <ClInclude Include="src\Objeto.h" />

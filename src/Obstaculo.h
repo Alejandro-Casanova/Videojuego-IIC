@@ -7,9 +7,10 @@ class Vector2D;
 
 class Obstaculo
 {
+	friend class Interaccion;
 public:
 	Obstaculo();
-	Obstaculo(Vector2D posicion);
+	Obstaculo(Vector2D posicion, const char* ruta_de_textura);
 	Obstaculo(const char* ruta_de_textura, Caja hitBox);
 	Obstaculo(Caja hitBox);
 

@@ -14,6 +14,7 @@
     <ClCompile Include="src\Proyectil.cpp" />
     <ClCompile Include="src\ListaProyectil.cpp" />
     <ClCompile Include="src\Entidad.cpp" />
+    <ClCompile Include="src\Interaccion.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Caja.h" />
@@ -29,5 +30,6 @@
     <ClInclude Include="src\Proyectil.h" />
     <ClInclude Include="src\ListaProyectil.h" />
     <ClInclude Include="src\Entidad.h" />
+    <ClInclude Include="src\Interaccion.h" />
   </ItemGroup>
 </Project>

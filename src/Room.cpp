@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include "freeglut.h"
+#include "Interaccion.h"
 #include "ETSIDI.h"
 
 Room::Room()
@@ -15,7 +16,10 @@ Room::~Room()
 
 void Room::mueve()
 {
-
+	Interaccion::rebote(*_personaje_ptr, _paredes);
+	for (auto& c : _obstaculos) {
+		Interaccion::rebote(*_personaje_ptr, c);
+	}
 }
 
 void Room::dibujaHitBox() const
@@ -44,11 +48,12 @@ void Room::dibuja() const
 	glDisable(GL_TEXTURE_2D);
 }
 
-void Room::inicializa(const char* ruta_de_layout, const char* ruta_de_textura)
+void Room::inicializa(const char* ruta_de_layout, const char* ruta_de_textura, Personaje* pptr)
 {
 	setParedes(_ancho, _alto);
 	cargaLayout(ruta_de_layout);
 	cargaTextura(ruta_de_textura);
+	_personaje_ptr = pptr;
 }
 
 void Room::cargaLayout(const char* ruta_de_archivo)
@@ -88,7 +93,7 @@ void Room::setObstaculos()
 		for (auto chr : str) {
 			std::cout << chr;
 			if (chr == 'R') {
-				_obstaculos.emplace_back(Obstaculo(origen + Vector2D(10.0f * j, -10.0f * i)));
+				_obstaculos.emplace_back(Obstaculo(origen + Vector2D(10.0f * j, -10.0f * i), "res/texturas/rocas.png"));
 			}
 			j++;
 		}

@@ -10,7 +10,7 @@ void Mundo::dibuja()
 			0.0, 1.0, 0.0);      // definimos hacia arriba (eje Y)    
 
 	///LLAMADAS PARA DIBUJAR
-	piso.dibuja();
+	_piso.dibuja();
 	proyectil1.dibuja();
 	personaje.dibuja();
 }
@@ -18,7 +18,7 @@ void Mundo::dibuja()
 void Mundo::mueve()
 {
 	//LLAMADAS DE ANIMACION
-	piso.mueve();
+	_piso.mueve();
 	proyectil1.mueve(0.025f);
 	personaje.mueve(0.025f);
 }
@@ -73,7 +73,7 @@ void Mundo::inicializa()
 	z_ojo=120.0f;
 
 	//LLAMADAS DE INICIALIZACION
-	piso.inicializa();
+	_piso.inicializa(&personaje);
 
 	//Proyectil proyectil1;
 	proyectil1.inicializa();

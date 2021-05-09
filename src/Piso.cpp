@@ -1,5 +1,6 @@
 #include "Piso.h"
 #include <iostream>
+#include <Personaje.h>
 
 Piso::Piso()
 {
@@ -20,10 +21,10 @@ void Piso::dibuja()
 	
 }
 
-void Piso::inicializa()
+void Piso::inicializa(Personaje* pptr)
 {
-	_room.inicializa("res/rooms/test.txt", "res/texturas/Basement1.png");
-
+	_room.inicializa("res/rooms/test.txt", "res/texturas/Basement1.png", pptr);
+	_personaje_ptr = pptr;
 	//Prueba
 	std::cout << std::endl;
 	_room.setObstaculos();

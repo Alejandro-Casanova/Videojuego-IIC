@@ -3,6 +3,7 @@
 #include "Piso.h"
 #include "Proyectil.h"
 #include"Personaje.h"
+#include "Interaccion.h"
 
 
 class Mundo{
@@ -23,6 +24,6 @@ private:
 	float y_ojo = 0;
 	float z_ojo = 0;
 
-	Piso piso;
+	Piso _piso;
 	
 };
