@@ -6,6 +6,7 @@
 
 class Personaje : public Entidad
 {
+	friend class Interaccion;
 public:
 	Personaje();
 	virtual ~Personaje();
