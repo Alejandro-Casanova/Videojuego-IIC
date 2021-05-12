@@ -2,6 +2,10 @@
 #include "freeglut.h"
 #include "Proyectil.h"
 #include <math.h>
+#include <time.h>
+#include <Windows.h>
+
+
 
 void Mundo::dibuja()
 {
@@ -48,22 +52,78 @@ void Mundo::tecla_disparo(unsigned char key)			//Creacion de proyectil de dispar
 }
 
 
-void Mundo::tecla(unsigned char key){
+void Mundo::tecla(unsigned char key) {
+
+	bool arriba = 0, abajo = 0, derecha = 0, izquierda = 0, parar = 0;
+
 	switch (key) {
 	case 'w':
-		personaje.setVel(0, 5);
-		break;
-	case 's':
-		personaje.setVel(0, -5);
-		break;
-	case 'd':
-		personaje.setVel(5,0);
-		break;
-	case 'a':
-		personaje.setVel(-5, 0);
+	{
+		arriba = 1;
+		//(personaje.setVel(0, 20);
+		//personaje.setVel(0, 10);
+		//personaje.setAcel(0, 10);
+		//personaje.mueve(0);
+
 		break;
 	}
+	case 's':
+		abajo = 1;
+		//personaje.setVel(0, -20);
+		//personaje.setAcel(0, -2);
+		break;
+	case 'd':
+		derecha = 1;
+		//personaje.setVel(20, 0);
+		//personaje.setAcel(2, 0);
+		break;
+	case 'a':
+		izquierda = 1;
+		//personaje.setVel(-20, 0);
+		//personaje.setAcel(-20, 0);
+		break;
+
+
+	default:
+		parar = 1;
+		break;
+	}
+
+	if (arriba) 
+	{
+			personaje.setVel(0, 10);
+		
+	}
+	else if (abajo)
+	{
+	
+		personaje.setVel(0, -10);
+	}
+
+	else if (izquierda)
+	{
+		
+		personaje.setVel(-10, 0);
+	}
+
+	else if (derecha)
+	{
+		
+		personaje.setVel(10, 0);
+	}
+	else if (parar){
+		
+		personaje.setVel(0, 0);
+		personaje.setAcel(0, 0);
+
+	}
+
+	
+
+
+
 }
+
 
 
 void Mundo::inicializa()
@@ -82,6 +142,9 @@ void Mundo::inicializa()
 
 Mundo::Mundo()
 {
+
+
+
 }
 
 
