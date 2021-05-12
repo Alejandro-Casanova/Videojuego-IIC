@@ -36,10 +36,20 @@ void Entidad::setVel(float vx, float vy)
 	_velocidad.x = vx;
 	_velocidad.y = vy;
 }
+
+
+void Entidad::setAcel(float ax, float ay)
+{
+	_aceleracion.x = ax;
+	_aceleracion.y = ay;
+
+}
+
+
 void Entidad::inicializa()
 {
 	setColor(122, 40, 80);
-	setRadio(10);
+	setRadio(5);
 	setPos(0, 0);
 
 }

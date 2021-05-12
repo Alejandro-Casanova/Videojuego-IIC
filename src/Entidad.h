@@ -15,7 +15,7 @@ public:
 	void setRadio(float radio) { _radio = radio; }
 	void setPos(float x, float y);
 	void setVel(float vx, float vy);
-	void setAcel(float ax, float ay) { _velocidad.set(ax, ay); }
+	void setAcel(float ax, float ay);
 
 protected:
 	ColorRGB _color = { 255, 255, 255 };
