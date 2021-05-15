@@ -36,10 +36,10 @@ void Personaje::dibuja()
 //	_velocidad.x = vx;
 //	_velocidad.y = vy;
 //}
-//void Personaje::inicializa()
-//{
-//	setColor(122,40,80);
-//	setRadio(10);
-//	setPos(0,0);
-//
-//}
+void Personaje::inicializa()
+{
+	setColor(122,40,80);
+	setRadio(5);
+	setPos(0,0);
+
+}

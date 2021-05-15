@@ -16,10 +16,11 @@ public:
 	void setPos(float x, float y);
 	void setVel(float vx, float vy);
 	void setAcel(float ax, float ay);
+	Vector2D getPos();
 
 protected:
-	ColorRGB _color = { 255, 255, 255 };
-	float _radio = 0.0f;
+	ColorRGB _color;
+	float _radio;
 
 	Vector2D _posicion;
 	Vector2D _velocidad;

@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\Desktop\Clases 2020-20201\2- Informatica\P4\P4\src\Enemigo.cpp" />
     <ClCompile Include="src\Caja.cpp" />
     <ClCompile Include="src\Entidad.cpp" />
     <ClCompile Include="src\Interaccion.cpp" />
@@ -36,7 +35,6 @@
     <ClCompile Include="src\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\Desktop\Clases 2020-20201\2- Informatica\P4\P4\src\Enemigo.h" />
     <ClInclude Include="src\Caja.h" />
     <ClInclude Include="src\ColorRGB.h" />
     <ClInclude Include="src\Entidad.h" />

@@ -1,18 +1,27 @@
 #include "Proyectil.h"
 #include "freeglut.h"
+#include "iostream"
 
 
 Proyectil::Proyectil(void)
 {
+	_radio = 1;
+	//_origen.set(0, 0);
+	//_posicion = _origen;
+	//_velocidad.setVel(0, 20);
+	//_aceleracion.set(0, 0);
 }
 
 Proyectil::~Proyectil(void) 
 {
+
 }
 
 
 void Proyectil::dibuja(){
-	glColor3f(0.0f, 1.0f, 1.0f);
+
+	
+	glColor3f(_color.r, _color.g, _color.b);
 	glPushMatrix();
 	glTranslatef(_posicion.x, _posicion.y, 0);
 	glutSolidSphere(_radio, 20, 20);
@@ -27,58 +36,39 @@ void Proyectil::dibuja(){
 
 
 
-float Proyectil::GetPosX(Vector2D vector){
-	float x;
-	x = vector.x;
-	return x;
-}
-
-float Proyectil::GetPosY(Vector2D vector){
-	float y;
-	y = vector.y;
-	return y;
-}
-
-
-//																							 SETS DE DIFERENTES VALORES
+//				 SETS DE DIFERENTES VALORES
 
 void Proyectil::setOrigen(float ox, float oy) {
 	_origen.x = ox;
 	_origen.y = oy;
 }
 
-//void Proyectil::setPos(float x, float y){
-//	_posicion.x = x;
-//	_posicion.y = y;
-//}
-//
-//void Proyectil::setVel(float vx, float vy) {
-//	_velocidad.x = vx;
-//	_velocidad.y = vy;
-//}
-//
-//void Proyectil::setAcel(float ax, float ay) {
-//	_aceleracion.x = ax;
-//	_aceleracion.y = ay;
-//}
+
 
 void Proyectil::inicializa()
 {
-	_radio = 5.0f;
-	_origen.set(0, 0);
-	_posicion = _origen;
-	_velocidad.set(0, 0);
-	_aceleracion.set(0, 0);
+	
+	//setColor(255, 0, 255);
+	//setRadio(1.5);
+	//setPos(0, 0);
+	//setVel(0, 20);
+	
 }
 
-
-
-
-
+//void Proyectil::setPos1(float ix, float iy)
+//{
+//	Entidad::setPos(ix, iy);
 //
+//	_origen = _posicion;
+//
+//}
+
+
+
+
 //void Proyectil::mueve(float t){
-//	posicion = posicion + velocidad * t + aceleracion * (0.5f * t * t);
-//	velocidad = velocidad + aceleracion * t;
+//	_posicion = _posicion + _velocidad * t + _aceleracion * (0.5f * t * t);
+//	_velocidad = _velocidad + _aceleracion * t;
 //}
 
 

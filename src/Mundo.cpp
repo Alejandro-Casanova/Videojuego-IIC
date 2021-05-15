@@ -18,16 +18,19 @@ void Mundo::dibuja()
 
 	///LLAMADAS PARA DIBUJAR
 	_piso.dibuja();
-	proyectil1.dibuja();
+	
 	personaje.dibuja();
+	proyectil1.dibuja();
+	disparosPlayer.dibuja();
 }
 
 void Mundo::mueve()
 {
 	//LLAMADAS DE ANIMACION
 	_piso.mueve();
-	proyectil1.mueve(0.025f);
+	disparosPlayer.mueve(0.025f);
 	personaje.mueve(0.025f);
+	proyectil1.mueve(0.025f);
 }
 
 
@@ -86,7 +89,20 @@ void Mundo::tecla(unsigned char key) {
 		//personaje.setVel(-10, 0);
 		//personaje.setAcel(-20, 0);
 		break;
+		
+	case ' ':
+	{
+		
+		Proyectil* d = new Proyectil();
+		//lista_Pro[i]
+		Vector2D pos = personaje.getPos();
+		d->setPos(pos.x, pos.y);
+		disparosPlayer.agregar(d);
+		d->setVel(0, 20);
+		break;
+		
 
+	}
 
 	
 	}
@@ -150,7 +166,7 @@ void Mundo::inicializa()
 	//LLAMADAS DE INICIALIZACION
 	_piso.inicializa(&personaje);
 
-	//Proyectil proyectil1;
+	
 	proyectil1.inicializa();
 	personaje.inicializa();
 }

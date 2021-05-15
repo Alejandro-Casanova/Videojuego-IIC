@@ -15,7 +15,6 @@
     <ClCompile Include="src\ListaProyectil.cpp" />
     <ClCompile Include="src\Entidad.cpp" />
     <ClCompile Include="src\Interaccion.cpp" />
-    <ClCompile Include="..\..\..\Desktop\Clases 2020-20201\2- Informatica\P4\P4\src\Enemigo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Caja.h" />
@@ -32,6 +31,5 @@
     <ClInclude Include="src\ListaProyectil.h" />
     <ClInclude Include="src\Entidad.h" />
     <ClInclude Include="src\Interaccion.h" />
-    <ClInclude Include="..\..\..\Desktop\Clases 2020-20201\2- Informatica\P4\P4\src\Enemigo.h" />
   </ItemGroup>
 </Project>
