@@ -14,6 +14,7 @@ Personaje personaje;
 public: 
 	Mundo();
 	void tecla(unsigned char key);
+	void tecla_up(unsigned char key);
 	void tecla_disparo(unsigned char key);
 	void inicializa();
 	void mueve();
