@@ -5,6 +5,7 @@
 
 class Proyectil : public Entidad
 {
+	friend class Interaccion;
 public:
 	Proyectil(void);
 	~Proyectil(void);
@@ -27,6 +28,7 @@ private:
 	Vector2D velocidad;
 	Vector2D aceleracion;*/
 	Vector2D _origen;
+	float distancia;			// longitud que recorre un disparo desde el origen
 
 	float GetPosX(Vector2D);
 	float GetPosY(Vector2D);

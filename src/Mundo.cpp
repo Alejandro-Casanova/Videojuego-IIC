@@ -36,20 +36,19 @@ void Mundo::tecla_disparo(unsigned char key)			//Creacion de proyectil de dispar
 {
 	// Creacion de un proyectil
 	//	proyectil.setOrigen(Vector2D.player)
-
 	switch (key)
 	{
-	case GLUT_KEY_LEFT:
-		proyectil1.setVel(-5.0f, 0.0f);
+	case 'j':
+		proyectil1.setVel(-15.0f, 0.0f);
 		break;
-	case GLUT_KEY_RIGHT:
-		proyectil1.setVel(5.0f, 0.0f);
+	case 'l':
+		proyectil1.setVel(15.0f, 0.0f);
 		break;
-	case GLUT_KEY_UP:
-		proyectil1.setVel(0.0f, 5.0f);
+	case 'i':
+		proyectil1.setVel(0.0f, 15.0f);
 		break;
-	case GLUT_KEY_DOWN:
-		proyectil1.setVel(0.0f, -5.0f);
+	case 'k':
+		proyectil1.setVel(0.0f, -15.0f);
 		break;
 	}
 }
