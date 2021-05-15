@@ -5,6 +5,7 @@
 void OnDraw(void); //esta funcion sera llamada para dibujar
 void OnTimer(int value); //esta funcion sera llamada cuando transcurra una temporizacion
 void OnKeyboardDown(unsigned char key, int x, int y); //cuando se pulse una tecla	
+void OnKeyboardUp(unsigned char key, int x, int y);
 
 Mundo mundo;
 
@@ -28,6 +29,8 @@ int main(int argc, char* argv[]){
 	glutDisplayFunc(OnDraw);
 	glutTimerFunc(25, OnTimer, 0);//le decimos que dentro de 25ms llame 1 vez a la funcion OnTimer()
 	glutKeyboardFunc(OnKeyboardDown);
+	glutKeyboardUpFunc(OnKeyboardUp);
+
 
 
 	///INICIALIZACIONES
@@ -64,10 +67,16 @@ void OnKeyboardDown(unsigned char key, int x_t, int y_t){
 	glutPostRedisplay();
 }
 
+void OnKeyboardUp(unsigned char key, int x_t, int y_t) {
+	mundo.tecla_up(key);
+	glutPostRedisplay();
+}
+
 void OnTimer(int value){
 
 	//CÓDIGO DE ANIMACION
 	mundo.mueve();
+
 
 	//no borrar estas lineas
 	glutTimerFunc(25, OnTimer, 0);

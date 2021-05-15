@@ -4,7 +4,10 @@
 #include <math.h>
 #include <time.h>
 #include <Windows.h>
+#include "stdio.h"
+#include "iostream"
 
+using namespace std;
 
 
 void Mundo::dibuja()
@@ -55,6 +58,7 @@ void Mundo::tecla_disparo(unsigned char key)			//Creacion de proyectil de dispar
 void Mundo::tecla(unsigned char key) {
 
 	bool arriba = 0, abajo = 0, derecha = 0, izquierda = 0, parar = 0;
+	cout << "tecladown";
 
 	switch (key) {
 	case 'w':
@@ -64,34 +68,34 @@ void Mundo::tecla(unsigned char key) {
 		//personaje.setVel(0, 10);
 		//personaje.setAcel(0, 10);
 		//personaje.mueve(0);
+		
 
 		break;
 	}
 	case 's':
 		abajo = 1;
-		//personaje.setVel(0, -20);
+		//personaje.setVel(0, -10);
 		//personaje.setAcel(0, -2);
 		break;
 	case 'd':
 		derecha = 1;
-		//personaje.setVel(20, 0);
+		//personaje.setVel(10, 0);
 		//personaje.setAcel(2, 0);
 		break;
 	case 'a':
 		izquierda = 1;
-		//personaje.setVel(-20, 0);
+		//personaje.setVel(-10, 0);
 		//personaje.setAcel(-20, 0);
 		break;
 
 
-	default:
-		parar = 1;
-		break;
+	
 	}
 
 	if (arriba) 
 	{
-			personaje.setVel(0, 10);
+		//personaje.setVel = personaje.setVel +  personaje.setAcel(0.1, 0.1);
+		personaje.setVel(0, 10);
 		
 	}
 	else if (abajo)
@@ -111,7 +115,7 @@ void Mundo::tecla(unsigned char key) {
 		
 		personaje.setVel(10, 0);
 	}
-	else if (parar){
+	else{
 		
 		personaje.setVel(0, 0);
 		personaje.setAcel(0, 0);
@@ -122,6 +126,18 @@ void Mundo::tecla(unsigned char key) {
 
 
 
+}
+
+
+void Mundo::tecla_up(unsigned char key) {
+
+	cout<<"TECLA UP";
+
+
+	if (key == 'w' || key == 's' || key == 'd' || key == 'a') {
+		personaje.setVel(0, 0);
+		personaje.setAcel(0, 0);
+	}
 }
 
 
