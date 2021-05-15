@@ -45,11 +45,16 @@ void Entidad::setAcel(float ax, float ay)
 
 }
 
+Vector2D Entidad::getPos() {
+
+	return _posicion;
+}
+
 
 void Entidad::inicializa()
 {
 	setColor(122, 40, 80);
-	setRadio(5);
+	setRadio(20);
 	setPos(0, 0);
 
 }

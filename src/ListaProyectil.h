@@ -1,5 +1,30 @@
 #pragma once
+#define MAX_PROYECTILES 100
+#include"Proyectil.h"
 class ListaProyectil
 {
+private: 
+	Proyectil* lista_Pro[MAX_PROYECTILES];
+	int contador;
+
+public:
+	ListaProyectil();
+	virtual ~ListaProyectil();
+	void destruirContenido();
+	friend class Interaccion;
+
+	bool agregar(Proyectil* f);
+	void eliminar(Proyectil* f);
+
+	void dibuja();
+	void mueve(float t);
+
+	void setColor(char r, char g, char b);
+
+	Proyectil* operator [] (int i);
+
+
+
+
 };
 

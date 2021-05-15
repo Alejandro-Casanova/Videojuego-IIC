@@ -15,10 +15,10 @@ public:
 
 	//Estas funciones están en la clase Entidad (herencia)
 
-	/*void mueve(float t);
-	void inicializa();
+	//void mueve(float t);
+	void inicializa() override;
 
-	void setColor(unsigned char r, unsigned char g, unsigned char b) { _r = r; _g = g; _b = b; }
+	/*void setColor(unsigned char r, unsigned char g, unsigned char b) { _r = r; _g = g; _b = b; }
 	void setRadio(float radio) { _radio = radio; }
 	void setPos(float x, float y);
 	void setVel(float vx, float vy);*/

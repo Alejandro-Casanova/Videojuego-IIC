@@ -4,11 +4,15 @@
 #include "Proyectil.h"
 #include"Personaje.h"
 #include "Interaccion.h"
+#include "ListaProyectil.h"
 
 
 class Mundo{
 Proyectil proyectil1;
 Personaje personaje;
+ListaProyectil disparosPlayer;
+//ListaProyectil disparosEnemigo;
+
 
 
 public: 
