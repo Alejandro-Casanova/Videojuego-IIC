@@ -1,6 +1,8 @@
 #pragma once
 #define MAX_PROYECTILES 100
 #include"Proyectil.h"
+
+
 class ListaProyectil
 {
 private: 
@@ -14,6 +16,7 @@ public:
 	friend class Interaccion;
 
 	bool agregar(Proyectil* f);
+	void eliminar(int index);
 	void eliminar(Proyectil* f);
 
 	void dibuja();

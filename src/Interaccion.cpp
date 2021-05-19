@@ -3,6 +3,8 @@
 #include "Caja.h"
 #include "Pared.h"
 #include "Obstaculo.h"
+#include "Proyectil.h"
+#include "ListaProyectil.h"
 
 void Interaccion::rebote(Personaje& p, Caja c)
 {
@@ -29,4 +31,27 @@ bool Interaccion::rebote(Personaje& e, Pared p)
 void Interaccion::rebote(Personaje& p, Obstaculo o)
 {
 	rebote(p, o._hitBox);
+}
+
+
+bool Interaccion::impacto(Proyectil& p, Pared pa) {
+	Vector2D dir;
+	float dif = pa.distancia(p._posicion, &dir) - p._radio;
+	if (dif <= 0.01f) {
+		return true;
+	}
+	return false;
+}
+
+
+
+
+bool Interaccion::impacto(Proyectil& pr, Obstaculo obs) {
+	return false;
+}
+
+
+
+bool Interaccion::impacto(Proyectil& p, Personaje per) {
+	return false;
 }

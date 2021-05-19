@@ -13,8 +13,8 @@ public:
 	static void rebote(Personaje& p, Caja c);
 	static bool rebote(Personaje& e, Pared p);
 	static void rebote(Personaje& p, Obstaculo o);
-	static void impacto(Proyectil& p, Obstaculo);
-	static void impacto(Proyectil& p, Enemigo);
-	static void impacto(Proyectil& p, Pared);
+	static bool impacto(Proyectil& p, Pared pa);
+	static bool impacto(Proyectil& p, Obstaculo o);
+	static bool impacto(Proyectil& p, Personaje per);
 };
 

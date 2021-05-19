@@ -21,7 +21,5 @@ private:
 	
 	Vector2D _origen;
 	float distancia=0;			// longitud que recorre un disparo desde el origen
-
-
 };
 
