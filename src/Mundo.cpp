@@ -37,22 +37,28 @@ void Mundo::mueve()
 
 void Mundo::tecla_disparo(unsigned char key)			//Creacion de proyectil de disparo del jugador
 {
-	// Creacion de un proyectil
-	//	proyectil.setOrigen(Vector2D.player)
-	switch (key)
-	{
-	case 'j':
-		proyectil1.setVel(-15.0f, 0.0f);
-		break;
-	case 'l':
-		proyectil1.setVel(15.0f, 0.0f);
-		break;
-	case 'i':
-		proyectil1.setVel(0.0f, 15.0f);
-		break;
-	case 'k':
-		proyectil1.setVel(0.0f, -15.0f);
-		break;
+	if (key == 'i' || key == 'j' || key == 'k' || key == 'l') {
+		// Creacion de un proyectil
+		Proyectil* d = new Proyectil();
+		//	proyectil.setOrigen(Vector2D.player)
+		Vector2D pos = personaje.getPos();
+		d->setPos(pos.x, pos.y);
+		disparosPlayer.agregar(d);
+		switch (key)
+		{
+		case 'j':
+			d->setVel(-20, 0);
+			break;
+		case 'l':
+			d->setVel(20, 0);
+			break;
+		case 'i':
+			d->setVel(0, 20);
+			break;
+		case 'k':
+			d->setVel(0, -20);
+			break;
+		}
 	}
 }
 

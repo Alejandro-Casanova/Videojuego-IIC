@@ -33,6 +33,18 @@ bool ListaProyectil::agregar(Proyectil* f)
 	return true;
 }
 
+void ListaProyectil::eliminar(int index) {
+	if ((index < 0) || (index >= contador))
+		return; 
+	delete lista_Pro[index]; 
+	contador--; 
+	for (int i = index; i < contador; i++) 
+		lista_Pro[i] = lista_Pro[i + 1];
+}
+
+
+
+
 void ListaProyectil::eliminar(Proyectil* f)
 {
 	for (int i = 0; i < contador; i++)
