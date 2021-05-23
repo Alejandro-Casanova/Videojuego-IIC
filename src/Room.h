@@ -10,6 +10,8 @@ class Personaje;
 
 class Room
 {
+	friend class ListaProyectil;
+
 public:
 	Room();
 	~Room();
@@ -32,8 +34,11 @@ private:
 	float _ancho = 130;
 	float _alto = 70;
 	float _bordeText = 15.0f; //Ancho de la textura que queda detrás de la hit-box de la pared
+
+public:
 	Caja _paredes; //Hit-box de las paredes
-	
+
+private:
 	Personaje* _personaje_ptr = nullptr;
 	std::vector<std::string> _layout; //Dimensiones de la habitación 7x13
 	std::vector<Obstaculo> _obstaculos;

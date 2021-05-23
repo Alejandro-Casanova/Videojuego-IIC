@@ -1,4 +1,5 @@
 #include "ListaProyectil.h"
+#include "Interaccion.h"
 
 ListaProyectil::ListaProyectil()
 {
@@ -23,8 +24,7 @@ void ListaProyectil::destruirContenido()
 }
 
 ///AGREGAR - DESTRUIR///
-bool ListaProyectil::agregar(Proyectil* f)
-{
+bool ListaProyectil::agregar(Proyectil* f){
 	if (contador < MAX_PROYECTILES)
 		lista_Pro[contador++] = f;
 	else
@@ -43,17 +43,16 @@ void ListaProyectil::eliminar(int index) {
 }
 
 
-
-
 void ListaProyectil::eliminar(Proyectil* f)
 {
 	for (int i = 0; i < contador; i++)
 		if (lista_Pro[i] == f)
 		{
-			eliminar(lista_Pro[i]);
+			eliminar(i);
 			return;
 		}
 }
+
 void ListaProyectil::dibuja()
 {
 	for (int i = 0; i < contador; i++)
@@ -81,4 +80,15 @@ Proyectil* ListaProyectil::operator[](int i)
 	if (i < 0) //si el indice es negativo, devuelvo la primera
 		i = 0;
 	return lista_Pro[i];
+}
+
+
+Proyectil* ListaProyectil::colision(Caja c)
+{
+	for (int i = 0; i < contador; i++)
+	{
+		if (Interaccion::impacto(*(lista_Pro[i]), c))
+			return lista_Pro[i];
+	}
+	return 0; //no hay colisión
 }

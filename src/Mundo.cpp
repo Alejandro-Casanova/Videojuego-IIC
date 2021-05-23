@@ -6,6 +6,7 @@
 #include <Windows.h>
 #include "stdio.h"
 #include "iostream"
+#include "Personaje.h"
 
 using namespace std;
 
@@ -20,7 +21,7 @@ void Mundo::dibuja()
 	_piso.dibuja();
 	
 	personaje.dibuja();
-	proyectil1.dibuja();
+
 	disparosPlayer.dibuja();
 }
 
@@ -30,7 +31,8 @@ void Mundo::mueve()
 	_piso.mueve();
 	disparosPlayer.mueve(0.025f);
 	personaje.mueve(0.025f);
-	proyectil1.mueve(0.025f);
+	Proyectil* aux = disparosPlayer.colision(_piso._room._paredes);
+	if (aux != 0) disparosPlayer.eliminar(aux);
 }
 
 
@@ -44,7 +46,10 @@ void Mundo::tecla_disparo(unsigned char key)			//Creacion de proyectil de dispar
 		Vector2D pos = personaje.getPos();
 		d->setPos(pos.x, pos.y);
 		disparosPlayer.agregar(d);
-		switch (key)
+		Vector2D proyp = d->getPos();
+		cout << "proy x = " << proyp.x << " || proy y = " << proyp.y << endl;
+		cout << "pers x = " << pos.x << " || pers y = " << pos.y << endl;
+;		switch (key)
 		{
 		case 'j':
 			d->setVel(-20, 0);
@@ -66,7 +71,8 @@ void Mundo::tecla_disparo(unsigned char key)			//Creacion de proyectil de dispar
 void Mundo::tecla(unsigned char key) {
 
 	bool arriba = 0, abajo = 0, derecha = 0, izquierda = 0, parar = 0;
-	cout << "tecladown";
+
+	// cout << "tecladown";
 
 	switch (key) {
 	case 'w':
@@ -76,7 +82,6 @@ void Mundo::tecla(unsigned char key) {
 		//personaje.setVel(0, 10);
 		//personaje.setAcel(0, 10);
 		//personaje.mueve(0);
-		
 
 		break;
 	}
@@ -94,23 +99,7 @@ void Mundo::tecla(unsigned char key) {
 		izquierda = 1;
 		//personaje.setVel(-10, 0);
 		//personaje.setAcel(-20, 0);
-		break;
-		
-	case ' ':
-	{
-		
-		Proyectil* d = new Proyectil();
-		//lista_Pro[i]
-		Vector2D pos = personaje.getPos();
-		d->setPos(pos.x, pos.y);
-		disparosPlayer.agregar(d);
-		d->setVel(0, 20);
-		break;
-		
-
-	}
-
-	
+		break;	
 	}
 
 	if (arriba) 
@@ -121,13 +110,11 @@ void Mundo::tecla(unsigned char key) {
 	}
 	else if (abajo)
 	{
-	
 		personaje.setVel(0, -10);
 	}
 
 	else if (izquierda)
 	{
-		
 		personaje.setVel(-10, 0);
 	}
 
@@ -152,7 +139,7 @@ void Mundo::tecla(unsigned char key) {
 
 void Mundo::tecla_up(unsigned char key) {
 
-	cout<<"TECLA UP";
+	// cout<<"TECLA UP";
 
 
 	if (key == 'w' || key == 's' || key == 'd' || key == 'a') {
@@ -173,7 +160,6 @@ void Mundo::inicializa()
 	_piso.inicializa(&personaje);
 
 	
-	proyectil1.inicializa();
 	personaje.inicializa();
 }
 

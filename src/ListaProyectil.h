@@ -1,7 +1,7 @@
 #pragma once
 #define MAX_PROYECTILES 100
-#include"Proyectil.h"
-
+#include "Proyectil.h"
+#include "Caja.h"
 
 class ListaProyectil
 {
@@ -25,6 +25,7 @@ public:
 	void setColor(char r, char g, char b);
 
 	Proyectil* operator [] (int i);
+	Proyectil* colision(Caja c);
 
 
 

@@ -1,4 +1,5 @@
 #include "Personaje.h"
+#include <iostream>
 
 Personaje::Personaje(){
 
