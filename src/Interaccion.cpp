@@ -28,9 +28,18 @@ bool Interaccion::rebote(Personaje& e, Pared p)
 	return false;
 }
 
-void Interaccion::rebote(Personaje& p, Obstaculo o)
-{
+void Interaccion::rebote(Personaje& p, Obstaculo o){
 	rebote(p, o._hitBox);
+}
+
+
+
+bool Interaccion::impacto(Proyectil& p, Caja c) {
+	if (impacto(p, c._dcha)) return true;
+	if (impacto(p, c._izq)) return true;
+	if (impacto(p, c._sup)) return true;
+	if (impacto(p, c._inf)) return true;
+	return false;
 }
 
 

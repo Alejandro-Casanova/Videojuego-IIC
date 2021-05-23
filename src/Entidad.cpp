@@ -53,9 +53,9 @@ Vector2D Entidad::getPos() {
 
 void Entidad::inicializa()
 {
-	setColor(122, 40, 80);
-	setRadio(20);
-	setPos(0, 0);
+	//setColor(122, 40, 80);
+	//setRadio(20);
+	//setPos(0, 0);
 
 }
 

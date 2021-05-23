@@ -8,12 +8,11 @@
 
 
 class Mundo{
-Proyectil proyectil1;
 Personaje personaje;
 ListaProyectil disparosPlayer;
 //ListaProyectil disparosEnemigo;
 
-
+friend class ListaProyectil;
 
 public: 
 	Mundo();
@@ -29,6 +28,6 @@ private:
 	float y_ojo = 0;
 	float z_ojo = 0;
 
+public:
 	Piso _piso;
-	
 };

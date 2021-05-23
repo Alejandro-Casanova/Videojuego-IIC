@@ -3,8 +3,11 @@
 #include "Room.h"
 class Personaje;
 
+
 class Piso
 {
+	friend class ListaProyectil;
+
 public:
 	Piso();
 	void mueve();
@@ -12,7 +15,9 @@ public:
 	void inicializa(Personaje* pptr);
 
 private:
-	Room _room;
 	Personaje* _personaje_ptr;
+
+public:
+	Room _room;
 };
 

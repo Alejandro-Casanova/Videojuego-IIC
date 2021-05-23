@@ -19,18 +19,22 @@ Proyectil::~Proyectil(void)
 
 
 void Proyectil::dibuja(){
+	//glColor3f(_color.r, _color.g, _color.b);
+	//glPushMatrix();
+	//glTranslatef(_posicion.x, _posicion.y, 0);
+	//glutSolidSphere(_radio, 20, 20);
+	//glTranslatef(-_posicion.x, -_posicion.y, 0);
+	//glBegin(GL_LINES);
+	//glVertex3f(_posicion.x, _posicion.y, 0);
+	//glVertex3f(_origen.x, _origen.y, 0);
+	//glEnd();
+	//glPopMatrix();
 
-	
-	glColor3f(_color.r, _color.g, _color.b);
-	glPushMatrix();
 	glTranslatef(_posicion.x, _posicion.y, 0);
+	//glColor3ub(_r,_g,_b);
+	_color.ponColor();
 	glutSolidSphere(_radio, 20, 20);
 	glTranslatef(-_posicion.x, -_posicion.y, 0);
-	glBegin(GL_LINES);
-	glVertex3f(_posicion.x, _posicion.y, 0);
-	glVertex3f(_origen.x, _origen.y, 0);
-	glEnd();
-	glPopMatrix();
 }
 
 
