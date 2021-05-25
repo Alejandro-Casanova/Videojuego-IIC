@@ -17,6 +17,7 @@ void Personaje::dibuja()
 	_color.ponColor();
     glutSolidSphere(_radio, 20, 20);
 	//glPopMatrix();
+	glTranslatef(-_posicion.x, -_posicion.y, 0);
 }
 
 //void Personaje::mueve(float t)
