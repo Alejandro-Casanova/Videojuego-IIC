@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="src\Caja.cpp" />
     <ClCompile Include="src\Entidad.cpp" />
     <ClCompile Include="src\Factoria.cpp" />
@@ -37,7 +36,6 @@
     <ClCompile Include="src\Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Sprite.h" />
     <ClInclude Include="src\Caja.h" />
     <ClInclude Include="src\ColorRGB.h" />
     <ClInclude Include="src\Entidad.h" />

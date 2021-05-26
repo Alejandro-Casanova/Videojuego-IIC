@@ -21,11 +21,12 @@ public:
 	void setBordeTextura(float bordeTextura) { _bordeTextura = bordeTextura; }
 
 	Caja _hitBox;
-	Vector2D origen;
+	Vector2D _posicion;
 	bool _playerFlag = true, _bulletFlag = true; //Define si se realiza colisión con jugador o proyectil
 	double _ancho = 10, _alto = 10; //Dimensiones predeterminadas
 	float _bordeTextura = 0.0f; //Por si la hit-box es menor que la textura
 	ETSIDI::GLTexture _textura = { 0, 0, 0 };
+	ETSIDI::Sprite _sprite;
 	
 private:
 	
