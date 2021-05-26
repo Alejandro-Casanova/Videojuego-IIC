@@ -37,11 +37,13 @@ private:
 
 public:
 	Caja _paredes; //Hit-box de las paredes
+	Vector2D origen=(-_ancho / 2.0f, +_alto / 2.0f - 10.0f);
 
 private:
 	Personaje* _personaje_ptr = nullptr;
 	std::vector<std::string> _layout; //Dimensiones de la habitación 7x13
 	std::vector<Obstaculo> _obstaculos;
 	ETSIDI::GLTexture _textura = { 0, 0, 0 };
+	
 };
 
