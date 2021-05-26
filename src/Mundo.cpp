@@ -158,7 +158,6 @@ void Mundo::inicializa()
 
 	//LLAMADAS DE INICIALIZACION
 	_piso.inicializa(&personaje);
-
 	
 	personaje.inicializa();
 }

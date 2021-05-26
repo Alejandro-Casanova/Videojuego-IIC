@@ -20,7 +20,7 @@ public:
 
 protected:
 	ColorRGB _color;
-	float _radio;
+	float _radio = 0.0f;
 
 	Vector2D _posicion;
 	Vector2D _velocidad;
