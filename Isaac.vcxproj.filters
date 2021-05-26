@@ -15,7 +15,11 @@
     <ClCompile Include="src\ListaProyectil.cpp" />
     <ClCompile Include="src\Entidad.cpp" />
     <ClCompile Include="src\Interaccion.cpp" />
+<<<<<<< Updated upstream
     <ClCompile Include="src\Factoria.cpp" />
+=======
+    <ClCompile Include="Sprite.cpp" />
+>>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Caja.h" />
@@ -32,6 +36,9 @@
     <ClInclude Include="src\ListaProyectil.h" />
     <ClInclude Include="src\Entidad.h" />
     <ClInclude Include="src\Interaccion.h" />
+<<<<<<< Updated upstream
     <ClInclude Include="src\Factoria.h" />
+=======
+    <ClInclude Include="Sprite.h" />
   </ItemGroup>
 </Project>

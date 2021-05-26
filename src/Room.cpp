@@ -87,21 +87,31 @@ void Room::cargaTextura(const char* ruta_de_textura)
 void Room::setObstaculos()
 {
 	int i = 0, j = 0;
+
 	//Para facilitar el dibujado se sitúa el origen en la esquina superior izquierda
 	Vector2D origen(-_ancho / 2.0f, +_alto / 2.0f - 10.0f);//10 es el ancho (magic number)
 	for (auto str : _layout) {
 		for (auto chr : str) {
 			std::cout << chr;
 			if (chr == 'R') {
+		
+			
 				_obstaculos.emplace_back(Obstaculo(origen + Vector2D(10.0f * j, -10.0f * i), "res/texturas/rocas.png"));
+				
 			}
-			j++;
+			else if (chr == 'H') {
+				_obstaculos.emplace_back(Obstaculo(origen + Vector2D(10.0f * j, -10.0f * i), "res/texturas/hole.png"));
+			}
+
+
+				j++;
+			}
+			j = 0;
+			std::cout << std::endl;
+			i++;
 		}
-		j = 0;
-		std::cout << std::endl;
-		i++;
 	}
-}
+
 
 void Room::setParedes(float ancho, float alto)
 {
