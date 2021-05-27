@@ -105,23 +105,23 @@ void Mundo::tecla(unsigned char key) {
 	if (arriba) 
 	{
 		//personaje.setVel = personaje.setVel +  personaje.setAcel(0.1, 0.1);
-		personaje.setVel(0, 10);
+		personaje.setVel(0, 30);
 		
 	}
 	else if (abajo)
 	{
-		personaje.setVel(0, -10);
+		personaje.setVel(0, -30);
 	}
 
 	else if (izquierda)
 	{
-		personaje.setVel(-10, 0);
+		personaje.setVel(-30, 0);
 	}
 
 	else if (derecha)
 	{
 		
-		personaje.setVel(10, 0);
+		personaje.setVel(30, 0);
 	}
 	else{
 		
