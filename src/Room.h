@@ -6,7 +6,7 @@
 #include "ETSIDI.h"
 #include <Caja.h>
 #include "Obstaculo.h"
-class Personaje;
+class Entidad;
 
 class Room
 {
@@ -19,7 +19,7 @@ public:
 	void dibuja() const;
 	void dibujaHitBox() const;
 
-	void inicializa(const char* ruta_de_layout, const char* ruta_de_textura, Personaje* pptr);
+	void inicializa(const char* ruta_de_layout, const char* ruta_de_textura, Entidad* pptr);
 	void cargaLayout(const char* ruta_de_archivo);
 	void cargaTextura(const char* ruta_de_textura);
 	
@@ -40,7 +40,7 @@ public:
 	Vector2D origen=(-_ancho / 2.0f, +_alto / 2.0f - 10.0f);
 
 private:
-	Personaje* _personaje_ptr = nullptr;
+	Entidad* _personaje_ptr = nullptr;
 	std::vector<std::string> _layout; //Dimensiones de la habitación 7x13
 	std::vector<Obstaculo> _obstaculos;
 	ETSIDI::GLTexture _textura = { 0, 0, 0 };

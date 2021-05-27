@@ -1,17 +1,16 @@
 #pragma once
-
-#include "Vector2D.h"
-#include "freeglut.h"
 #include "Entidad.h"
 
-class Personaje : public Entidad
+class Enemigo : public Entidad
 {
+	friend class Interaccion;
 public:
-	Personaje();
-	virtual ~Personaje();
+	Enemigo();
+	virtual ~Enemigo();
 
 	virtual void dibuja() override;
 	void inicializa() override;
+	void mueve(float t);
 
 private:
 

@@ -18,6 +18,7 @@ public:
 	void setAcel(float ax, float ay);
 	Vector2D getPos();
 
+	
 protected:
 	ColorRGB _color;
 	float _radio = 0.0f;
@@ -26,4 +27,5 @@ protected:
 	Vector2D _velocidad;
 	Vector2D _aceleracion;
 
+	friend class Interaccion;
 };

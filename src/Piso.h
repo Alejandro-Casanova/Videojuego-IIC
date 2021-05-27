@@ -12,10 +12,10 @@ public:
 	Piso();
 	void mueve();
 	void dibuja();
-	void inicializa(Personaje* pptr);
+	void inicializa(Entidad* pptr);
 
 private:
-	Personaje* _personaje_ptr;
+	Entidad* _personaje_ptr;
 
 public:
 	Room _room;

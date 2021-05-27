@@ -12,7 +12,6 @@ void Entidad::mueve(float t)
 {
 	_posicion = _posicion + _velocidad * t + _aceleracion * (0.5f * t * t);
 	_velocidad = _velocidad + _aceleracion * t;
-
 }
 
 void Entidad::setPos(float x, float y)

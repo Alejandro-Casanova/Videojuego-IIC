@@ -1,6 +1,6 @@
 #pragma once
 
-class Personaje;
+class Entidad;
 class Caja;
 class Pared;
 class Obstaculo;
@@ -10,12 +10,12 @@ class Enemigo;
 class Interaccion
 {
 public:
-	static void rebote(Personaje& p, Caja c);
-	static bool rebote(Personaje& e, Pared p);
-	static void rebote(Personaje& p, Obstaculo o);
+	static void rebote(Entidad& p, Caja c);
+	static bool rebote(Entidad& e, Pared p);
+	static void rebote(Entidad& p, Obstaculo o);
 	static bool impacto(Proyectil& p, Pared pa);
 	static bool impacto(Proyectil& p, Caja c);
 	static bool impacto(Proyectil& p, Obstaculo o);
-	static bool impacto(Proyectil& p, Personaje per);
+	static bool impacto(Proyectil& p, Enemigo e);
 };
 
