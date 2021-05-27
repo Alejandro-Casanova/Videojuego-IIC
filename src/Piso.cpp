@@ -21,7 +21,7 @@ void Piso::dibuja()
 	
 }
 
-void Piso::inicializa(Personaje* pptr)
+void Piso::inicializa(Entidad* pptr)
 {
 	_room.inicializa("res/rooms/test.txt", "res/texturas/Basement1.png", pptr);
 	_personaje_ptr = pptr;

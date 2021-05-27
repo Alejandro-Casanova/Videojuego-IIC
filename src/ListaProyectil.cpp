@@ -92,3 +92,12 @@ Proyectil* ListaProyectil::colision(Caja c)
 	}
 	return 0; //no hay colisión
 }
+
+Proyectil* ListaProyectil::impacto(Enemigo e) {
+	for (int i = 0; i < contador; i++)
+	{
+		if (Interaccion::impacto(*(lista_Pro[i]), e))
+			return lista_Pro[i];
+	}
+	return 0; //no hay colisión
+}

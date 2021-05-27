@@ -2,6 +2,7 @@
 #define MAX_PROYECTILES 100
 #include "Proyectil.h"
 #include "Caja.h"
+#include "Enemigo.h"
 
 class ListaProyectil
 {
@@ -26,6 +27,7 @@ public:
 
 	Proyectil* operator [] (int i);
 	Proyectil* colision(Caja c);
+	Proyectil* impacto(Enemigo e);
 
 
 

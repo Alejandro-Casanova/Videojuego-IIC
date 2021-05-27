@@ -23,5 +23,5 @@ void Personaje::inicializa()
 {
 	setColor(122,40,80);
 	setRadio(5);
-	setPos(0,0);
+	setPos(40,0);
 }

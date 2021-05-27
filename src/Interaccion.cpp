@@ -5,8 +5,10 @@
 #include "Obstaculo.h"
 #include "Proyectil.h"
 #include "ListaProyectil.h"
+#include "Enemigo.h"
+#include "Vector2D.h"
 
-void Interaccion::rebote(Personaje& p, Caja c)
+void Interaccion::rebote(Entidad& p, Caja c)
 {
 	rebote(p, c._dcha);
 	rebote(p, c._izq);
@@ -14,7 +16,7 @@ void Interaccion::rebote(Personaje& p, Caja c)
 	rebote(p, c._inf);
 }
 
-bool Interaccion::rebote(Personaje& e, Pared p)
+bool Interaccion::rebote(Entidad& e, Pared p)
 {
 	Vector2D dir;
 	float dif = p.distancia(e._posicion, &dir) - e._radio;
@@ -28,7 +30,7 @@ bool Interaccion::rebote(Personaje& e, Pared p)
 	return false;
 }
 
-void Interaccion::rebote(Personaje& p, Obstaculo o){
+void Interaccion::rebote(Entidad& p, Obstaculo o){
 	rebote(p, o._hitBox);
 }
 
@@ -61,6 +63,10 @@ bool Interaccion::impacto(Proyectil& pr, Obstaculo obs) {
 
 
 
-bool Interaccion::impacto(Proyectil& p, Personaje per) {
+bool Interaccion::impacto(Proyectil& p, Enemigo e) {
+	Vector2D dif = p._posicion - e._posicion;
+	float d = dif.modulo();
+	float dentro = d - (p._radio + e._radio);
+	if (dentro < 0.0f) return true;
 	return false;
 }

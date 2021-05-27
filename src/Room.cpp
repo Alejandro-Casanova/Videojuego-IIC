@@ -48,7 +48,7 @@ void Room::dibuja() const
 	glDisable(GL_TEXTURE_2D);
 }
 
-void Room::inicializa(const char* ruta_de_layout, const char* ruta_de_textura, Personaje* pptr)
+void Room::inicializa(const char* ruta_de_layout, const char* ruta_de_textura, Entidad* pptr)
 {
 	setParedes(_ancho, _alto);
 	cargaLayout(ruta_de_layout);

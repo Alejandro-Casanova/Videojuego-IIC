@@ -5,10 +5,12 @@
 #include"Personaje.h"
 #include "Interaccion.h"
 #include "ListaProyectil.h"
+#include "Enemigo.h"
 
 
 class Mundo{
 Personaje personaje;
+Enemigo malapersona;
 ListaProyectil disparosPlayer;
 //ListaProyectil disparosEnemigo;
 
