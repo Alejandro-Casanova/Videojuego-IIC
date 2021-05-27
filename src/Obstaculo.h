@@ -26,7 +26,7 @@ public:
 	double _ancho = 10, _alto = 10; //Dimensiones predeterminadas
 	float _bordeTextura = 0.0f; //Por si la hit-box es menor que la textura
 	ETSIDI::GLTexture _textura = { 0, 0, 0 };
-	ETSIDI::Sprite _sprite;
+	ETSIDI::Sprite _sprite(const char);
 	
 private:
 	
