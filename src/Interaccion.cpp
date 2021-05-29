@@ -20,11 +20,13 @@ bool Interaccion::rebote(Entidad& e, Pared p)
 {
 	Vector2D dir;
 	float dif = p.distancia(e._posicion, &dir) - e._radio;
-	if (dif <= 0.0f)
-	{
-		Vector2D v_inicial = e._velocidad;
+	if (dif <= 0.0f){
+		//Separa los cuerpos
+		e._posicion -= (dir * dif);
+		//a._posicion -= (distVec.unitario() * ((minDist - dist) / 2));
+		/*Vector2D v_inicial = e._velocidad;
 		e._velocidad = v_inicial - dir * 2.0 * (v_inicial * dir);
-		e._posicion = e._posicion - dir * dif;
+		e._posicion = e._posicion - dir * dif;*/
 		return true;
 	}
 	return false;

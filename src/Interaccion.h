@@ -13,6 +13,7 @@ public:
 	static void rebote(Entidad& p, Caja c);
 	static bool rebote(Entidad& e, Pared p);
 	static void rebote(Entidad& p, Obstaculo o);
+
 	static bool impacto(Proyectil& p, Pared pa);
 	static bool impacto(Proyectil& p, Caja c);
 	static bool impacto(Proyectil& p, Obstaculo o);

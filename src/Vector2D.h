@@ -9,11 +9,15 @@ public:
 	float modulo(); 
 	float argumento();
 	Vector2D unitario();
-	Vector2D operator - (Vector2D); 
-	Vector2D operator + (Vector2D);
-	float operator *(Vector2D); 
-	Vector2D operator *(float); 
-	Vector2D operator +(float);
+
+	Vector2D operator - (Vector2D) const; 
+	Vector2D operator + (Vector2D) const;
+	Vector2D operator += (Vector2D);
+	Vector2D operator -= (Vector2D);
+	float operator *(Vector2D) const; 
+	Vector2D operator *(float) const; 
+	Vector2D operator +(float) const;
+
 	void set(float x, float y);
 
 //ATRIBUTOS

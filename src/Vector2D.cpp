@@ -9,7 +9,7 @@ Vector2D::~Vector2D() {
 }
 
 float Vector2D::modulo() {
-	return (float)sqrt(x * x + y * y);
+	return (float)sqrtf(x * x + y * y);
 }
 
 float Vector2D::argumento() {
@@ -28,14 +28,14 @@ Vector2D Vector2D::unitario()
 	return retorno;
 }
 
-Vector2D Vector2D::operator - (Vector2D v)
+Vector2D Vector2D::operator - (Vector2D v) const
 {
 	Vector2D res;
 	res.x = x - v.x;
 	res.y = y - v.y;
 	return res;
 }
-Vector2D Vector2D::operator + (Vector2D v)
+Vector2D Vector2D::operator + (Vector2D v) const
 {
 	Vector2D res;
 	res.x = x + v.x;
@@ -43,18 +43,18 @@ Vector2D Vector2D::operator + (Vector2D v)
 	return res;
 }
 
-float Vector2D::operator * (Vector2D v) {
+float Vector2D::operator * (Vector2D v) const{
 	return v.x * x + v.y * y;
 }
 
-Vector2D Vector2D::operator * (float escalar) {
+Vector2D Vector2D::operator * (float escalar) const{
 	Vector2D resultado;
 	resultado.x = escalar * x;
 	resultado.y = escalar * y;
 	return resultado;
 }
 
-Vector2D Vector2D::operator+(float escalar)
+Vector2D Vector2D::operator+(float escalar) const
 {
 
 	return Vector2D(x + escalar, y + escalar);
@@ -64,4 +64,18 @@ void Vector2D::set(float x, float y)
 {
 	x = x;
 	y = y;
+}
+
+Vector2D Vector2D::operator+=(Vector2D v)
+{
+	x += v.x;
+	y += v.y;
+	return *this;
+}
+
+Vector2D Vector2D::operator-=(Vector2D v)
+{
+	x -= v.x;
+	y -= v.y;
+	return *this;
 }
