@@ -10,6 +10,8 @@ Obstaculo::Obstaculo(Vector2D posicion, const char* ruta_de_textura) {
 	_posicion = posicion;
 	cargaTextura(ruta_de_textura);
 	
+	
+	
 }
 
 Obstaculo::Obstaculo(const char* ruta_de_textura, Caja hitBox)
