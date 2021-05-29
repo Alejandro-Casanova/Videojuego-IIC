@@ -22,6 +22,7 @@
     <ClCompile Include="src\Caja.cpp" />
     <ClCompile Include="src\Enemigo.cpp" />
     <ClCompile Include="src\Entidad.cpp" />
+    <ClCompile Include="src\GestorDeTeclado.cpp" />
     <ClCompile Include="src\Interaccion.cpp" />
     <ClCompile Include="src\ListaProyectil.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -40,6 +41,7 @@
     <ClInclude Include="src\ColorRGB.h" />
     <ClInclude Include="src\Enemigo.h" />
     <ClInclude Include="src\Entidad.h" />
+    <ClInclude Include="src\GestorDeTeclado.h" />
     <ClInclude Include="src\Interaccion.h" />
     <ClInclude Include="src\ListaProyectil.h" />
     <ClInclude Include="src\Mundo.h" />
