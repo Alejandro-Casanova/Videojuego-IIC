@@ -1,7 +1,8 @@
 #pragma once
-#include "Entidad.h"
 
-class Enemigo : public Entidad
+#include "Personaje.h"
+
+class Enemigo : public Personaje
 {
 	friend class Interaccion;
 public:
