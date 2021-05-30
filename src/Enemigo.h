@@ -20,7 +20,7 @@ public:
 
 	virtual void dibuja() override;
 	void inicializa() override;
-	void mueve(float t);
+	 virtual void mueve(float t);
 
 
 	//Caja _hitBox;
@@ -29,9 +29,38 @@ public:
 	//double _ancho = 10, _alto = 10; //Dimensiones predeterminadas
 	//float _bordeTextura = 0.0f; //Por si la hit-box es menor que la textura
 	//ETSIDI::GLTexture _textura = { 0, 0, 0 };
-	ETSIDI::Sprite _sprite{"res/texturas/caca.png"};
+	
 
 private:
-
+	//ETSIDI::Sprite _sprite{" "} =0;
 };
 
+class Caca : public Enemigo {
+	//atributos propios
+public:
+	Caca();
+	Caca(Vector2D pos);
+	virtual ~Caca();
+	//void inicializa() override;
+	virtual void dibuja() override;
+	virtual void mueve(float t);
+
+private:
+	ETSIDI::Sprite _spriteCaca{ "res/texturas/caca.png" };
+};
+
+
+
+class Fatty : public Enemigo {
+	//atributos propios
+public:
+	Fatty();
+	Fatty(Vector2D pos);
+	virtual ~Fatty();
+	//void inicializa() override;
+	virtual void dibuja() override;
+	virtual void mueve(float t);
+
+private:
+	ETSIDI::Sprite _spriteFatty{ "res/texturas/fatty.png" };
+};

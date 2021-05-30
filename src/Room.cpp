@@ -34,7 +34,7 @@ void Room::dibujaHitBox() const
 void Room::dibuja() const
 {
 	for (auto i : _enemigos) {
-		i.dibuja();
+		i->dibuja();
 	}
 
 	glEnable(GL_TEXTURE_2D);
@@ -59,7 +59,7 @@ void Room::inicializa(const char* ruta_de_layout, const char* ruta_de_textura, E
 	_personaje_ptr = pptr;
 	setObstaculos();
 	for (auto i : _enemigos) {
-		i.inicializa();
+		i->inicializa();
 	}
 }
 
@@ -110,8 +110,12 @@ void Room::setObstaculos()
 				_obstaculos.emplace_back(Obstaculo(origen + Vector2D(10.0f * j, -10.0f * i), "res/texturas/hole.png"));
 			}
 
-			else if (chr == 'E') {
-				_enemigos.emplace_back(Enemigo(origen+Vector2D(10.0f * j, -10.0f * i)));
+			else if (chr == 'F') {
+				_enemigos.emplace_back(new Fatty(origen+Vector2D(10.0f * j, -10.0f * i)));
+			}
+
+			else if (chr == 'C') {
+				_enemigos.emplace_back(new Caca(origen + Vector2D(10.0f * j, -10.0f * i)));
 			}
 
 
@@ -127,4 +131,18 @@ void Room::setObstaculos()
 void Room::setParedes(float ancho, float alto)
 {
 	_paredes.setParedes(Vector2D(-ancho / 2.0f, -alto / 2.0f), Vector2D(ancho / 2.0f, alto / 2.0f));
+}
+
+void Room::eliminarElemento(ListaProyectil& listaP) {
+
+	//for (int i = _enemigos.size() -1 ; i >= 0; i--) {
+	for (int i = 2; i >= 0; i--) {
+		for (int j = listaP.getNum() - 1; j >= 0; j--) {
+			Proyectil* auxi = listaP.impacto(*_enemigos[i]);
+			if (auxi != 0) {
+				listaP.eliminar(auxi);
+				_enemigos.erase(_enemigos.begin() + i);
+			}
+		}
+	}
 }

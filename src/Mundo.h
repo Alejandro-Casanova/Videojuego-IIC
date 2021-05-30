@@ -6,13 +6,14 @@
 #include "Interaccion.h"
 #include "ListaProyectil.h"
 #include "Enemigo.h"
+#include "Room.h"
 
 
 class Mundo{
 Personaje personaje;
 //Enemigo malapersona;
 ListaProyectil disparosPlayer;
-//ListaProyectil disparosEnemigo;
+
 
 friend class ListaProyectil;
 
@@ -32,4 +33,5 @@ private:
 
 public:
 	Piso _piso;
+	Room* _roomActual;
 };
