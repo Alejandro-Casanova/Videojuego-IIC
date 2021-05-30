@@ -12,6 +12,7 @@ Player::~Player()
 
 void Player::tecla()
 {
+	//Movimiento
 	if (GestorDeTeclado::isKeyPressed('a')) {
 		_velocidad.x -= 20.0f;
 	} 
@@ -36,6 +37,8 @@ void Player::tecla()
 	if (GestorDeTeclado::isKeyUnPressed('s')) {
 		_velocidad.y += 20.0f;
 	}
+
+	//Disparo
 	//ObjetoMovil::mueve(t);
 	//sprite.loop();
 }
@@ -86,6 +89,25 @@ void Player::dibuja()
 			_body.setState(10, false);
 		}
 	}
+
+	//GUIÑO Y ORIENTACION CABEZA
+	if (GestorDeTeclado::isKeyDown('k')) {
+		if (_shootCounter > 0.2f) _head.setState(0);
+		else _head.setState(1);
+	}
+	if (GestorDeTeclado::isKeyDown('l')) {
+		if (_shootCounter > 0.2f) _head.setState(2);
+		else _head.setState(3);
+	}
+	if (GestorDeTeclado::isKeyDown('i')) {
+		if (_shootCounter > 0.2f) _head.setState(4);
+		else _head.setState(5);
+	}
+	if (GestorDeTeclado::isKeyDown('j')) {
+		if (_shootCounter > 0.2f) _head.setState(6);
+		else _head.setState(7);
+	}
+
 	_head.draw();
 	_body.draw();
 	//std::cout << _sprite.getState();
@@ -105,6 +127,6 @@ void Player::inicializa(){
 
 void Player::mueve(float t)
 {
-	Entidad::mueve(t);
+	Personaje::mueve(t);
 	_body.loop();
 }
