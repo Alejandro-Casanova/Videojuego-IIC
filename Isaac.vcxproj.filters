@@ -17,6 +17,8 @@
     <ClCompile Include="src\Vector2D.cpp" />
     <ClCompile Include="src\Enemigo.cpp" />
     <ClCompile Include="src\GestorDeTeclado.cpp" />
+    <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\CoordinadorIsaac.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Caja.h" />
@@ -35,5 +37,7 @@
     <ClInclude Include="src\Vector2D.h" />
     <ClInclude Include="src\Enemigo.h" />
     <ClInclude Include="src\GestorDeTeclado.h" />
+    <ClInclude Include="src\Player.h" />
+    <ClInclude Include="src\CoordinadorIsaac.h" />
   </ItemGroup>
 </Project>

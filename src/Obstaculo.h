@@ -32,11 +32,4 @@ private:
 	
 };
 
-class Roca : public Obstaculo {
-	ETSIDI::Sprite _sprite{"res/texturas/rocas.png"};
-};
-
-class Hueco : public Obstaculo {
-	ETSIDI::Sprite _sprite{ "res/texturas/hole.png" };
-};
 
