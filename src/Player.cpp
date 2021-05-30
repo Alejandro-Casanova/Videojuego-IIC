@@ -107,6 +107,7 @@ void Player::dibuja()
 		if (_shootCounter > 0.2f) _head.setState(6);
 		else _head.setState(7);
 	}
+	if (_shootCounter > 0.2f && (_head.getState() % 2)) _head.setState(_head.getState() - 1); //Evita que se quede con los ojos cerrados
 
 	_head.draw();
 	_body.draw();
