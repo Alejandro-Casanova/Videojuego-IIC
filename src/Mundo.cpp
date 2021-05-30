@@ -144,7 +144,7 @@ void Mundo::inicializa()
 	//LLAMADAS DE INICIALIZACION
 	jugador.inicializa();
 	malapersona.inicializa();
-	_piso.inicializa(&personaje,_roomActual);
+	_piso.inicializa(&jugador,_roomActual);
 	
 
 	

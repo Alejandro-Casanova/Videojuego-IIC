@@ -26,7 +26,7 @@ public:
 	void dibuja() const;
 	void dibujaHitBox() const;
 
-	void inicializa(const char* ruta_de_layout, const char* ruta_de_textura, Player* pptr);
+	void inicializa(const char* ruta_de_layout, const char* ruta_de_textura, Entidad* pptr);
 	void cargaLayout(const char* ruta_de_archivo);
 	void cargaTextura(const char* ruta_de_textura);
 	
