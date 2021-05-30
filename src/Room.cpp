@@ -4,6 +4,7 @@
 #include "freeglut.h"
 #include "Interaccion.h"
 #include "ETSIDI.h"
+#include "Player.h"
 
 Room::Room()
 {
@@ -16,9 +17,9 @@ Room::~Room()
 
 void Room::mueve()
 {
-	Interaccion::rebote(*_personaje_ptr, _paredes);
+	Interaccion::rebote(*_player_ptr, _paredes);
 	for (auto& c : _obstaculos) {
-		Interaccion::rebote(*_personaje_ptr, c);
+		Interaccion::rebote(*_player_ptr, c);
 	}
 }
 
@@ -48,12 +49,12 @@ void Room::dibuja() const
 	glDisable(GL_TEXTURE_2D);
 }
 
-void Room::inicializa(const char* ruta_de_layout, const char* ruta_de_textura, Entidad* pptr)
+void Room::inicializa(const char* ruta_de_layout, const char* ruta_de_textura, Player* pptr)
 {
 	setParedes(_ancho, _alto);
 	cargaLayout(ruta_de_layout);
 	cargaTextura(ruta_de_textura);
-	_personaje_ptr = pptr;
+	_player_ptr = pptr;
 }
 
 void Room::cargaLayout(const char* ruta_de_archivo)

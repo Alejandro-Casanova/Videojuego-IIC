@@ -7,8 +7,14 @@
 #include "stdio.h"
 #include "iostream"
 #include "Personaje.h"
+#include "GestorDeTeclado.h"
 
 using namespace std;
+
+Mundo::Mundo()
+{
+
+}
 
 
 void Mundo::dibuja()
@@ -18,9 +24,13 @@ void Mundo::dibuja()
 			0.0, 1.0, 0.0);      // definimos hacia arriba (eje Y)    
 
 	///LLAMADAS PARA DIBUJAR
+
+	
+	jugador.dibuja();
+
 	_piso.dibuja();
 	
-	personaje.dibuja();
+	
 
 	malapersona.dibuja();
 
@@ -32,7 +42,7 @@ void Mundo::mueve()
 	//LLAMADAS DE ANIMACION
 	_piso.mueve();
 	disparosPlayer.mueve(0.025f);
-	personaje.mueve(0.025f);
+	jugador.mueve(0.025f);
 	malapersona.mueve(0.025f);
 	Proyectil* auxc = disparosPlayer.colision(_piso._room._paredes);
 	if (auxc != 0) disparosPlayer.eliminar(auxc);
@@ -45,116 +55,80 @@ void Mundo::mueve()
 
 
 
-void Mundo::tecla_disparo(unsigned char key)			//Creacion de proyectil de disparo del jugador
-{
-	if (key == 'i' || key == 'j' || key == 'k' || key == 'l') {
+//void Mundo::tecla_disparo(unsigned char key)			//Creacion de proyectil de disparo del jugador
+//{
+//	if (key == 'i' || key == 'j' || key == 'k' || key == 'l') {
+//		// Creacion de un proyectil
+//		Proyectil* d = new Proyectil();
+//		//	proyectil.setOrigen(Vector2D.player)
+//		Vector2D pos = personaje.getPos();
+//		d->setPos(pos.x, pos.y);
+//		disparosPlayer.agregar(d);
+//		Vector2D proyp = d->getPos();
+//		cout << "proy x = " << proyp.x << " || proy y = " << proyp.y << endl;
+//		cout << "pers x = " << pos.x << " || pers y = " << pos.y << endl;
+//;		switch (key)
+//		{
+//		case 'j':
+//			d->setVel(-20, 0);
+//			break;
+//		case 'l':
+//			d->setVel(20, 0);
+//			break;
+//		case 'i':
+//			d->setVel(0, 20);
+//			break;
+//		case 'k':
+//			d->setVel(0, -20);
+//			break;
+//		}
+//	}
+//}
+
+
+void Mundo::tecla() {
+
+	if (GestorDeTeclado::isKeyPressed('j') || GestorDeTeclado::isKeyPressed('k') || GestorDeTeclado::isKeyPressed('l') || GestorDeTeclado::isKeyPressed('i')) {
 		// Creacion de un proyectil
 		Proyectil* d = new Proyectil();
 		//	proyectil.setOrigen(Vector2D.player)
-		Vector2D pos = personaje.getPos();
+		Vector2D pos = jugador.getPos();
 		d->setPos(pos.x, pos.y);
 		disparosPlayer.agregar(d);
 		Vector2D proyp = d->getPos();
 		cout << "proy x = " << proyp.x << " || proy y = " << proyp.y << endl;
 		cout << "pers x = " << pos.x << " || pers y = " << pos.y << endl;
-;		switch (key)
-		{
-		case 'j':
+
+		if (GestorDeTeclado::isKeyPressed('j'))
 			d->setVel(-20, 0);
-			break;
-		case 'l':
+		if (GestorDeTeclado::isKeyPressed('l'))
 			d->setVel(20, 0);
-			break;
-		case 'i':
+		if (GestorDeTeclado::isKeyPressed('i'))
 			d->setVel(0, 20);
-			break;
-		case 'k':
+		if (GestorDeTeclado::isKeyPressed('k'))
 			d->setVel(0, -20);
-			break;
-		}
+	}
+	else {
+		jugador.tecla();
 	}
 }
 
-
-void Mundo::tecla(unsigned char key) {
-
-	bool arriba = 0, abajo = 0, derecha = 0, izquierda = 0, parar = 0;
-
-	// cout << "tecladown";
-
-	switch (key) {
-	case 'w':
-	{
-		arriba = 1;
-		//(personaje.setVel(0, 20);
-		//personaje.setVel(0, 10);
-		//personaje.setAcel(0, 10);
-		//personaje.mueve(0);
-
-		break;
-	}
-	case 's':
-		abajo = 1;
-		//personaje.setVel(0, -10);
-		//personaje.setAcel(0, -2);
-		break;
-	case 'd':
-		derecha = 1;
-		//personaje.setVel(10, 0);
-		//personaje.setAcel(2, 0);
-		break;
-	case 'a':
-		izquierda = 1;
-		//personaje.setVel(-10, 0);
-		//personaje.setAcel(-20, 0);
-		break;	
-	}
-
-	if (arriba) 
-	{
-		//personaje.setVel = personaje.setVel +  personaje.setAcel(0.1, 0.1);
-		personaje.setVel(0, 30);
-		
-	}
-	else if (abajo)
-	{
-		personaje.setVel(0, -30);
-	}
-
-	else if (izquierda)
-	{
-		personaje.setVel(-30, 0);
-	}
-
-	else if (derecha)
-	{
-		
-		personaje.setVel(30, 0);
-	}
-	else{
-		
-		personaje.setVel(0, 0);
-		personaje.setAcel(0, 0);
-
-	}
-
-	
-
-
-
+void Mundo::teclaEspecial()
+{
+	jugador.teclaEspecial();
 }
 
 
-void Mundo::tecla_up(unsigned char key) {
-
-	// cout<<"TECLA UP";
-
-
-	if (key == 'w' || key == 's' || key == 'd' || key == 'a') {
-		personaje.setVel(0, 0);
-		personaje.setAcel(0, 0);
-	}
-}
+//void Mundo::tecla_up(unsigned char key) {
+//
+//	// cout<<"TECLA UP";
+//
+//
+//	if (key == 'w' || key == 's' || key == 'd' || key == 'a') {
+//		personaje.setVel(0, 0);
+//		personaje.setAcel(0, 0);
+//	}
+//}
 
 
 
@@ -165,17 +139,12 @@ void Mundo::inicializa()
 	z_ojo=120.0f;
 	
 	//LLAMADAS DE INICIALIZACION
-	_piso.inicializa(&personaje);
+	_piso.inicializa(&jugador);
 	
-	personaje.inicializa();
+	jugador.inicializa();
 	malapersona.inicializa();
 }
 
-Mundo::Mundo()
-{
 
-
-
-}
 
 

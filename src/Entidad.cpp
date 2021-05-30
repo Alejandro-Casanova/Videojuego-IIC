@@ -1,4 +1,7 @@
 #include "Entidad.h"
+#include <math.h>
+
+#define PI 3.14159265358979323846
 
 Entidad::Entidad() {
 
@@ -37,6 +40,25 @@ void Entidad::setAcel(float ax, float ay)
 Vector2D Entidad::getPos() {
 
 	return _posicion;
+}
+
+void Entidad::dibujaHitbox() const
+{
+	float x = _posicion.x;
+	float y = _posicion.y;
+	glBegin(GL_LINES);
+	glColor3f(1.0f, 1.0f, 1.0f);
+
+	x += (float)_radio * cos(359 * PI / 180.0f);
+	y += (float)_radio * sin(359 * PI / 180.0f);
+	for (int j = 0; j < 360; j++)
+	{
+		glVertex2f(x, y);
+		x = _posicion.x + (float)_radio * cos(j * PI / 180.0f);
+		y = _posicion.y + (float)_radio * sin(j * PI / 180.0f);
+		glVertex2f(x, y);
+	}
+	glEnd();
 }
 
 

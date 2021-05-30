@@ -8,8 +8,9 @@ public:
 	virtual ~Entidad();
 
 	virtual void dibuja() = 0;
-	void mueve(float t);
+	virtual void mueve(float t);
 	virtual void inicializa();
+	
 
 	void setColor(unsigned char r, unsigned char g, unsigned char b) { _color.set(r, g, b); }
 	void setRadio(float radio) { _radio = radio; }
@@ -20,6 +21,8 @@ public:
 
 	
 protected:
+	void dibujaHitbox() const;
+
 	ColorRGB _color;
 	float _radio = 0.0f;
 

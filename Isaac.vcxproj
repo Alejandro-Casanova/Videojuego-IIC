@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Caja.cpp" />
+    <ClCompile Include="src\CoordinadorIsaac.cpp" />
     <ClCompile Include="src\Enemigo.cpp" />
     <ClCompile Include="src\Entidad.cpp" />
     <ClCompile Include="src\GestorDeTeclado.cpp" />
@@ -40,6 +41,7 @@
   <ItemGroup>
     <ClInclude Include="src\Caja.h" />
     <ClInclude Include="src\ColorRGB.h" />
+    <ClInclude Include="src\CoordinadorIsaac.h" />
     <ClInclude Include="src\Enemigo.h" />
     <ClInclude Include="src\Entidad.h" />
     <ClInclude Include="src\GestorDeTeclado.h" />
