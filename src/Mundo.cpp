@@ -22,7 +22,7 @@ void Mundo::dibuja()
 	
 	personaje.dibuja();
 
-	malapersona.dibuja();
+	//malapersona.dibuja();
 
 	disparosPlayer.dibuja();
 }
@@ -33,14 +33,14 @@ void Mundo::mueve()
 	_piso.mueve();
 	disparosPlayer.mueve(0.025f);
 	personaje.mueve(0.025f);
-	malapersona.mueve(0.025f);
+	//malapersona.mueve(0.025f);
 	Proyectil* auxc = disparosPlayer.colision(_piso._room._paredes);
 	if (auxc != 0) disparosPlayer.eliminar(auxc);
-	Interaccion::rebote(malapersona, _piso._room._paredes);
-	Proyectil* auxi = disparosPlayer.impacto(malapersona);
+	//Interaccion::rebote(malapersona, _piso._room._paredes);
+	/*Proyectil* auxi = disparosPlayer.impacto();
 	if (auxi != 0) { disparosPlayer.eliminar(auxi);
 	malapersona.setPos(-130, 0);
-	}
+	}*/
 }
 
 
@@ -168,7 +168,8 @@ void Mundo::inicializa()
 	_piso.inicializa(&personaje);
 	
 	personaje.inicializa();
-	malapersona.inicializa();
+	
+	//malapersona.inicializa();
 }
 
 Mundo::Mundo()

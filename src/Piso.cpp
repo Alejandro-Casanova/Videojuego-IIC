@@ -27,5 +27,4 @@ void Piso::inicializa(Entidad* pptr)
 	_personaje_ptr = pptr;
 	//Prueba
 	std::cout << std::endl;
-	_room.setObstaculos();
 }

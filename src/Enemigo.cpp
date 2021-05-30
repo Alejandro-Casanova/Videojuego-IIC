@@ -9,30 +9,32 @@ Enemigo::~Enemigo() {
 
 }
 
-void Enemigo::dibuja()
-{
-	//glPushMatrix();
-	glTranslatef(_posicion.x, _posicion.y, 0);
-	_color.ponColor();
-	glutSolidSphere(_radio, 20, 20);
-	//glPopMatrix();
-	glTranslatef(-_posicion.x, -_posicion.y, 0);
+Enemigo::Enemigo(Vector2D posicion) {
+	//_hitBox.setParedes(posicion, posicion + Vector2D(_ancho, _alto));
+	_posicion = posicion;
+
+
 }
+
 
 void Enemigo::inicializa()
 {
-	setColor(240, 60, 80);
-	setRadio(5);
-	
-	_posicion.x = rand() % 70 - 35;
-	_posicion.y = rand() % 40 - 20;
+	_sprite.setSize(13, 13);
 
-	setPos(0, 0);// _posicion.x, _posicion.y);
 }
+void Enemigo::dibuja()
+{
+	_sprite.setPos(_posicion.x, _posicion.y);
+	_sprite.setSize(13, 13);
+	_sprite.draw();
+}
+
+
 
 
 void Enemigo::mueve(float t) {
 	Entidad::mueve(t);
 	_velocidad = (10, 10);
+	_sprite.loop();
 
 }
