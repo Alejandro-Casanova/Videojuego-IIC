@@ -95,22 +95,22 @@ void Mundo::tecla() {
 		if (jugador.dispara()) { //Indica si el jugador está listo para disparar
 			// Creacion de un proyectil
 			Proyectil* d = new Proyectil();
-				//	proyectil.setOrigen(Vector2D.player)
-				Vector2D pos = jugador.getPos();
-				d->setPos(pos.x, pos.y);
-				disparosPlayer.agregar(d);
-				Vector2D proyp = d->getPos();
-				cout << "proy x = " << proyp.x << " || proy y = " << proyp.y << endl;
-				cout << "pers x = " << pos.x << " || pers y = " << pos.y << endl;
+			//	proyectil.setOrigen(Vector2D.player)
+			Vector2D pos = jugador.getPos();
+			d->setPos(pos.x, pos.y);
+			disparosPlayer.agregar(d);
+			Vector2D proyp = d->getPos();
+			cout << "proy x = " << proyp.x << " || proy y = " << proyp.y << endl;
+			cout << "pers x = " << pos.x << " || pers y = " << pos.y << endl;
 
-				if (GestorDeTeclado::isKeyDown('j'))
-					d->setVel(-20, 0);
-				else if (GestorDeTeclado::isKeyDown('l'))
-					d->setVel(20, 0);
-				else if (GestorDeTeclado::isKeyDown('i'))
-					d->setVel(0, 20);
-				else if (GestorDeTeclado::isKeyDown('k'))
-					d->setVel(0, -20);
+			if (GestorDeTeclado::isKeyDown('j'))
+				d->setVel(-20, 0);
+			else if (GestorDeTeclado::isKeyDown('l'))
+				d->setVel(20, 0);
+			else if (GestorDeTeclado::isKeyDown('i'))
+				d->setVel(0, 20);
+			else if (GestorDeTeclado::isKeyDown('k'))
+				d->setVel(0, -20);
 
 		}
 	}
