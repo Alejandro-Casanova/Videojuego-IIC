@@ -10,10 +10,15 @@ public:
 	Personaje();
 	virtual ~Personaje();
 
+	bool dispara();
 	virtual void dibuja() override;
 	void inicializa() override;
+	virtual void mueve(float) override;
 
-private:
-
+protected:
+	float _healthStat = 0.0f;
+	float _speedStat = 0.0f;
+	float _shootSpeed = 1.0f;
+	float _shootCounter = 0.0f; 
 };
 
