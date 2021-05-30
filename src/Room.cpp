@@ -33,6 +33,9 @@ void Room::dibujaHitBox() const
 
 void Room::dibuja() const
 {
+	for (auto i : _enemigos) {
+		i.dibuja();
+	}
 
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, _textura.id);
@@ -54,6 +57,10 @@ void Room::inicializa(const char* ruta_de_layout, const char* ruta_de_textura, E
 	cargaLayout(ruta_de_layout);
 	cargaTextura(ruta_de_textura);
 	_personaje_ptr = pptr;
+	setObstaculos();
+	for (auto i : _enemigos) {
+		i.inicializa();
+	}
 }
 
 void Room::cargaLayout(const char* ruta_de_archivo)
@@ -101,6 +108,10 @@ void Room::setObstaculos()
 			}
 			else if (chr == 'H') {
 				_obstaculos.emplace_back(Obstaculo(origen + Vector2D(10.0f * j, -10.0f * i), "res/texturas/hole.png"));
+			}
+
+			else if (chr == 'E') {
+				_enemigos.emplace_back(Enemigo(origen+Vector2D(10.0f * j, -10.0f * i)));
 			}
 
 

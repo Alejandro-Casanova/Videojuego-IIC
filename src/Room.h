@@ -6,6 +6,7 @@
 #include "ETSIDI.h"
 #include <Caja.h>
 #include "Obstaculo.h"
+#include "Enemigo.h"
 
 class Entidad;
 class Enemigo;
@@ -46,7 +47,7 @@ private:
 	Entidad* _personaje_ptr = nullptr;
 	std::vector<std::string> _layout; //Dimensiones de la habitación 7x13
 	std::vector<Obstaculo> _obstaculos;
-	std::vector<Enemigo*> _enemigos;
+	std::vector<Enemigo> _enemigos;
 	std::vector<Objeto*> _objetos;
 	ETSIDI::GLTexture _textura = { 0, 0, 0 };
 	

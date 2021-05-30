@@ -10,7 +10,7 @@
 
 class Mundo{
 Personaje personaje;
-Enemigo malapersona;
+//Enemigo malapersona;
 ListaProyectil disparosPlayer;
 //ListaProyectil disparosEnemigo;
 
