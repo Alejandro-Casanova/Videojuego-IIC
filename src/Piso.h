@@ -15,7 +15,7 @@ public:
 	void inicializa(Entidad* pptr, Room* rpr);
 
 private:
-	Entidad* _personaje_ptr;
+	Entidad* _personaje_ptr = nullptr;
 
 public:
 	Room _room;

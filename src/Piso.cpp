@@ -1,6 +1,6 @@
 #include "Piso.h"
 #include <iostream>
-#include <Personaje.h>
+#include "Player.h"
 
 Piso::Piso()
 {
@@ -17,9 +17,8 @@ void Piso::dibuja()
 	_room.dibujaHitBox();
 	_room.dibuja();
 
-	
-	
 }
+
 
 void Piso::inicializa(Entidad* pptr,Room* rpr)
 {

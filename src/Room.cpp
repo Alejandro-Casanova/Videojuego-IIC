@@ -4,6 +4,7 @@
 #include "freeglut.h"
 #include "Interaccion.h"
 #include "ETSIDI.h"
+#include "Player.h"
 
 Room::Room()
 {
@@ -16,9 +17,9 @@ Room::~Room()
 
 void Room::mueve()
 {
-	Interaccion::rebote(*_personaje_ptr, _paredes);
+	Interaccion::rebote(*_player_ptr, _paredes);
 	for (auto& c : _obstaculos) {
-		Interaccion::rebote(*_personaje_ptr, c);
+		Interaccion::rebote(*_player_ptr, c);
 	}
 }
 
@@ -51,12 +52,13 @@ void Room::dibuja() const
 	glDisable(GL_TEXTURE_2D);
 }
 
-void Room::inicializa(const char* ruta_de_layout, const char* ruta_de_textura, Entidad* pptr)
+void Room::inicializa(const char* ruta_de_layout, const char* ruta_de_textura, Player* pptr)
 {
 	setParedes(_ancho, _alto);
 	cargaLayout(ruta_de_layout);
 	cargaTextura(ruta_de_textura);
-	_personaje_ptr = pptr;
+
+	_player_ptr = pptr;
 	setObstaculos();
 	for (auto i : _enemigos) {
 		i->inicializa();
@@ -68,19 +70,19 @@ void Room::cargaLayout(const char* ruta_de_archivo)
 	std::ifstream file;
 	file.open(ruta_de_archivo);
 
-	//ComprobaciÛn (ruta de archivo v·lida)
+	//Comprobaci√≥n (ruta de archivo v√°lida)
 	if (file.fail()) {
 		std::cout << "No se pudo abrir el archivo: " << ruta_de_archivo << "\n";
 		exit(0);
 	}
 
-	//Registra el layout de la habitaciÛn desde el archivo
+	//Registra el layout de la habitaci√≥n desde el archivo
 	std::string temp;
 	while (std::getline(file, temp)) {
 		_layout.emplace_back(temp);
 	}
 
-	//ComprobaciÛn por terminal
+	//Comprobaci√≥n por terminal
 	for (auto i : _layout) {
 		std::cout << i << std::endl;
 	}
@@ -95,7 +97,7 @@ void Room::setObstaculos()
 {
 	int i = 0, j = 0;
 
-	//Para facilitar el dibujado se sit˙a el origen en la esquina superior izquierda
+	//Para facilitar el dibujado se sit√∫a el origen en la esquina superior izquierda
 	Vector2D origen(-_ancho / 2.0f, +_alto / 2.0f - 10.0f);//10 es el ancho (magic number)
 	for (auto str : _layout) {
 		for (auto chr : str) {

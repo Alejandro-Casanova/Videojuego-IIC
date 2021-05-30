@@ -2,7 +2,8 @@
 #include "Pared.h"
 #include "Piso.h"
 #include "Proyectil.h"
-#include"Personaje.h"
+//#include"Personaje.h"
+#include "Player.h"
 #include "Interaccion.h"
 #include "ListaProyectil.h"
 #include "Enemigo.h"
@@ -10,18 +11,15 @@
 
 
 class Mundo{
-Personaje personaje;
-//Enemigo malapersona;
-ListaProyectil disparosPlayer;
-
-
 friend class ListaProyectil;
 
 public: 
 	Mundo();
-	void tecla(unsigned char key);
-	void tecla_up(unsigned char key);
-	void tecla_disparo(unsigned char key);
+	//void tecla(unsigned char key);
+	void tecla();
+	void teclaEspecial();
+	//void tecla_up(unsigned char key);
+	//void tecla_disparo(unsigned char key);
 	void inicializa();
 	void mueve();
 	void dibuja();
@@ -33,5 +31,8 @@ private:
 
 public:
 	Piso _piso;
+	Player jugador;
+	Enemigo malapersona; //TEMPORAL
+	ListaProyectil disparosPlayer; //TEMPORAL?? Tal vez tener una lista proyectil por room, tal vez reiniciarla al cambiar de room
 	Room* _roomActual;
 };

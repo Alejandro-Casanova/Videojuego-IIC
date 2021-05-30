@@ -13,6 +13,7 @@
 class Entidad;
 class Enemigo;
 class Objeto;
+class Player;
 
 class Room
 {
@@ -25,7 +26,7 @@ public:
 	void dibuja() const;
 	void dibujaHitBox() const;
 
-	void inicializa(const char* ruta_de_layout, const char* ruta_de_textura, Entidad* pptr);
+	void inicializa(const char* ruta_de_layout, const char* ruta_de_textura, Player* pptr);
 	void cargaLayout(const char* ruta_de_archivo);
 	void cargaTextura(const char* ruta_de_textura);
 	
@@ -48,7 +49,7 @@ public:
 	Vector2D origen=(-_ancho / 2.0f, +_alto / 2.0f - 10.0f);
 
 private:
-	Entidad* _personaje_ptr = nullptr;
+	Entidad* _player_ptr = nullptr;
 	std::vector<std::string> _layout; //Dimensiones de la habitación 7x13
 	std::vector<Obstaculo> _obstaculos;
 	std::vector<Enemigo*> _enemigos;
