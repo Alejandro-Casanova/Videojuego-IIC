@@ -7,6 +7,7 @@
 #include "Interaccion.h"
 #include "ListaProyectil.h"
 #include "Enemigo.h"
+#include "Room.h"
 
 
 class Mundo{
@@ -33,4 +34,5 @@ public:
 	Player jugador;
 	Enemigo malapersona; //TEMPORAL
 	ListaProyectil disparosPlayer; //TEMPORAL?? Tal vez tener una lista proyectil por room, tal vez reiniciarla al cambiar de room
+	Room* _roomActual;
 };

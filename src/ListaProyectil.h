@@ -24,6 +24,7 @@ public:
 	void mueve(float t);
 
 	void setColor(char r, char g, char b);
+	int getNum() { return contador; };
 
 	Proyectil* operator [] (int i);
 	Proyectil* colision(Caja c);

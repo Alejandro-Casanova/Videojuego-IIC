@@ -6,6 +6,9 @@
 #include "ETSIDI.h"
 #include <Caja.h>
 #include "Obstaculo.h"
+#include "Enemigo.h"
+#include "Interaccion.h"
+#include "ListaProyectil.h"
 
 class Entidad;
 class Enemigo;
@@ -33,6 +36,8 @@ public:
 	void setAncho(float ancho) { _ancho = ancho; }
 	void setAlto(float alto) { _alto = alto; }
 	void setBordeText(float bordeText) { _bordeText = bordeText; }
+
+	void eliminarElemento(ListaProyectil& listaP);
 
 private:
 	float _ancho = 130;

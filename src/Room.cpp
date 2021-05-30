@@ -34,6 +34,9 @@ void Room::dibujaHitBox() const
 
 void Room::dibuja() const
 {
+	for (auto i : _enemigos) {
+		i->dibuja();
+	}
 
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, _textura.id);
@@ -54,7 +57,12 @@ void Room::inicializa(const char* ruta_de_layout, const char* ruta_de_textura, P
 	setParedes(_ancho, _alto);
 	cargaLayout(ruta_de_layout);
 	cargaTextura(ruta_de_textura);
+
 	_player_ptr = pptr;
+	setObstaculos();
+	for (auto i : _enemigos) {
+		i->inicializa();
+	}
 }
 
 void Room::cargaLayout(const char* ruta_de_archivo)
@@ -62,19 +70,19 @@ void Room::cargaLayout(const char* ruta_de_archivo)
 	std::ifstream file;
 	file.open(ruta_de_archivo);
 
-	//ComprobaciÛn (ruta de archivo v·lida)
+	//Comprobaci√≥n (ruta de archivo v√°lida)
 	if (file.fail()) {
 		std::cout << "No se pudo abrir el archivo: " << ruta_de_archivo << "\n";
 		exit(0);
 	}
 
-	//Registra el layout de la habitaciÛn desde el archivo
+	//Registra el layout de la habitaci√≥n desde el archivo
 	std::string temp;
 	while (std::getline(file, temp)) {
 		_layout.emplace_back(temp);
 	}
 
-	//ComprobaciÛn por terminal
+	//Comprobaci√≥n por terminal
 	for (auto i : _layout) {
 		std::cout << i << std::endl;
 	}
@@ -89,7 +97,7 @@ void Room::setObstaculos()
 {
 	int i = 0, j = 0;
 
-	//Para facilitar el dibujado se sit˙a el origen en la esquina superior izquierda
+	//Para facilitar el dibujado se sit√∫a el origen en la esquina superior izquierda
 	Vector2D origen(-_ancho / 2.0f, +_alto / 2.0f - 10.0f);//10 es el ancho (magic number)
 	for (auto str : _layout) {
 		for (auto chr : str) {
@@ -102,6 +110,14 @@ void Room::setObstaculos()
 			}
 			else if (chr == 'H') {
 				_obstaculos.emplace_back(Obstaculo(origen + Vector2D(10.0f * j, -10.0f * i), "res/texturas/hole.png"));
+			}
+
+			else if (chr == 'F') {
+				_enemigos.emplace_back(new Fatty(origen+Vector2D(10.0f * j, -10.0f * i)));
+			}
+
+			else if (chr == 'C') {
+				_enemigos.emplace_back(new Caca(origen + Vector2D(10.0f * j, -10.0f * i)));
 			}
 
 
@@ -117,4 +133,18 @@ void Room::setObstaculos()
 void Room::setParedes(float ancho, float alto)
 {
 	_paredes.setParedes(Vector2D(-ancho / 2.0f, -alto / 2.0f), Vector2D(ancho / 2.0f, alto / 2.0f));
+}
+
+void Room::eliminarElemento(ListaProyectil& listaP) {
+
+	//for (int i = _enemigos.size() -1 ; i >= 0; i--) {
+	for (int i = 2; i >= 0; i--) {
+		for (int j = listaP.getNum() - 1; j >= 0; j--) {
+			Proyectil* auxi = listaP.impacto(*_enemigos[i]);
+			if (auxi != 0) {
+				listaP.eliminar(auxi);
+				_enemigos.erase(_enemigos.begin() + i);
+			}
+		}
+	}
 }
