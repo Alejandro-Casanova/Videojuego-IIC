@@ -1,5 +1,6 @@
 #include "ListaProyectil.h"
 #include "Interaccion.h"
+#include "Obstaculo.h"
 
 ListaProyectil::ListaProyectil()
 {
@@ -97,6 +98,16 @@ Proyectil* ListaProyectil::impacto(Enemigo e) {
 	for (int i = 0; i < contador; i++)
 	{
 		if (Interaccion::impacto(*(lista_Pro[i]), e))
+			return lista_Pro[i];
+	}
+	return 0; //no hay colisión
+}
+
+Proyectil* ListaProyectil::impacto(const Obstaculo& o)
+{
+	for (int i = 0; i < contador; i++)
+	{
+		if (Interaccion::impacto(*(lista_Pro[i]), o))
 			return lista_Pro[i];
 	}
 	return 0; //no hay colisión

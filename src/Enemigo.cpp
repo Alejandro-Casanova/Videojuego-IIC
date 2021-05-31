@@ -15,25 +15,20 @@ Enemigo::Enemigo(Vector2D posicion, Entidad* playerPtr) {
 	_radio = 5.0f;
 }
 
-
 void Enemigo::inicializa()
 {
 
 }
+
 void Enemigo::inicializa(Entidad* playerPtr)
 {
 	inicializa();
 	_playerPtr = playerPtr;
 }
+
 void Enemigo::dibuja(){
 
 }
-
-//void Enemigo::mueve(float t, const Entidad& obj) {
-//
-//	Personaje::mueve(t);
-//
-//}
 
 void Enemigo::follow(Entidad* ptr)
 {
@@ -41,19 +36,18 @@ void Enemigo::follow(Entidad* ptr)
 	_velocidad = dir.unitario() * _speedStat;
 }
 
-
 /// FATTY
 
 Fatty::Fatty() {
-	//_spriteFatty.setSize(13, 13);
+
 }
 
-Fatty::~Fatty()
-{
+Fatty::~Fatty(){
+
 }
 
-Fatty::Fatty(Vector2D pos, Entidad* playerPtr):Enemigo(pos, playerPtr) {
-	_dims.set(13.0f, 13.0f);
+Fatty::Fatty(Vector2D pos, Entidad* playerPtr) : Enemigo(pos, playerPtr) {
+
 	_spriteFatty.setSize(_dims.x, _dims.y);
 	_spriteFatty.setCenter(_dims.x / 2.0f, _dims.y / 2.0f);
 }
@@ -72,10 +66,9 @@ void Fatty::mueve(float t) {
 
 }
 
-
 ///////////// caca
-Caca::Caca(Vector2D pos, Entidad* const playerPtr) : Enemigo(pos, playerPtr) {
-	_dims.set(13.0f, 13.0f);
+Caca::Caca(Vector2D pos, Entidad* const playerPtr) : Enemigo(pos, playerPtr) 
+{
 	_spriteCaca.setSize(_dims.x, _dims.y);
 	_spriteCaca.setCenter(_dims.x / 2.0f, _dims.y / 2.0f);
 }
@@ -87,14 +80,15 @@ void Caca::dibuja()
 	_spriteCaca.draw();
 }
 
-void Caca::mueve(float t) {
+void Caca::mueve(float t) 
+{
 	Enemigo::mueve(t);
 	follow(_playerPtr);
-
+	//_spriteCaca.loop();
 }
 
-Caca::Caca() {
-	//_spriteFatty.setSize(13, 13);
+Caca::Caca(){
+
 }
 
 Caca::~Caca()

@@ -25,6 +25,4 @@ void Piso::inicializa(Entidad* pptr, Room* &rpr)
 	_room.inicializa("res/rooms/test.txt", "res/texturas/Basement1.png", pptr);
 	_personaje_ptr = pptr;
 	rpr = &_room;
-	//Prueba
-	std::cout << std::endl;
 }

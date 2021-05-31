@@ -8,16 +8,16 @@
 class GestorDeTeclado
 {
 public:
-    static void update();
+    static void update(); //Necesario para la función isKeyPressed
 
     static void pressKey(int keyID);
     static void releaseKey(int keyID);
 
-    static void setMouseCoords(float x, float y);
+    static void setMouseCoords(float x, float y); //Guarda las coordenadas del cursor
 
-    static bool isKeyDown(int keyID);
-    static bool isKeyPressed(int keyID);
-    static bool isKeyUnPressed(int keyID);
+    static bool isKeyDown(int keyID); //Devuelve true si la tecla está presionada
+    static bool isKeyPressed(int keyID); //Devuelve true si la tecla JUSTO acaba de ser pulsada
+    static bool isKeyUnPressed(int keyID); //Devuelve true si la tecla JUSTO acaba de ser liberada
 
     static Vector2D getMouseCoords(){ return _mouseCoords; }
 

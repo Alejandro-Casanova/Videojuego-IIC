@@ -9,7 +9,7 @@ class Enemigo : public Personaje
 	friend class Interaccion;
 public:
 	Enemigo();
-	Enemigo(Vector2D posicion, Entidad* playerPtr);
+	Enemigo(Vector2D posicion, Entidad* playerPtr); //Almacena posicion y un puntero al jugador
 	virtual ~Enemigo();
 
 	virtual void dibuja() override;
@@ -17,7 +17,7 @@ public:
 	void inicializa(Entidad* playerPtr); //Almacena un puntero al jugador
 
 protected:
-	Vector2D _dims; //Dimensiones del sprite
+	Vector2D _dims{ 13.0f, 13.0f }; //Dimensiones del sprite
 	void follow(Entidad* ptr); //Modifica la velocidad del enemigo para seguir a una entidad genérica (a menudo será el jugador)
 	Entidad* _playerPtr = nullptr; //Almacena un puntero al jugador para poder seguirlo
 };
@@ -27,7 +27,7 @@ public:
 	Caca();
 	Caca(Vector2D pos, Entidad* const playerPtr);
 	virtual ~Caca();
-	//void inicializa() override;
+
 	virtual void dibuja() override;
 	virtual void mueve(float t) override;
 
@@ -42,6 +42,7 @@ public:
 	Fatty();
 	Fatty(const Vector2D pos, Entidad* const PlayerPtr);
 	virtual ~Fatty();
+
 	virtual void dibuja() override;
 	virtual void mueve(float t) override;
 

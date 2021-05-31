@@ -7,11 +7,10 @@
 void OnDraw(void); //esta funcion sera llamada para dibujar
 void OnTimer(int value); //esta funcion sera llamada cuando transcurra una temporizacion
 void OnKeyboardDown(unsigned char key, int x, int y); //cuando se pulse una tecla	
-void OnKeyboardUp(unsigned char key, int x, int y);
-void onSpecialKeyboardDown(int key, int x, int y);
-void onSpecialKeyboardUp(int key, int x, int y);
+void OnKeyboardUp(unsigned char key, int x, int y); //cuando se libere una tecla
+void onSpecialKeyboardDown(int key, int x, int y); //cuando se pulse una tecla especial
+void onSpecialKeyboardUp(int key, int x, int y); //cuando se libere una tecla especial
 
-//Mundo mundo;
 CoordinadorIsaac isaac;
 
 int main(int argc, char* argv[]){
@@ -35,14 +34,11 @@ int main(int argc, char* argv[]){
 	glutTimerFunc(25, OnTimer, 0);//le decimos que dentro de 25ms llame 1 vez a la funcion OnTimer()
 	glutKeyboardFunc(OnKeyboardDown);
 	glutKeyboardUpFunc(OnKeyboardUp);
-	glutSpecialFunc(onSpecialKeyboardDown); //gestion de los cursores
+	glutSpecialFunc(onSpecialKeyboardDown); 
 	glutSpecialUpFunc(onSpecialKeyboardUp);
-
-
 
 	///INICIALIZACIONES
 	isaac.inicializa();
-
 
 	//pasarle el control a GLUT,que llamara a los callbacks
 	glutMainLoop();
@@ -68,21 +64,18 @@ void OnDraw(void){
 void OnKeyboardDown(unsigned char key, int x_t, int y_t){
 	
 	//LLAMADAS DE TECLADO
-	//poner aqui el código de teclado
 	GestorDeTeclado::pressKey(key);
 	isaac.tecla();
-	//isaac.tecla_disparo();
 
-	GestorDeTeclado::update();
+	GestorDeTeclado::update(); //Necesario para el correcto funcionamiento
 	glutPostRedisplay();
 }
 
 void OnKeyboardUp(unsigned char key, int x_t, int y_t) {
 	GestorDeTeclado::releaseKey(key);
 	isaac.tecla();
-	//mundo.tecla_up(key);
 
-	GestorDeTeclado::update();
+	GestorDeTeclado::update(); //Necesario para el correcto funcionamiento
 	glutPostRedisplay();
 }
 
@@ -91,7 +84,7 @@ void onSpecialKeyboardDown(int key, int x, int y)
 	GestorDeTeclado::pressKey(key);
 	isaac.teclaEspecial();
 
-	GestorDeTeclado::update();
+	GestorDeTeclado::update(); //Necesario para el correcto funcionamiento
 	glutPostRedisplay();
 }
 
@@ -99,7 +92,7 @@ void onSpecialKeyboardUp(int key, int x, int y) {
 	GestorDeTeclado::releaseKey(key);
 	isaac.teclaEspecial();
 
-	GestorDeTeclado::update();
+	GestorDeTeclado::update(); //Necesario para el correcto funcionamiento
 	glutPostRedisplay();
 }
 

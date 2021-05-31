@@ -5,19 +5,17 @@ Obstaculo::Obstaculo()
 	
 }
 
-Obstaculo::Obstaculo(Vector2D posicion, const char* ruta_de_textura) {
+Obstaculo::Obstaculo(Vector2D posicion, const char* ruta_de_textura) 
+{
 	_hitBox.setParedes(posicion, posicion + Vector2D(_ancho, _alto));
 	_posicion = posicion;
 	cargaTextura(ruta_de_textura);
-	
 }
 
 Obstaculo::Obstaculo(const char* ruta_de_textura, Caja hitBox)
 {
 	_hitBox = hitBox;
 	cargaTextura(ruta_de_textura);
-
-
 }
 
 Obstaculo::Obstaculo(Caja hitBox)

@@ -16,6 +16,10 @@ Mundo::Mundo()
 
 }
 
+Mundo::~Mundo()
+{
+}
+
 
 void Mundo::dibuja()
 {

@@ -13,11 +13,16 @@ Room::Room()
 
 Room::~Room()
 {
+	//Libera la memoria
 	for (auto i : _enemigos) {
 		delete i;
 	}
 
 	for (auto i : _objetos) {
+		delete i;
+	}
+
+	for (auto i : _obstaculos) {
 		delete i;
 	}
 }
@@ -26,7 +31,7 @@ void Room::mueve()
 {
 	Interaccion::rebote(*_player_ptr, _paredes);
 	for (auto& c : _obstaculos) {
-		Interaccion::rebote(*_player_ptr, c);
+		Interaccion::rebote(*_player_ptr, *c);
 	}
 
 	for (auto i : _enemigos) {
@@ -39,7 +44,7 @@ void Room::dibujaHitBox() const
 	//Dibuja las lineas blancas (provisional)
 	_paredes.dibuja();
 	for (auto i : _obstaculos) {
-		i.dibuja();
+		i->dibuja();
 	}
 }
 
@@ -94,9 +99,9 @@ void Room::cargaLayout(const char* ruta_de_archivo)
 	}
 
 	//Comprobación por terminal
-	for (auto i : _layout) {
+	/*for (auto i : _layout) {
 		std::cout << i << std::endl;
-	}
+	}*/
 }
 
 void Room::cargaTextura(const char* ruta_de_textura)
@@ -109,33 +114,26 @@ void Room::setRoom()
 	int i = 0, j = 0;
 
 	//Para facilitar el dibujado se sitúa el origen en la esquina superior izquierda
-	Vector2D origen(-_ancho / 2.0f, +_alto / 2.0f - 10.0f);//10 es el ancho (magic number)
+	Vector2D origen(-_ancho / 2.0f, +_alto / 2.0f - TILE_WIDTH);//10 es el ancho (magic number)
 	for (auto str : _layout) {
 		for (auto chr : str) {
-			std::cout << chr;
+			//std::cout << chr;
 			if (chr == 'R') {
-		
-			
-				_obstaculos.emplace_back(Obstaculo(origen + Vector2D(10.0f * j, -10.0f * i), "res/texturas/rocas.png"));
-				
+				_obstaculos.emplace_back(new Obstaculo(origen + Vector2D(10.0f * j, -10.0f * i), "res/texturas/rocas.png"));
 			}
 			else if (chr == 'H') {
-				_obstaculos.emplace_back(Obstaculo(origen + Vector2D(10.0f * j, -10.0f * i), "res/texturas/hole.png"));
+				_obstaculos.emplace_back(new Obstaculo(origen + Vector2D(10.0f * j, -10.0f * i), "res/texturas/hole.png"));
 			}
-
 			else if (chr == 'F') {
 				_enemigos.emplace_back(new Fatty(origen+Vector2D(10.0f * j, -10.0f * i), _player_ptr));
 			}
-
 			else if (chr == 'C') {
 				_enemigos.emplace_back(new Caca(origen + Vector2D(10.0f * j, -10.0f * i), _player_ptr));
 			}
-
-
 				j++;
 			}
 			j = 0;
-			std::cout << std::endl;
+			//std::cout << std::endl;
 			i++;
 		}
 	}
@@ -152,13 +150,21 @@ void Room::gestionarDisparos(ListaProyectil& listaP) {
 	Proyectil* auxc = listaP.colision(_paredes);
 	if (auxc != 0) listaP.eliminar(auxc);
 
-	//Enemigos
+	//ENEMIGOS
 	for (int j = _enemigos.size() - 1; j >= 0; j--) {
 		Proyectil* auxi = listaP.impacto(*_enemigos[j]);
 		if (auxi != 0) {
 			listaP.eliminar(auxi);
 			delete _enemigos[j];
 			_enemigos.erase(_enemigos.begin() + j);
+		}
+	}
+
+	//OBSTACULOS
+	for (auto o : _obstaculos) {
+		Proyectil* auxi = listaP.impacto(*o);
+		if (auxi != 0) {
+			listaP.eliminar(auxi);
 		}
 	}
 }
