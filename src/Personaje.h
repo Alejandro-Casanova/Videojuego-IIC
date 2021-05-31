@@ -17,7 +17,7 @@ public:
 
 protected:
 	float _healthStat = 0.0f;
-	float _speedStat = 0.0f;
+	float _speedStat = 10.0f;
 	float _shootSpeed = 1.0f;
 	float _shootCounter = 0.0f; 
 };
