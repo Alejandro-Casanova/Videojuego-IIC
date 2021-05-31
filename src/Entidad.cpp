@@ -37,11 +37,6 @@ void Entidad::setAcel(float ax, float ay)
 
 }
 
-Vector2D Entidad::getPos() {
-
-	return _posicion;
-}
-
 void Entidad::dibujaHitbox() const
 {
 	float x = _posicion.x;

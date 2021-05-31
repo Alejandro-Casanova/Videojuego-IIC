@@ -30,14 +30,14 @@ public:
 	void cargaLayout(const char* ruta_de_archivo);
 	void cargaTextura(const char* ruta_de_textura);
 	
-	void setObstaculos();
+	void setRoom(); //Inicializa Obstáculos, Enemigos, etc...
 
 	void setParedes(float ancho, float alto);
 	void setAncho(float ancho) { _ancho = ancho; }
 	void setAlto(float alto) { _alto = alto; }
 	void setBordeText(float bordeText) { _bordeText = bordeText; }
 
-	void eliminarElemento(ListaProyectil& listaP);
+	void gestionarDisparos(ListaProyectil& listaP);
 
 private:
 	float _ancho = 130;

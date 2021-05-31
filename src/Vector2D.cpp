@@ -60,10 +60,10 @@ Vector2D Vector2D::operator+(float escalar) const
 	return Vector2D(x + escalar, y + escalar);
 }
 
-void Vector2D::set(float x, float y)
+void Vector2D::set(float nx, float ny)
 {
-	x = x;
-	y = y;
+	x = nx;
+	y = ny;
 }
 
 Vector2D Vector2D::operator+=(Vector2D v)

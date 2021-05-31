@@ -13,6 +13,13 @@ Room::Room()
 
 Room::~Room()
 {
+	for (auto i : _enemigos) {
+		delete i;
+	}
+
+	for (auto i : _objetos) {
+		delete i;
+	}
 }
 
 void Room::mueve()
@@ -20,6 +27,10 @@ void Room::mueve()
 	Interaccion::rebote(*_player_ptr, _paredes);
 	for (auto& c : _obstaculos) {
 		Interaccion::rebote(*_player_ptr, c);
+	}
+
+	for (auto i : _enemigos) {
+		i->mueve(0.025f);
 	}
 }
 
@@ -59,7 +70,7 @@ void Room::inicializa(const char* ruta_de_layout, const char* ruta_de_textura, E
 	cargaTextura(ruta_de_textura);
 
 	_player_ptr = pptr;
-	setObstaculos();
+	setRoom();
 	for (auto i : _enemigos) {
 		i->inicializa();
 	}
@@ -93,7 +104,7 @@ void Room::cargaTextura(const char* ruta_de_textura)
 	_textura = ETSIDI::getTexture(ruta_de_textura);
 }
 
-void Room::setObstaculos()
+void Room::setRoom()
 {
 	int i = 0, j = 0;
 
@@ -113,11 +124,11 @@ void Room::setObstaculos()
 			}
 
 			else if (chr == 'F') {
-				_enemigos.emplace_back(new Fatty(origen+Vector2D(10.0f * j, -10.0f * i)));
+				_enemigos.emplace_back(new Fatty(origen+Vector2D(10.0f * j, -10.0f * i), _player_ptr));
 			}
 
 			else if (chr == 'C') {
-				_enemigos.emplace_back(new Caca(origen + Vector2D(10.0f * j, -10.0f * i)));
+				_enemigos.emplace_back(new Caca(origen + Vector2D(10.0f * j, -10.0f * i), _player_ptr));
 			}
 
 
@@ -135,16 +146,19 @@ void Room::setParedes(float ancho, float alto)
 	_paredes.setParedes(Vector2D(-ancho / 2.0f, -alto / 2.0f), Vector2D(ancho / 2.0f, alto / 2.0f));
 }
 
-void Room::eliminarElemento(ListaProyectil& listaP) {
+void Room::gestionarDisparos(ListaProyectil& listaP) {
 
-	//for (int i = _enemigos.size() -1 ; i >= 0; i--) {
-	for (int i = 2; i >= 0; i--) {
-		for (int j = listaP.getNum() - 1; j >= 0; j--) {
-			Proyectil* auxi = listaP.impacto(*_enemigos[i]);
-			if (auxi != 0) {
-				listaP.eliminar(auxi);
-				_enemigos.erase(_enemigos.begin() + i);
-			}
+	//PAREDES
+	Proyectil* auxc = listaP.colision(_paredes);
+	if (auxc != 0) listaP.eliminar(auxc);
+
+	//Enemigos
+	for (int j = _enemigos.size() - 1; j >= 0; j--) {
+		Proyectil* auxi = listaP.impacto(*_enemigos[j]);
+		if (auxi != 0) {
+			listaP.eliminar(auxi);
+			delete _enemigos[j];
+			_enemigos.erase(_enemigos.begin() + j);
 		}
 	}
 }

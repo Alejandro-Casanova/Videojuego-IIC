@@ -45,47 +45,14 @@ void Mundo::mueve()
   
 	malapersona.mueve(0.025f);
   
-	Proyectil* auxc = disparosPlayer.colision(_piso._room._paredes);
-	if (auxc != 0) disparosPlayer.eliminar(auxc);
+	
 	//Interaccion::rebote(malapersona, _piso._room._paredes);
 	/*Proyectil* auxi = disparosPlayer.impacto();
 	if (auxi != 0) { disparosPlayer.eliminar(auxi);
 	malapersona.setPos(-130, 0);
 	}*/
-
+	_roomActual->gestionarDisparos(disparosPlayer); //Colisiones de los disparos con el entorno y enemigos
 }
-
-
-
-//void Mundo::tecla_disparo(unsigned char key)			//Creacion de proyectil de disparo del jugador
-//{
-//	if (key == 'i' || key == 'j' || key == 'k' || key == 'l') {
-//		// Creacion de un proyectil
-//		Proyectil* d = new Proyectil();
-//		//	proyectil.setOrigen(Vector2D.player)
-//		Vector2D pos = personaje.getPos();
-//		d->setPos(pos.x, pos.y);
-//		disparosPlayer.agregar(d);
-//		Vector2D proyp = d->getPos();
-//		cout << "proy x = " << proyp.x << " || proy y = " << proyp.y << endl;
-//		cout << "pers x = " << pos.x << " || pers y = " << pos.y << endl;
-//;		switch (key)
-//		{
-//		case 'j':
-//			d->setVel(-20, 0);
-//			break;
-//		case 'l':
-//			d->setVel(20, 0);
-//			break;
-//		case 'i':
-//			d->setVel(0, 20);
-//			break;
-//		case 'k':
-//			d->setVel(0, -20);
-//			break;
-//		}
-//	}
-//}
 
 
 void Mundo::tecla() {
@@ -122,20 +89,6 @@ void Mundo::teclaEspecial()
 	jugador.teclaEspecial();
 }
 
-
-//void Mundo::tecla_up(unsigned char key) {
-//
-//	// cout<<"TECLA UP";
-//
-//
-//	if (key == 'w' || key == 's' || key == 'd' || key == 'a') {
-//		personaje.setVel(0, 0);
-//		personaje.setAcel(0, 0);
-//	}
-//}
-
-
-
 void Mundo::inicializa()
 {
 	x_ojo=0.0f;
@@ -145,7 +98,7 @@ void Mundo::inicializa()
 	//LLAMADAS DE INICIALIZACION
 	jugador.inicializa();
 	malapersona.inicializa();
-	_piso.inicializa(&jugador,_roomActual);
+	_piso.inicializa(&jugador, _roomActual);
 	
 
 	

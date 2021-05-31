@@ -9,10 +9,10 @@
 class Objeto : public Entidad
 {
 public:
-	enum obj_t { OBJETO = 0, CORAZON, MONEDA, LLAVE };
+	enum class obj_t { OBJETO = 0, CORAZON, MONEDA, LLAVE };
 protected:
 	obj_t rtt;
-	Objeto(obj_t t = OBJETO) :rtt(t) {}
+	Objeto(obj_t t = obj_t::OBJETO) :rtt(t) {}
 public:
 	virtual ~Objeto() {};												//declaración virtual al dest. OBLIGATORIA!
 	obj_t type() const { return rtt; }
@@ -24,21 +24,21 @@ public:
 
 class Corazon : public Objeto {
 public:
-	Corazon() : Objeto(CORAZON) {}
+	Corazon() : Objeto(obj_t::CORAZON) {}
 	void valor() { std::cout << "corazon valor 10HP" << std::endl; }
 	std::ostream& print(std::ostream& o = std::cout) const override { o << "soy un corazon" << std::endl; return o; }
 };
 
 class Moneda : public Objeto {
 public:
-	Moneda() : Objeto(MONEDA) {}
+	Moneda() : Objeto(obj_t::MONEDA) {}
 	void valor() { std::cout << "moneda valor 5G" << std::endl; }
 	std::ostream& print(std::ostream& o = std::cout) const override { o << "soy una Moneda" << std::endl; return o; }
 };
 
 class Llave : public Objeto {
 public:
-	Llave() : Objeto(LLAVE) {}
+	Llave() : Objeto(obj_t::LLAVE) {}
 	//void peso() { cout << "arco-peso 3Kg" << endl; }
 	std::ostream& print(std::ostream& o = std::cout) const { o << "soy una Moneda" << std::endl; return o; }
 };
@@ -53,13 +53,13 @@ public:
 
 Objeto* Factoria::create(const Objeto& ob)
 {
-	if (ob.type() == Objeto::CORAZON) {
+	if (ob.type() == Objeto::obj_t::CORAZON) {
 		return new Corazon(dynamic_cast<const Corazon&>(ob));			//copia profunda
 	}
-	else if (ob.type() == Objeto::MONEDA) {
+	else if (ob.type() == Objeto::obj_t::MONEDA) {
 		return new Moneda(dynamic_cast<const Moneda&>(ob));
 	}
-	else if (ob.type() == Objeto::LLAVE) {
+	else if (ob.type() == Objeto::obj_t::LLAVE) {
 		return new Llave(dynamic_cast<const Llave&>(ob));
 	}
 
@@ -70,11 +70,11 @@ Objeto* Factoria::create(const Objeto& ob)
 Objeto* Factoria::create(Objeto::obj_t t) {
 
 	switch (t) {
-	case Objeto::CORAZON:
+	case Objeto::obj_t::CORAZON:
 		return new Corazon;
-	case Objeto::MONEDA:
+	case Objeto::obj_t::MONEDA:
 		return new Moneda;
-	case Objeto::LLAVE:
+	case Objeto::obj_t::LLAVE:
 		return new Llave;
 	default:
 		std::cerr << "incorrect type-factory::create()" << std::endl;

@@ -17,7 +17,7 @@ public:
 	void setPos(float x, float y);
 	void setVel(float vx, float vy);
 	void setAcel(float ax, float ay);
-	Vector2D getPos();
+	Vector2D getPos() const { return _posicion; }
 
 	
 protected:
