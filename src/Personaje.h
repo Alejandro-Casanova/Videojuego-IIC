@@ -11,14 +11,15 @@ public:
 	virtual ~Personaje();
 
 	bool dispara();
-	virtual void dibuja() override;
+	virtual void dibuja() override = 0; //Personaje es una clase abstracta
 	void inicializa() override;
 	virtual void mueve(float) override;
 
 protected:
-	float _healthStat = 0.0f;
-	float _speedStat = 10.0f;
-	float _shootSpeed = 1.0f;
-	float _shootCounter = 0.0f; 
+	float _healthStat = 0.0f; //Salud Máxima
+	float _healthCounter = 0.0f; //Contador de salud
+	float _speedStat = 10.0f; //Velocidad de desplazamiento
+	float _shootSpeed = 1.0f; //Segundos entre disparos
+	float _shootCounter = 0.0f; //Contador para controlar la frecuencia de disparo
 };
 

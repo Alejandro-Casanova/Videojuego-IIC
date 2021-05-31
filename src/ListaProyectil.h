@@ -3,6 +3,7 @@
 #include "Proyectil.h"
 #include "Caja.h"
 #include "Enemigo.h"
+class Obstaculo;
 
 class ListaProyectil
 {
@@ -29,9 +30,7 @@ public:
 	Proyectil* operator [] (int i);
 	Proyectil* colision(Caja c);
 	Proyectil* impacto(Enemigo e);
-
-
-
+	Proyectil* impacto(const Obstaculo& e);
 
 };
 

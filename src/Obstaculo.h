@@ -19,25 +19,23 @@ public:
 	void cargaTextura(const char* ruta_de_textura);
 	void setHitBox(Vector2D vert1, Vector2D vert2){ _hitBox.setParedes(vert1, vert2); } //Vértices opuestos de la caja
 	void setBordeTextura(float bordeTextura) { _bordeTextura = bordeTextura; }
+	const Caja& getHitBox() const { return _hitBox; }
 
+protected:
 	Caja _hitBox;
 	Vector2D _posicion;
 	bool _playerFlag = true, _bulletFlag = true; //Define si se realiza colisión con jugador o proyectil
 	double _ancho = 10, _alto = 10; //Dimensiones predeterminadas
 	float _bordeTextura = 0.0f; //Por si la hit-box es menor que la textura
 	ETSIDI::GLTexture _textura = { 0, 0, 0 };
-	
-	
-private:
-	
 };
 
 class Roca : public Obstaculo {
-	//Roca(Vector2D posicion) : Obstaculo(posicion, ;
+	Roca(){}
 	ETSIDI::Sprite _sprite{ "res/texturas/rocas.png" };
 };
 
 class Hueco : public Obstaculo {
-
+	Hueco() { _bulletFlag = false; }
 	ETSIDI::Sprite _sprite{ "res/texturas/hole.png" };
 };

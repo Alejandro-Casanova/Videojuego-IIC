@@ -10,6 +10,8 @@
 #include "Interaccion.h"
 #include "ListaProyectil.h"
 
+#define TILE_WIDTH 10.0F //Ancho de cada casilla
+
 class Entidad;
 class Enemigo;
 class Objeto;
@@ -37,21 +39,19 @@ public:
 	void setAlto(float alto) { _alto = alto; }
 	void setBordeText(float bordeText) { _bordeText = bordeText; }
 
-	void gestionarDisparos(ListaProyectil& listaP);
+	void gestionarDisparos(ListaProyectil& listaP); //Colisiones de los proyectiles con diferentes elementos de la room
 
 private:
 	float _ancho = 130;
 	float _alto = 70;
 	float _bordeText = 15.0f; //Ancho de la textura que queda detrás de la hit-box de la pared
 
-public:
 	Caja _paredes; //Hit-box de las paredes
 	Vector2D origen=(-_ancho / 2.0f, +_alto / 2.0f - 10.0f);
 
-private:
 	Entidad* _player_ptr = nullptr;
 	std::vector<std::string> _layout; //Dimensiones de la habitación 7x13
-	std::vector<Obstaculo> _obstaculos;
+	std::vector<Obstaculo*> _obstaculos;
 	std::vector<Enemigo*> _enemigos;
 	std::vector<Objeto*> _objetos;
 	ETSIDI::GLTexture _textura = { 0, 0, 0 };

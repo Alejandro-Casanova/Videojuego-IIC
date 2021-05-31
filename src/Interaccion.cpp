@@ -23,10 +23,6 @@ bool Interaccion::rebote(Entidad& e, Pared p)
 	if (dif <= 0.0f){
 		//Separa los cuerpos
 		e._posicion -= (dir * dif);
-		//a._posicion -= (distVec.unitario() * ((minDist - dist) / 2));
-		/*Vector2D v_inicial = e._velocidad;
-		e._velocidad = v_inicial - dir * 2.0 * (v_inicial * dir);
-		e._posicion = e._posicion - dir * dif;*/
 		return true;
 	}
 	return false;
@@ -35,7 +31,6 @@ bool Interaccion::rebote(Entidad& e, Pared p)
 void Interaccion::rebote(Entidad& p, Obstaculo o){
 	rebote(p, o._hitBox);
 }
-
 
 
 bool Interaccion::impacto(Proyectil& p, Caja c) {
@@ -56,11 +51,11 @@ bool Interaccion::impacto(Proyectil& p, Pared pa) {
 	return false;
 }
 
-
-
-
 bool Interaccion::impacto(Proyectil& pr, Obstaculo obs) {
-	return false;
+	if (obs._bulletFlag) {
+		return impacto(pr, obs._hitBox);
+	}
+		return false;
 }
 
 

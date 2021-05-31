@@ -6,8 +6,6 @@ class Personaje;
 
 class Piso
 {
-	friend class ListaProyectil;
-
 public:
 	Piso();
 	void mueve();
@@ -16,8 +14,6 @@ public:
 
 private:
 	Entidad* _personaje_ptr = nullptr;
-
-public:
 	Room _room;
 };
 

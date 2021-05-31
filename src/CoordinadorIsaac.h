@@ -13,6 +13,6 @@ public:
 	void dibuja(); 
 protected: 
 	enum class Estado { INICIO, JUEGO, GAMEOVER, FIN, PAUSA }; 
-	Estado estado = Estado::JUEGO; //TEMPORAL
+	Estado estado = Estado::JUEGO; //TEMPORAL, arranca directamente en la pantalla de juego
 	Mundo mundo;
 };
