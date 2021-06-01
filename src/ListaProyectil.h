@@ -30,7 +30,7 @@ public:
 	Proyectil* operator [] (int i);
 	Proyectil* colision(Caja c);
 	Proyectil* impacto(Enemigo e);
-	Proyectil* impacto(const Obstaculo& e);
+	Proyectil* impacto(Obstaculo& e);
 
 };
 

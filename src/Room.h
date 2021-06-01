@@ -9,8 +9,9 @@
 #include "Enemigo.h"
 #include "Interaccion.h"
 #include "ListaProyectil.h"
+#include "Macros.h"
 
-#define TILE_WIDTH 10.0F //Ancho de cada casilla
+
 
 class Entidad;
 class Enemigo;

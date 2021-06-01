@@ -103,7 +103,7 @@ Proyectil* ListaProyectil::impacto(Enemigo e) {
 	return 0; //no hay colisión
 }
 
-Proyectil* ListaProyectil::impacto(const Obstaculo& o)
+Proyectil* ListaProyectil::impacto(Obstaculo& o)
 {
 	for (int i = 0; i < contador; i++)
 	{

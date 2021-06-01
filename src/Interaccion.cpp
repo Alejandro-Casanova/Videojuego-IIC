@@ -28,7 +28,7 @@ bool Interaccion::rebote(Entidad& e, Pared p)
 	return false;
 }
 
-void Interaccion::rebote(Entidad& p, Obstaculo o){
+void Interaccion::rebote(Entidad& p, Obstaculo& o){
 	rebote(p, o._hitBox);
 }
 
@@ -51,7 +51,7 @@ bool Interaccion::impacto(Proyectil& p, Pared pa) {
 	return false;
 }
 
-bool Interaccion::impacto(Proyectil& pr, Obstaculo obs) {
+bool Interaccion::impacto(Proyectil& pr, Obstaculo& obs) {
 	if (obs._bulletFlag) {
 		return impacto(pr, obs._hitBox);
 	}
