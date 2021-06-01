@@ -1,50 +1,26 @@
 #include "Obstaculo.h"
+#include "Macros.h"
 
-Obstaculo::Obstaculo()
-{
-	
-}
-
-Obstaculo::Obstaculo(Vector2D posicion, const char* ruta_de_textura) 
+Obstaculo::Obstaculo(Vector2D posicion, const char* ruta_de_textura) : _sprite{ ruta_de_textura }
 {
 	_hitBox.setParedes(posicion, posicion + Vector2D(_ancho, _alto));
 	_posicion = posicion;
-	cargaTextura(ruta_de_textura);
+	_sprite.setSize(TILE_WIDTH, TILE_WIDTH);
+	_sprite.setCenter(0.0f, 0.0f);
 }
 
-Obstaculo::Obstaculo(const char* ruta_de_textura, Caja hitBox)
+void Obstaculo::dibuja()
 {
-	_hitBox = hitBox;
-	cargaTextura(ruta_de_textura);
-}
-
-Obstaculo::Obstaculo(Caja hitBox)
-{
-	_hitBox = hitBox;
-}
-
-void Obstaculo::dibuja() const
-{
-
 	_hitBox.dibuja();
+	_sprite.setPos(_posicion.x, _posicion.y);
+	_sprite.draw();
+}
 
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, _textura.id);
-	glDisable(GL_LIGHTING);
-	glBegin(GL_POLYGON);
-	glColor3f(1, 1, 1);
-	glTexCoord2d(0, 1); glVertex3f(_posicion.x, _posicion.y,0.0f);
-	glTexCoord2d(1, 1); glVertex3f(_posicion.x + _ancho, _posicion.y , 0.0f);
-	glTexCoord2d(1, 0); glVertex3f(_posicion.x +_ancho, _posicion.y + _alto, 0.0f);
-	glTexCoord2d(0, 0); glVertex3f(_posicion.x , _posicion.y + _alto, 0.0f);
-	glEnd();
-	glEnable(GL_LIGHTING);
-	glDisable(GL_TEXTURE_2D);
-
+Roca::Roca(Vector2D posicion) : Obstaculo(posicion, "res/texturas/rocas.png"){
 	
 }
 
-void Obstaculo::cargaTextura(const char* ruta_de_textura)
-{
-	_textura = ETSIDI::getTexture(ruta_de_textura);
+Hueco::Hueco(Vector2D posicion) : Obstaculo(posicion, "res/texturas/hole.png") { 
+	_bulletFlag = false;
+	
 }

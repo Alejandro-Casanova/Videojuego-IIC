@@ -47,6 +47,7 @@
     <ClInclude Include="src\GestorDeTeclado.h" />
     <ClInclude Include="src\Interaccion.h" />
     <ClInclude Include="src\ListaProyectil.h" />
+    <ClInclude Include="src\Macros.h" />
     <ClInclude Include="src\Mundo.h" />
     <ClInclude Include="src\Objeto.h" />
     <ClInclude Include="src\Obstaculo.h" />

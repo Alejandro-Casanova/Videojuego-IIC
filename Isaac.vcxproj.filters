@@ -39,5 +39,6 @@
     <ClInclude Include="src\GestorDeTeclado.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\CoordinadorIsaac.h" />
+    <ClInclude Include="src\Macros.h" />
   </ItemGroup>
 </Project>

@@ -5,81 +5,57 @@
 #include <string>
 #include <vector>
 #include "Entidad.h"
+#include <ETSIDI.h>
+#include "Vector2D.h"
 
 class Objeto : public Entidad
-{
+{	
 public:
 	enum class obj_t { OBJETO = 0, CORAZON, MONEDA, LLAVE };
 protected:
+	Objeto(const char* ruta_de_textura, Vector2D posicion = { 0.0f, 0.0f }, obj_t t = obj_t::OBJETO);
+	void dimensionaSprite(int pxWidth, int pxHeight); //Ajusta las proporciones del sprite para que no se deforme la textura
 	obj_t rtt;
-	Objeto(obj_t t = obj_t::OBJETO) :rtt(t) {}
+	ETSIDI::Sprite _sprite;
+	int _valor = 1; //Valor del objeto (cantidad de salud, monedas, llaves....)
 public:
-	virtual ~Objeto() {};												//declaración virtual al dest. OBLIGATORIA!
+	virtual ~Objeto() {};//declaración virtual al dest. OBLIGATORIA!
+
+	void dibuja() override;
+
 	obj_t type() const { return rtt; }
+	int getValor() { return _valor; }
+
 	virtual std::ostream& print(std::ostream& o = std::cout) const = 0;
 	friend std::ostream& operator <<(std::ostream& o, const Objeto& ob) { return ob.print(o); }
-	void dibuja() override {} //TO DO
-
 };
 
 class Corazon : public Objeto {
 public:
-	Corazon() : Objeto(obj_t::CORAZON) {}
-	void valor() { std::cout << "corazon valor 10HP" << std::endl; }
+	Corazon(Vector2D pos) : Objeto("res/texturas/container.png", pos, obj_t::CORAZON) { dimensionaSprite(24, 20); }
+
 	std::ostream& print(std::ostream& o = std::cout) const override { o << "soy un corazon" << std::endl; return o; }
 };
 
 class Moneda : public Objeto {
 public:
-	Moneda() : Objeto(obj_t::MONEDA) {}
-	void valor() { std::cout << "moneda valor 5G" << std::endl; }
+	Moneda(Vector2D pos) : Objeto("res/texturas/dime.png", pos, obj_t::MONEDA) { dimensionaSprite(24, 14); }
+	
 	std::ostream& print(std::ostream& o = std::cout) const override { o << "soy una Moneda" << std::endl; return o; }
 };
 
 class Llave : public Objeto {
 public:
-	Llave() : Objeto(obj_t::LLAVE) {}
-	//void peso() { cout << "arco-peso 3Kg" << endl; }
+	Llave(Vector2D pos) : Objeto("res/texturas/key.png", pos, obj_t::LLAVE) { dimensionaSprite(23, 31); }
+	
 	std::ostream& print(std::ostream& o = std::cout) const { o << "soy una Moneda" << std::endl; return o; }
 };
 
 class Factoria
 {
 public:
-	static Objeto* create(Objeto::obj_t);			//equivalente al constructor normal
+	static Objeto* create(Objeto::obj_t, Vector2D pos);			//equivalente al constructor normal
 	static Objeto* create(const Objeto&);			//equivalente al constructor copia, pero en un ámbito de enlace dinámico
 	static void destroy(Objeto* p) { delete p;  p = nullptr; }
 };
 
-Objeto* Factoria::create(const Objeto& ob)
-{
-	if (ob.type() == Objeto::obj_t::CORAZON) {
-		return new Corazon(dynamic_cast<const Corazon&>(ob));			//copia profunda
-	}
-	else if (ob.type() == Objeto::obj_t::MONEDA) {
-		return new Moneda(dynamic_cast<const Moneda&>(ob));
-	}
-	else if (ob.type() == Objeto::obj_t::LLAVE) {
-		return new Llave(dynamic_cast<const Llave&>(ob));
-	}
-
-	std::cerr << "error al tratar de construir un objeto desconocido- factory::create(...)";
-	return NULL;
-}
-
-Objeto* Factoria::create(Objeto::obj_t t) {
-
-	switch (t) {
-	case Objeto::obj_t::CORAZON:
-		return new Corazon;
-	case Objeto::obj_t::MONEDA:
-		return new Moneda;
-	case Objeto::obj_t::LLAVE:
-		return new Llave;
-	default:
-		std::cerr << "incorrect type-factory::create()" << std::endl;
-		return nullptr;
-	}
-
-	return nullptr;
-}

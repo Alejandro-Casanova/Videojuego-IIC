@@ -5,6 +5,7 @@
 #include "Interaccion.h"
 #include "ETSIDI.h"
 #include "Player.h"
+#include "Objeto.h"
 
 Room::Room()
 {
@@ -29,13 +30,24 @@ Room::~Room()
 
 void Room::mueve()
 {
+
+	//Colision jugador con paredes y obstaculos
 	Interaccion::rebote(*_player_ptr, _paredes);
 	for (auto& c : _obstaculos) {
 		Interaccion::rebote(*_player_ptr, *c);
 	}
 
-	for (auto i : _enemigos) {
+	//Movimiento enemigos
+	for (auto &i : _enemigos) {
 		i->mueve(0.025f);
+	}
+
+	//Colisiones enemigos con paredes y obstáculos
+	for (auto &i : _enemigos) {
+		Interaccion::rebote(*i, _paredes);
+		for (auto &c : _obstaculos) {
+			Interaccion::rebote(*i, *c);
+		}
 	}
 }
 
@@ -43,14 +55,20 @@ void Room::dibujaHitBox() const
 {
 	//Dibuja las lineas blancas (provisional)
 	_paredes.dibuja();
-	for (auto i : _obstaculos) {
-		i->dibuja();
-	}
+	
 }
 
 void Room::dibuja() const
 {
 	for (auto i : _enemigos) {
+		i->dibuja();
+	}
+
+	for (auto i : _objetos) {
+		i->dibuja();
+	}
+
+	for (auto i : _obstaculos) {
 		i->dibuja();
 	}
 
@@ -119,16 +137,25 @@ void Room::setRoom()
 		for (auto chr : str) {
 			//std::cout << chr;
 			if (chr == 'R') {
-				_obstaculos.emplace_back(new Obstaculo(origen + Vector2D(10.0f * j, -10.0f * i), "res/texturas/rocas.png"));
+				_obstaculos.emplace_back(new Roca(origen + Vector2D(10.0f * j, -10.0f * i)));
 			}
 			else if (chr == 'H') {
-				_obstaculos.emplace_back(new Obstaculo(origen + Vector2D(10.0f * j, -10.0f * i), "res/texturas/hole.png"));
+				_obstaculos.emplace_back(new Hueco(origen + Vector2D(10.0f * j, -10.0f * i)));
 			}
 			else if (chr == 'F') {
 				_enemigos.emplace_back(new Fatty(origen+Vector2D(10.0f * j, -10.0f * i), _player_ptr));
 			}
 			else if (chr == 'C') {
 				_enemigos.emplace_back(new Caca(origen + Vector2D(10.0f * j, -10.0f * i), _player_ptr));
+			}
+			else if (chr == 'L') {
+				_objetos.emplace_back(Factoria::create(Objeto::obj_t::LLAVE, origen + Vector2D(10.0f * j, -10.0f * i)));
+			}
+			else if (chr == 'S') {
+				_objetos.emplace_back(Factoria::create(Objeto::obj_t::CORAZON, origen + Vector2D(10.0f * j, -10.0f * i)));
+			}
+			else if (chr == 'M') {
+				_objetos.emplace_back(Factoria::create(Objeto::obj_t::MONEDA, origen + Vector2D(10.0f * j, -10.0f * i)));
 			}
 				j++;
 			}
