@@ -10,3 +10,7 @@ Archivos de Floor
 '.': Hueco
 'S': Room Inicial
 'R': Room Normal
+
+Enemigos
+'F': Fatty
+'C': Caca

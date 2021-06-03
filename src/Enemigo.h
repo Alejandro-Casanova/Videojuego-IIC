@@ -18,8 +18,8 @@ public:
 
 protected:
 	Vector2D _dims{ 13.0f, 13.0f }; //Dimensiones del sprite
-	void follow(Entidad* ptr); //Modifica la velocidad del enemigo para seguir a una entidad genérica (a menudo será el jugador)
-	Entidad* _playerPtr = nullptr; //Almacena un puntero al jugador para poder seguirlo
+	void follow(Entidad* ptr);      //Modifica la velocidad del enemigo para seguir a una entidad genérica (a menudo será el jugador)
+	Entidad* _playerPtr = nullptr;  //Almacena un puntero al jugador para poder seguirlo
 };
 
 class Caca : public Enemigo {
