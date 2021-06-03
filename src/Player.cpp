@@ -131,3 +131,9 @@ void Player::mueve(float t)
 	Personaje::mueve(t);
 	_body.loop();
 }
+
+void Player::flipPos(bool H, bool V)
+{
+	if (H) _posicion.x *= -1;
+	if (V) _posicion.y *= -1;
+}

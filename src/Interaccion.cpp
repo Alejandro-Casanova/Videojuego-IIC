@@ -33,16 +33,16 @@ void Interaccion::rebote(Entidad& p, Obstaculo& o){
 }
 
 
-bool Interaccion::impacto(Proyectil& p, Caja c) {
-	if (impacto(p, c._dcha)) return true;
-	if (impacto(p, c._izq)) return true;
-	if (impacto(p, c._sup)) return true;
-	if (impacto(p, c._inf)) return true;
+bool Interaccion::colision(const Entidad& p, const Caja& c) {
+	if (colision(p, c._dcha)) return true;
+	if (colision(p, c._izq)) return true;
+	if (colision(p, c._sup)) return true;
+	if (colision(p, c._inf)) return true;
 	return false;
 }
 
 
-bool Interaccion::impacto(Proyectil& p, Pared pa) {
+bool Interaccion::colision(const Entidad& p, const Pared& pa) {
 	Vector2D dir;
 	float dif = pa.distancia(p._posicion, &dir) - p._radio;
 	if (dif <= 0.01f) {
@@ -51,16 +51,16 @@ bool Interaccion::impacto(Proyectil& p, Pared pa) {
 	return false;
 }
 
-bool Interaccion::impacto(Proyectil& pr, Obstaculo& obs) {
+bool Interaccion::colision(const Entidad& pr, const Obstaculo& obs) {
 	if (obs._bulletFlag) {
-		return impacto(pr, obs._hitBox);
+		return colision(pr, obs._hitBox);
 	}
 		return false;
 }
 
 
 
-bool Interaccion::impacto(Proyectil& p, Enemigo e) {
+bool Interaccion::colision(const Entidad& p, const Entidad& e) {
 	Vector2D dif = p._posicion - e._posicion;
 	float d = dif.modulo();
 	float dentro = d - (p._radio + e._radio);

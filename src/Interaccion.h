@@ -17,9 +17,9 @@ public:
 
 	//Las funciones impacto tan solo devuelven true si ocurre colisión
 	//NOTA: Gracias a la herencia podrían definirse para recibir una referencia a entidad, siendo así más genéricas
-	static bool impacto(Proyectil& p, Pared pa);
-	static bool impacto(Proyectil& p, Caja c);
-	static bool impacto(Proyectil& p, Obstaculo& o);
-	static bool impacto(Proyectil& p, Enemigo e);
+	static bool colision(const Entidad& p, const Pared& pa);
+	static bool colision(const Entidad& p, const Caja& c);
+	static bool colision(const Entidad& p, const Obstaculo& o);
+	static bool colision(const Entidad& p, const Entidad& e);
 };
 

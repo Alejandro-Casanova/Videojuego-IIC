@@ -6,8 +6,9 @@
 #include "ETSIDI.h"
 #include "Player.h"
 #include "Objeto.h"
+#include "GestorDeTeclado.h"
 
-Room::Room()
+Room::Room(float indice) : _indice(indice)
 {
 
 }
@@ -58,8 +59,13 @@ void Room::dibujaHitBox() const
 	
 }
 
-void Room::dibuja() const
+void Room::dibuja()
 {
+	//_puerta.dibuja();
+	for (auto i : _puertas) {
+		i->dibuja();
+	}
+
 	for (auto i : _enemigos) {
 		i->dibuja();
 	}
@@ -106,7 +112,7 @@ void Room::cargaLayout(const char* ruta_de_archivo)
 
 	//Comprobación (ruta de archivo válida)
 	if (file.fail()) {
-		std::cout << "No se pudo abrir el archivo: " << ruta_de_archivo << "\n";
+		std::cerr << "No se pudo abrir el archivo: " << ruta_de_archivo << "\n";
 		exit(0);
 	}
 
@@ -165,6 +171,11 @@ void Room::setRoom()
 		}
 	}
 
+void Room::addPuerta(Puerta* newPuerta)
+{
+	_puertas.push_back(newPuerta);
+}
+
 
 void Room::setParedes(float ancho, float alto)
 {
@@ -194,4 +205,13 @@ void Room::gestionarDisparos(ListaProyectil& listaP) {
 			listaP.eliminar(auxi);
 		}
 	}
+}
+
+Puerta* Room::puertaActual()
+{
+	for (auto& c : _puertas) {
+		if (Interaccion::colision(*_player_ptr, c->getHitBox()))
+			return c;
+	}
+	return nullptr;
 }
