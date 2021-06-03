@@ -8,8 +8,7 @@ class Enemigo : public Personaje
 {
 	friend class Interaccion;
 public:
-	Enemigo();
-	Enemigo(Vector2D posicion, Entidad* playerPtr); //Almacena posicion y un puntero al jugador
+	Enemigo(Vector2D posicion, Entidad* playerPtr, const char* ruta_de_textura); //Almacena posicion y un puntero al jugador
 	virtual ~Enemigo();
 
 	virtual void dibuja() override;
@@ -18,13 +17,14 @@ public:
 
 protected:
 	Vector2D _dims{ 13.0f, 13.0f }; //Dimensiones del sprite
-	void follow(Entidad* ptr);      //Modifica la velocidad del enemigo para seguir a una entidad genÈrica (a menudo ser· el jugador)
-	Entidad* _playerPtr = nullptr;  //Almacena un puntero al jugador para poder seguirlo
+	void follow(Entidad* ptr); //Modifica la velocidad del enemigo para seguir a una entidad gen√©rica (a menudo ser√° el jugador)
+	Entidad* _playerPtr = nullptr; //Almacena un puntero al jugador para poder seguirlo
+	ETSIDI::Sprite _sprite;
+
 };
 
 class Caca : public Enemigo {
 public:
-	Caca();
 	Caca(Vector2D pos, Entidad* const playerPtr);
 	virtual ~Caca();
 
@@ -32,14 +32,12 @@ public:
 	virtual void mueve(float t) override;
 
 private:
-	ETSIDI::Sprite _spriteCaca{ "res/texturas/caca.png" };
 };
 
 
 
 class Fatty : public Enemigo {
 public:
-	Fatty();
 	Fatty(const Vector2D pos, Entidad* const PlayerPtr);
 	virtual ~Fatty();
 
@@ -47,5 +45,4 @@ public:
 	virtual void mueve(float t) override;
 
 private:
-	ETSIDI::Sprite _spriteFatty{ "res/texturas/fatty.png" };
 };

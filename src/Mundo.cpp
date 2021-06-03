@@ -24,17 +24,17 @@ Mundo::~Mundo()
 void Mundo::dibuja()
 {
 	gluLookAt(x_ojo, y_ojo, z_ojo,  // posicion del ojo
-			0.0, y_ojo, 0.0,      // hacia que punto mira  (0,0,0) 
+			x_ojo, y_ojo, 0.0,      // hacia que punto mira  (0,0,0) 
 			0.0, 1.0, 0.0);      // definimos hacia arriba (eje Y)    
 
 	///LLAMADAS PARA DIBUJAR
-
+	_gui.dibuja();
 	
 	jugador.dibuja();
 
 	_piso.dibuja();
 
-	malapersona.dibuja();
+	//malapersona.dibuja();
 
 	disparosPlayer.dibuja();
 }
@@ -47,9 +47,6 @@ void Mundo::mueve()
 
 	jugador.mueve(T_CONST);
   
-	malapersona.mueve(T_CONST);
-  
-	
 	//Interaccion::rebote(malapersona, _piso._room._paredes);
 	/*Proyectil* auxi = disparosPlayer.impacto();
 	if (auxi != 0) { disparosPlayer.eliminar(auxi);
@@ -60,10 +57,9 @@ void Mundo::mueve()
 
 
 void Mundo::tecla() {
-
 	//DISPARO
 	if (GestorDeTeclado::isKeyDown('j') || GestorDeTeclado::isKeyDown('k') || GestorDeTeclado::isKeyDown('l') || GestorDeTeclado::isKeyDown('i')) {
-		if (jugador.dispara()) { //Indica si el jugador est· listo para disparar
+		if (jugador.dispara()) { //Indica si el jugador est√° listo para disparar
 			// Creacion de un proyectil
 			Proyectil* d = new Proyectil();
 			//	proyectil.setOrigen(Vector2D.player)
@@ -93,18 +89,19 @@ void Mundo::tecla() {
 
 void Mundo::teclaEspecial()
 {
+	
 	jugador.teclaEspecial();
 }
 
 void Mundo::inicializa()
 {
-	x_ojo=0.0f;
+	x_ojo=-10.0f;
 	y_ojo=0.0f;
-	z_ojo=120.0f;
+	z_ojo=140.0f;
 	
 	//LLAMADAS DE INICIALIZACION
 	jugador.inicializa();
-	malapersona.inicializa();
+	//malapersona.inicializa();
 	_piso.inicializa(&jugador);
 	
 

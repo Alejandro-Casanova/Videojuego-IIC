@@ -7,6 +7,7 @@
 #include "ListaProyectil.h"
 #include "Enemigo.h"
 #include "Room.h"
+#include "GUI.h"
 
 
 class Mundo{
@@ -29,7 +30,8 @@ private:
 
 	Piso _piso;
 	Player jugador;
-	Enemigo malapersona; //TEMPORAL
+	GUI _gui{ &jugador };
+	//Enemigo malapersona; //TEMPORAL
 	ListaProyectil disparosPlayer;
 
 	//Room* _roomActual = nullptr;

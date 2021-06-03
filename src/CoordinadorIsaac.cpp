@@ -19,34 +19,9 @@ void CoordinadorIsaac::teclaEspecial() {
 } 
 
 void CoordinadorIsaac::tecla() {
-	/*if (estado == Estado::INICIO) {
-		if (GestorDeTeclado::isKeyPressed('e')) {
-			mundo.inicializa(); 
-			estado = Estado::JUEGO;
-		} 
-		if (GestorDeTeclado::isKeyPressed('s'))
-			exit(0);
-	}*/
-	//if (estado == Estado::JUEGO) { 
-	//	if (GestorDeTeclado::isKeyPressed('p')) {
-	//		//estado = estado::pausa;
-	//	}else
-	//		mundo.tecla(); 
-	/*}
-	else if (estado == Estado::PAUSA) {
-		if (GestorDeTeclado::isKeyPressed('c')) {
-			estado = Estado::JUEGO;
-		}
-	}
-	else if (estado == Estado::GAMEOVER) { 
-		if (GestorDeTeclado::isKeyPressed('c'))
-			estado = Estado::INICIO; 
-	}
-	else if (estado == Estado::FIN) { 
-		if (GestorDeTeclado::isKeyPressed('c'))
-			estado = Estado::INICIO;
-	}*/
+	
 	mundo.tecla();
+	
 }
 
 void CoordinadorIsaac::inicializa()
