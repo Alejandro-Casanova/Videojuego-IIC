@@ -33,5 +33,6 @@ private:
 	GUI _gui{ &jugador };
 	//Enemigo malapersona; //TEMPORAL
 	ListaProyectil disparosPlayer;
+
 	//Room* _roomActual = nullptr;
 };

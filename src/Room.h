@@ -40,6 +40,7 @@ public:
 	void setAncho(float ancho) { _ancho = ancho; }
 	void setAlto(float alto) { _alto = alto; }
 	int getIndice() const { return _indice; }
+	void disparos();
 	//void setIndice(float nIndice) { _indice = nIndice; }
 
 	void gestionarDisparos(ListaProyectil& listaP); //Colisiones de los proyectiles con diferentes elementos de la room
@@ -51,6 +52,7 @@ private:
 	float _alto = ROOM_HEIGHT;
 
 	Caja _paredes; //Hit-box de las paredes
+	ListaProyectil disparosEnemigos;
 	Vector2D origen=(-_ancho / 2.0f, +_alto / 2.0f - 10.0f);
 
 	Entidad* _player_ptr = nullptr;

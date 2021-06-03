@@ -52,6 +52,23 @@ void Room::mueve()
 			Interaccion::rebote(*i, *c);
 		}
 	}
+
+	//Colisiones entre los enemigos
+	for (auto& i : _enemigos) {
+		for (auto& j : _enemigos) {
+			if (i != j && Interaccion::colision(*i, *j)) {
+				Vector2D dir = i->getPos() - j->getPos();
+				Vector2D separar = dir.unitario();
+				Vector2D newpos = i->getPos() + separar*0.1f;
+				i->setPos(newpos.x, newpos.y);
+				newpos = j->getPos() - separar * 0.1f;
+				j->setPos(newpos.x, newpos.y);
+			}
+		}
+	}
+
+	Room::disparos();
+	disparosEnemigos.mueve(T_CONST);
 }
 
 void Room::dibujaHitBox() const
@@ -79,8 +96,11 @@ void Room::dibuja()
 	for (auto i : _obstaculos) {
 		i->dibuja();
 	}
-
+  
 	_sprite.draw();
+
+	disparosEnemigos.dibuja();
+	Room::gestionarDisparos(disparosEnemigos);
 }
 
 void Room::inicializa(const char* ruta_de_layout, Entidad* pptr)
@@ -93,6 +113,7 @@ void Room::inicializa(const char* ruta_de_layout, Entidad* pptr)
 	for (auto i : _enemigos) {
 		i->inicializa();
 	}
+	disparosEnemigos.setFriendly(false);
 }
 
 void Room::cargaLayout(const char* ruta_de_archivo)
@@ -156,6 +177,23 @@ void Room::setRoom()
 		}
 	}
 
+void Room::disparos() {
+	for (auto i : _enemigos){
+		if (i->dispara()) {		//Indica si el enemigo está listo para disparar
+		// Creacion de un proyectil
+			Proyectil* d = new Proyectil();
+			//	proyectil.setOrigen(Vector2D.player)
+			Vector2D pos = i->getPos();
+			d->setPos(pos.x, pos.y);
+			d->setColor(200, 20, 20);
+			disparosEnemigos.agregar(d);
+			Vector2D target = _player_ptr->getPos() - pos;
+			Vector2D dir = target.unitario();
+			d->setVel(15*dir.x , 15*dir.y);
+		}
+	}
+}
+
 void Room::addPuerta(Puerta* newPuerta)
 {
 	_puertas.push_back(newPuerta);
@@ -169,19 +207,27 @@ void Room::setParedes(float ancho, float alto)
 
 void Room::gestionarDisparos(ListaProyectil& listaP) {
 
+
+	if (listaP.isFriend()) {	//Interacciones de Proyectiles del Player
+		//ENEMIGOS
+		for (int j = _enemigos.size() - 1; j >= 0; j--) {
+			Proyectil* auxi = listaP.impacto(*_enemigos[j]);
+			if (auxi != 0) {
+				listaP.eliminar(auxi);
+				delete _enemigos[j];
+				_enemigos.erase(_enemigos.begin() + j);
+			}
+		}
+	}
+
+	if (listaP.isFriend() == 0) {	//Interacciones de los Proyectiles de los Enemigos
+
+	}
+
 	//PAREDES
 	Proyectil* auxc = listaP.colision(_paredes);
 	if (auxc != 0) listaP.eliminar(auxc);
 
-	//ENEMIGOS
-	for (int j = _enemigos.size() - 1; j >= 0; j--) {
-		Proyectil* auxi = listaP.impacto(*_enemigos[j]);
-		if (auxi != 0) {
-			listaP.eliminar(auxi);
-			delete _enemigos[j];
-			_enemigos.erase(_enemigos.begin() + j);
-		}
-	}
 
 	//OBSTACULOS
 	for (auto o : _obstaculos) {

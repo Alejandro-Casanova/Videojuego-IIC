@@ -4,4 +4,7 @@ Archivos de Room:
 'H': Hueco en el suelo
 'L': Llave
 'M': Moneda
-'S': Salud, Corazón
+
+Enemigos:
+'F': Fatty
+'C': Caca

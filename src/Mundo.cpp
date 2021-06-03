@@ -13,7 +13,7 @@ using namespace std;
 
 Mundo::Mundo()
 {
-
+	disparosPlayer.setFriendly(true);
 }
 
 Mundo::~Mundo()
@@ -43,13 +43,10 @@ void Mundo::mueve()
 {
 	//LLAMADAS DE ANIMACION
 	_piso.mueve();
-	disparosPlayer.mueve(0.025f);
+	disparosPlayer.mueve(T_CONST);
 
-	jugador.mueve(0.025f);
+	jugador.mueve(T_CONST);
   
-	//malapersona.mueve(0.025f);
-  
-	
 	//Interaccion::rebote(malapersona, _piso._room._paredes);
 	/*Proyectil* auxi = disparosPlayer.impacto();
 	if (auxi != 0) { disparosPlayer.eliminar(auxi);
@@ -62,7 +59,7 @@ void Mundo::mueve()
 void Mundo::tecla() {
 	//DISPARO
 	if (GestorDeTeclado::isKeyDown('j') || GestorDeTeclado::isKeyDown('k') || GestorDeTeclado::isKeyDown('l') || GestorDeTeclado::isKeyDown('i')) {
-		if (jugador.dispara()) { //Indica si el jugador está listo para disparar
+		if (jugador.dispara()) { //Indica si el jugador estÃ¡ listo para disparar
 			// Creacion de un proyectil
 			Proyectil* d = new Proyectil();
 			//	proyectil.setOrigen(Vector2D.player)
@@ -72,19 +69,21 @@ void Mundo::tecla() {
 			Vector2D proyp = d->getPos();
 
 			if (GestorDeTeclado::isKeyDown('j'))
-				d->setVel(-20, 0);
+				d->setVel(-35, 0);
 			else if (GestorDeTeclado::isKeyDown('l'))
-				d->setVel(20, 0);
+				d->setVel(35, 0);
 			else if (GestorDeTeclado::isKeyDown('i'))
-				d->setVel(0, 20);
+				d->setVel(0, 35);
 			else if (GestorDeTeclado::isKeyDown('k'))
-				d->setVel(0, -20);
+				d->setVel(0, -35);
 
 		}
 	}
 	jugador.tecla();
 	if (GestorDeTeclado::isKeyPressed(' ')){
-		_piso.cambiaRoom();
+		if (_piso.cambiaRoom()) {
+			disparosPlayer.destruirContenido();
+		}
 	}
 }
 
