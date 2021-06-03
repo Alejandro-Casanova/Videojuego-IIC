@@ -18,6 +18,13 @@ bool Personaje::dispara()
 	return false;
 }
 
+bool Personaje::recibeHerida(int daño)
+{
+	_healthCounter -= daño;
+	if (_healthCounter <= 0) return true;
+	return false;
+}
+
 void Personaje::inicializa()
 {
 	setColor(122,40,80);

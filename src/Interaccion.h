@@ -14,6 +14,7 @@ public:
 	static void rebote(Entidad& p, Caja c);
 	static bool rebote(Entidad& e, Pared p);
 	static void rebote(Entidad& p, Obstaculo& o);
+	static bool rebote(Entidad& a, Entidad& b);
 
 	//Las funciones impacto tan solo devuelven true si ocurre colisión
 	//NOTA: Gracias a la herencia podrían definirse para recibir una referencia a entidad, siendo así más genéricas

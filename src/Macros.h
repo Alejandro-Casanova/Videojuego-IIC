@@ -6,4 +6,5 @@
 #define ROOM_HEIGHT 70.0F
 #define ROOM_BORDE_TEXTURA 18.0F //Ancho de la textura que queda detr�s de la hit-box de la pared
 #define T_CONST 0.025F	//Constante de tiempo para movimientos
+#define T_INVULNERABLE 0.75F //Tiempo de invulnerabilidad tras recibir daño
 

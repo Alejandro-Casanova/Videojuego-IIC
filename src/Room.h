@@ -30,7 +30,7 @@ public:
 	void dibuja();
 	void dibujaHitBox() const;
 
-	void inicializa(const char* ruta_de_layout, Entidad* pptr);
+	void inicializa(const char* ruta_de_layout, Player* pptr);
 	void cargaLayout(const char* ruta_de_archivo);
 	
 	void setRoom(); //Inicializa Obstáculos, Enemigos, etc...
@@ -43,6 +43,7 @@ public:
 	void disparos();
 	//void setIndice(float nIndice) { _indice = nIndice; }
 
+	void muerte(); //El jugador muere
 	void gestionarDisparos(ListaProyectil& listaP); //Colisiones de los proyectiles con diferentes elementos de la room
 	Puerta* puertaActual();//Devuelve la puerta que está en contacto con el jugador, en caso de no haber ninguna, devuelve nullptr
 
@@ -55,7 +56,7 @@ private:
 	ListaProyectil disparosEnemigos;
 	Vector2D origen=(-_ancho / 2.0f, +_alto / 2.0f - 10.0f);
 
-	Entidad* _player_ptr = nullptr;
+	Player* _player_ptr = nullptr;
 	std::vector<std::string> _layout; //Dimensiones de la habitación 7x13
 	std::vector<Obstaculo*> _obstaculos;
 	std::vector<Enemigo*> _enemigos;
