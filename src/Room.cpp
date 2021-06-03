@@ -54,17 +54,19 @@ void Room::mueve()
 	}
 
 	//Colisiones entre los enemigos
-	for (auto& i : _enemigos) {
-		for (auto& j : _enemigos) {
-			if (i != j && Interaccion::colision(*i, *j)) {
-				Vector2D dir = i->getPos() - j->getPos();
-				Vector2D separar = dir.unitario();
-				Vector2D newpos = i->getPos() + separar*0.1f;
-				i->setPos(newpos.x, newpos.y);
-				newpos = j->getPos() - separar * 0.1f;
-				j->setPos(newpos.x, newpos.y);
+	if (!_enemigos.empty()) {
+		for (int i = 0; i < _enemigos.size() - 1; i++) {
+			for (int j = i + 1; j < _enemigos.size(); j++) {
+				Interaccion::rebote(*_enemigos[i], *_enemigos[j]);
 			}
 		}
+	}
+
+	//Colisiones del jugador con los enemigos y DAÑO melee
+	for (auto& i : _enemigos) {
+		if (Interaccion::rebote(*_player_ptr, *i))
+			if (_player_ptr->recibeHerida(i->getMeleeDamage()))
+				muerte();
 	}
 
 	Room::disparos();
@@ -103,7 +105,7 @@ void Room::dibuja()
 	Room::gestionarDisparos(disparosEnemigos);
 }
 
-void Room::inicializa(const char* ruta_de_layout, Entidad* pptr)
+void Room::inicializa(const char* ruta_de_layout, Player* pptr)
 {
 	setParedes(_ancho, _alto);
 	cargaLayout(ruta_de_layout);
@@ -205,6 +207,12 @@ void Room::setParedes(float ancho, float alto)
 	_paredes.setParedes(Vector2D(-ancho / 2.0f, -alto / 2.0f), Vector2D(ancho / 2.0f, alto / 2.0f));
 }
 
+void Room::muerte()
+{
+	std::cout << "\n\n\nMORISTEEEEEEEEEEEEEEEEEEEEEEE\n\n\n"; //PROVISIONAL
+	exit(0);
+}
+
 void Room::gestionarDisparos(ListaProyectil& listaP) {
 
 
@@ -214,14 +222,21 @@ void Room::gestionarDisparos(ListaProyectil& listaP) {
 			Proyectil* auxi = listaP.impacto(*_enemigos[j]);
 			if (auxi != 0) {
 				listaP.eliminar(auxi);
-				delete _enemigos[j];
-				_enemigos.erase(_enemigos.begin() + j);
+				if (_enemigos[j]->recibeHerida(_player_ptr->getShotDamage())) {
+					delete _enemigos[j];
+					_enemigos.erase(_enemigos.begin() + j);
+				}
 			}
 		}
 	}
-
-	if (listaP.isFriend() == 0) {	//Interacciones de los Proyectiles de los Enemigos
-
+	else{	//Interacciones de los Proyectiles de los Enemigos
+		Proyectil* auxi = listaP.impacto(*_player_ptr);
+		if (auxi != 0) {
+			listaP.eliminar(auxi);
+			if (_player_ptr->recibeHerida(1)) { //VALOR PROVISIONAL, incluir informacion de daño en los disparos???
+				muerte();
+			}
+		}
 	}
 
 	//PAREDES

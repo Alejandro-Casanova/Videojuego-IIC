@@ -10,7 +10,7 @@ class ListaProyectil
 private: 
 	Proyectil* lista_Pro[MAX_PROYECTILES];
 	int contador;
-	bool friendly;	// 0 si hace daño, 1 si NO hace daño
+	bool friendly = true;	// 0 si hace daño, 1 si NO hace daño
 
 public:
 	ListaProyectil();
@@ -33,7 +33,7 @@ public:
 
 	Proyectil* operator [] (int i);
 	Proyectil* colision(Caja c);
-	Proyectil* impacto(Enemigo e);
+	Proyectil* impacto(Entidad& e);
 	Proyectil* impacto(Obstaculo& e);
 
 };

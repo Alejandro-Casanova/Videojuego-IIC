@@ -32,6 +32,22 @@ void Interaccion::rebote(Entidad& p, Obstaculo& o){
 	rebote(p, o._hitBox);
 }
 
+bool Interaccion::rebote(Entidad& a, Entidad& b)
+{
+	Vector2D dir = a.getPos() - b.getPos();
+	if (dir.modulo() < a._radio + b._radio) {
+		float dist = (a._radio + b._radio - dir.modulo()) / 2.0f;
+		Vector2D separar = dir.unitario();
+		Vector2D newpos = a.getPos() + separar * dist;
+		a.setPos(newpos.x, newpos.y);
+		newpos = b.getPos() - separar * dist;
+		b.setPos(newpos.x, newpos.y);
+		return true;
+	}
+	return false;
+
+}
+
 
 bool Interaccion::colision(const Entidad& p, const Caja& c) {
 	if (colision(p, c._dcha)) return true;

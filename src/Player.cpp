@@ -1,6 +1,8 @@
 #include "Player.h"
 #include "GestorDeTeclado.h"
 #include <iostream>
+#include "Macros.h"
+#include "GestorSprites.h"
 
 Player::Player()
 {
@@ -111,8 +113,14 @@ void Player::dibuja()
 	}
 	if (_shootCounter > 0.2f && (_head.getState() % 2)) _head.setState(_head.getState() - 1); //Evita que se quede con los ojos cerrados
 
-	_head.draw();
-	_body.draw();
+	if (_damageTimer != 0) {
+		_especial.setState(1);
+		_especial.draw();
+	}
+	else {
+		_head.draw();
+		_body.draw();
+	}
 	//std::cout << _sprite.getState();
 
 	glPopMatrix();
@@ -120,18 +128,35 @@ void Player::dibuja()
 
 void Player::inicializa(){
 
+	GestorSprites::dimensionaSprite(32, 15, 8.0f, _body);
 	_body.setCenter(4, 6);
-	_body.setSize(8, 3.75);
-	_head.setCenter(6, 4);
-	_head.setSize(12, 8.4);
+	//_body.setSize(8, 3.75);
+	GestorSprites::dimensionaSprite(40, 28, 12.0f, _head);
+	//_head.setCenter(6, 4);
+	//_head.setSize(12, 8.4);
+	GestorSprites::dimensionaSprite(40, 36, 12.0f, _especial);
 	setRadio(5.0f);
-	//_setPos(0.0f, -7.5f);
 }
 
 void Player::mueve(float t)
 {
 	Personaje::mueve(t);
 	_body.loop();
+
+	//Gestion de la invulnerabilidad
+	_damageTimer -= t;
+	if (_damageTimer < 0) _damageTimer = 0;
+	std::cout << _damageTimer << "   " << _healthCounter << std::endl;
+}
+
+bool Player::recibeHerida(int daño)
+{
+	if (_damageTimer == 0) {
+		_damageTimer = T_INVULNERABLE;
+		return Personaje::recibeHerida(daño);
+	}
+	return false;
+	
 }
 
 void Player::flipPos(bool H, bool V)

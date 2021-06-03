@@ -17,6 +17,7 @@ public:
 	void setVel(float vx, float vy) { _velocidad.set(vx, vy); }
 	void setAcel(float ax, float ay) { _aceleracion.set(ax, ay); }
 	Vector2D getPos() const { return _posicion; }
+	float getRadio() const { return _radio; }
 
 	
 protected:
