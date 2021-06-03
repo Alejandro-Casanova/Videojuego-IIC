@@ -31,5 +31,6 @@ private:
 	Player jugador;
 	Enemigo malapersona; //TEMPORAL
 	ListaProyectil disparosPlayer;
+
 	//Room* _roomActual = nullptr;
 };

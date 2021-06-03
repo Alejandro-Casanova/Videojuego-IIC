@@ -11,6 +11,15 @@ ListaProyectil::ListaProyectil()
 	}
 }
 
+ListaProyectil::ListaProyectil(bool fr) {
+	friendly = fr;
+	contador = 0;
+	for (int i = 0; i < MAX_PROYECTILES; i++)
+	{
+		lista_Pro[i] = 0; //Por ahora los 100 valores del puntero no apuntan a nada
+	}
+}
+
 ListaProyectil::~ListaProyectil()
 {
 }
@@ -41,6 +50,14 @@ void ListaProyectil::eliminar(int index) {
 	contador--; 
 	for (int i = index; i < contador; i++) 
 		lista_Pro[i] = lista_Pro[i + 1];
+}
+
+void ListaProyectil::setFriendly(bool h) {
+	friendly = h;
+}
+
+bool ListaProyectil::isFriend() {
+	return friendly;
 }
 
 

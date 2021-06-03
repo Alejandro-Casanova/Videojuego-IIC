@@ -20,7 +20,7 @@ void Piso::dibuja()
 
 }
 
-void Piso::cambiaRoom()
+bool Piso::cambiaRoom()
 {
 	auto* puerta = _rooms[_roomActual]->puertaActual();
 	if (puerta != nullptr) {
@@ -37,9 +37,11 @@ void Piso::cambiaRoom()
 			_playerPtr->flipPos(true, false);
 			break;
 		default:
-			break;
+			break;	
 		}
+		return true;
 	}
+	return false;
 }
 
 

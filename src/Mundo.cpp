@@ -13,7 +13,7 @@ using namespace std;
 
 Mundo::Mundo()
 {
-
+	disparosPlayer.setFriendly(true);
 }
 
 Mundo::~Mundo()
@@ -43,11 +43,11 @@ void Mundo::mueve()
 {
 	//LLAMADAS DE ANIMACION
 	_piso.mueve();
-	disparosPlayer.mueve(0.025f);
+	disparosPlayer.mueve(T_CONST);
 
-	jugador.mueve(0.025f);
+	jugador.mueve(T_CONST);
   
-	malapersona.mueve(0.025f);
+	malapersona.mueve(T_CONST);
   
 	
 	//Interaccion::rebote(malapersona, _piso._room._paredes);
@@ -71,23 +71,23 @@ void Mundo::tecla() {
 			d->setPos(pos.x, pos.y);
 			disparosPlayer.agregar(d);
 			Vector2D proyp = d->getPos();
-			cout << "proy x = " << proyp.x << " || proy y = " << proyp.y << endl;
-			cout << "pers x = " << pos.x << " || pers y = " << pos.y << endl;
 
 			if (GestorDeTeclado::isKeyDown('j'))
-				d->setVel(-20, 0);
+				d->setVel(-35, 0);
 			else if (GestorDeTeclado::isKeyDown('l'))
-				d->setVel(20, 0);
+				d->setVel(35, 0);
 			else if (GestorDeTeclado::isKeyDown('i'))
-				d->setVel(0, 20);
+				d->setVel(0, 35);
 			else if (GestorDeTeclado::isKeyDown('k'))
-				d->setVel(0, -20);
+				d->setVel(0, -35);
 
 		}
 	}
 	jugador.tecla();
 	if (GestorDeTeclado::isKeyPressed(' ')){
-		_piso.cambiaRoom();
+		if (_piso.cambiaRoom()) {
+			disparosPlayer.destruirContenido();
+		}
 	}
 }
 
