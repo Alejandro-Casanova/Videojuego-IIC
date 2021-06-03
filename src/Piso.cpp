@@ -45,7 +45,7 @@ void Piso::cambiaRoom()
 
 void Piso::inicializa(Player* pptr)
 {
-	cargaLayout("res/rooms/floor_test.txt");
+	cargaLayout("res/pisos/1.txt");
 	_playerPtr = pptr;
 	setPiso();
 }
@@ -97,8 +97,8 @@ void Piso::setPiso()
 		_roomLayout[i].resize(_layout[i].size()); //Dimensiona las columnas del vector
 		for (int j = 0; j < _layout[i].size(); j++) {
 			if(_layout[i][j] == 'S') {
-				_roomLayout[i][j] = new Room(0);
-				_roomLayout[i][j]->inicializa("res/rooms/test.txt", "res/texturas/Basement1.png", _playerPtr);
+				_roomLayout[i][j] = new Room(0, "res/texturas/rooms/Basement1.png");
+				_roomLayout[i][j]->inicializa("res/rooms/1.txt", _playerPtr);
 				_rooms.push_back(_roomLayout[i][j]);//Será la room inicial
 				break;
 			}
@@ -109,8 +109,8 @@ void Piso::setPiso()
 		for (int j = 0; j < _layout[i].size(); j++) {
 			switch (_layout[i][j]) {
 			case 'R':
-				_roomLayout[i][j] = new Room(_rooms.size());
-				_roomLayout[i][j]->inicializa("res/rooms/test.txt", "res/texturas/Basement1.png", _playerPtr);
+				_roomLayout[i][j] = new Room(_rooms.size(), "res/texturas/rooms/Basement1.png");
+				_roomLayout[i][j]->inicializa("res/rooms/1.txt", _playerPtr);
 				_rooms.push_back(_roomLayout[i][j]);
 				break;
 			case '.':

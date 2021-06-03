@@ -24,17 +24,17 @@ Mundo::~Mundo()
 void Mundo::dibuja()
 {
 	gluLookAt(x_ojo, y_ojo, z_ojo,  // posicion del ojo
-			0.0, y_ojo, 0.0,      // hacia que punto mira  (0,0,0) 
+			x_ojo, y_ojo, 0.0,      // hacia que punto mira  (0,0,0) 
 			0.0, 1.0, 0.0);      // definimos hacia arriba (eje Y)    
 
 	///LLAMADAS PARA DIBUJAR
-
+	_gui.dibuja();
 	
 	jugador.dibuja();
 
 	_piso.dibuja();
 
-	malapersona.dibuja();
+	//malapersona.dibuja();
 
 	disparosPlayer.dibuja();
 }
@@ -47,7 +47,7 @@ void Mundo::mueve()
 
 	jugador.mueve(0.025f);
   
-	malapersona.mueve(0.025f);
+	//malapersona.mueve(0.025f);
   
 	
 	//Interaccion::rebote(malapersona, _piso._room._paredes);
@@ -60,7 +60,6 @@ void Mundo::mueve()
 
 
 void Mundo::tecla() {
-
 	//DISPARO
 	if (GestorDeTeclado::isKeyDown('j') || GestorDeTeclado::isKeyDown('k') || GestorDeTeclado::isKeyDown('l') || GestorDeTeclado::isKeyDown('i')) {
 		if (jugador.dispara()) { //Indica si el jugador está listo para disparar
@@ -71,8 +70,6 @@ void Mundo::tecla() {
 			d->setPos(pos.x, pos.y);
 			disparosPlayer.agregar(d);
 			Vector2D proyp = d->getPos();
-			cout << "proy x = " << proyp.x << " || proy y = " << proyp.y << endl;
-			cout << "pers x = " << pos.x << " || pers y = " << pos.y << endl;
 
 			if (GestorDeTeclado::isKeyDown('j'))
 				d->setVel(-20, 0);
@@ -93,18 +90,19 @@ void Mundo::tecla() {
 
 void Mundo::teclaEspecial()
 {
+	
 	jugador.teclaEspecial();
 }
 
 void Mundo::inicializa()
 {
-	x_ojo=0.0f;
+	x_ojo=-10.0f;
 	y_ojo=0.0f;
-	z_ojo=120.0f;
+	z_ojo=140.0f;
 	
 	//LLAMADAS DE INICIALIZACION
 	jugador.inicializa();
-	malapersona.inicializa();
+	//malapersona.inicializa();
 	_piso.inicializa(&jugador);
 	
 

@@ -7,10 +7,12 @@
 #include "Player.h"
 #include "Objeto.h"
 #include "GestorDeTeclado.h"
+#include "Macros.h"
 
-Room::Room(float indice) : _indice(indice)
+Room::Room(float indice, const char* ruta_de_textura) : _indice(indice), _sprite{ruta_de_textura}
 {
-
+	_sprite.setPos(0, 0);
+	GestorSprites::dimensionaSprite(468, 285, _ancho + 2.0f * ROOM_BORDE_TEXTURA, _sprite); //Se ha estrechado un poco la textura para adaptarla a l hitbox de la habitacion
 }
 
 Room::~Room()
@@ -78,25 +80,13 @@ void Room::dibuja()
 		i->dibuja();
 	}
 
-	glEnable(GL_TEXTURE_2D);
-	glBindTexture(GL_TEXTURE_2D, _textura.id);
-	glDisable(GL_LIGHTING);
-	glBegin(GL_POLYGON);
-	glColor3f(1, 1, 1);
-	glTexCoord2d(0, 1); glVertex3f(-_ancho / 2.0f - _bordeText, _alto/2.0f + _bordeText, 0.0f);
-	glTexCoord2d(1, 1); glVertex3f(_ancho / 2.0f + _bordeText, _alto / 2.0f + _bordeText, 0.0f);
-	glTexCoord2d(1, 0); glVertex3f(_ancho / 2.0f + _bordeText, -_alto / 2.0f - _bordeText, 0.0f);
-	glTexCoord2d(0, 0); glVertex3f(-_ancho / 2.0f - _bordeText, -_alto / 2.0f - _bordeText, 0.0f);
-	glEnd();
-	glEnable(GL_LIGHTING);
-	glDisable(GL_TEXTURE_2D);
+	_sprite.draw();
 }
 
-void Room::inicializa(const char* ruta_de_layout, const char* ruta_de_textura, Entidad* pptr)
+void Room::inicializa(const char* ruta_de_layout, Entidad* pptr)
 {
 	setParedes(_ancho, _alto);
 	cargaLayout(ruta_de_layout);
-	cargaTextura(ruta_de_textura);
 
 	_player_ptr = pptr;
 	setRoom();
@@ -126,11 +116,6 @@ void Room::cargaLayout(const char* ruta_de_archivo)
 	/*for (auto i : _layout) {
 		std::cout << i << std::endl;
 	}*/
-}
-
-void Room::cargaTextura(const char* ruta_de_textura)
-{
-	_textura = ETSIDI::getTexture(ruta_de_textura);
 }
 
 void Room::setRoom()

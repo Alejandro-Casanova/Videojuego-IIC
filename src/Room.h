@@ -24,15 +24,14 @@ class Room
 	friend class ListaProyectil;
 
 public:
-	Room(float indice);
+	Room(float indice, const char* ruta_de_textura);
 	~Room();
 	void mueve();
 	void dibuja();
 	void dibujaHitBox() const;
 
-	void inicializa(const char* ruta_de_layout, const char* ruta_de_textura, Entidad* pptr);
+	void inicializa(const char* ruta_de_layout, Entidad* pptr);
 	void cargaLayout(const char* ruta_de_archivo);
-	void cargaTextura(const char* ruta_de_textura);
 	
 	void setRoom(); //Inicializa Obstáculos, Enemigos, etc...
 	void addPuerta(Puerta* newPuerta); //Añade una puerta a la room
@@ -40,7 +39,6 @@ public:
 	void setParedes(float ancho, float alto);
 	void setAncho(float ancho) { _ancho = ancho; }
 	void setAlto(float alto) { _alto = alto; }
-	void setBordeText(float bordeText) { _bordeText = bordeText; }
 	int getIndice() const { return _indice; }
 	//void setIndice(float nIndice) { _indice = nIndice; }
 
@@ -49,9 +47,8 @@ public:
 
 private:
 	const int _indice; //Identifica la room, para diferenciarla del resto de rooms del piso
-	float _ancho = 130;
-	float _alto = 70;
-	float _bordeText = 15.0f; //Ancho de la textura que queda detrás de la hit-box de la pared
+	float _ancho = ROOM_WIDTH;
+	float _alto = ROOM_HEIGHT;
 
 	Caja _paredes; //Hit-box de las paredes
 	Vector2D origen=(-_ancho / 2.0f, +_alto / 2.0f - 10.0f);
@@ -61,7 +58,7 @@ private:
 	std::vector<Obstaculo*> _obstaculos;
 	std::vector<Enemigo*> _enemigos;
 	std::vector<Objeto*> _objetos;
-	ETSIDI::GLTexture _textura = { 0, 0, 0 };
+	ETSIDI::Sprite _sprite;
 
 	Puerta _puerta{nullptr};
 	std::vector<Puerta*> _puertas;

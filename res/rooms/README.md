@@ -5,8 +5,3 @@ Archivos de Room:
 'L': Llave
 'M': Moneda
 'S': Salud, Corazón
-
-Archivos de Floor
-'.': Hueco
-'S': Room Inicial
-'R': Room Normal

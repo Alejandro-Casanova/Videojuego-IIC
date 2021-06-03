@@ -4,6 +4,8 @@
 
 Player::Player()
 {
+	_healthStat = 5.0f;
+	_healthCounter = _healthStat;
 }
 
 Player::~Player()
