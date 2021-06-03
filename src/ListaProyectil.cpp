@@ -88,7 +88,7 @@ Proyectil* ListaProyectil::colision(Caja c)
 {
 	for (int i = 0; i < contador; i++)
 	{
-		if (Interaccion::impacto(*(lista_Pro[i]), c))
+		if (Interaccion::colision(*(lista_Pro[i]), c))
 			return lista_Pro[i];
 	}
 	return 0; //no hay colisión
@@ -97,7 +97,7 @@ Proyectil* ListaProyectil::colision(Caja c)
 Proyectil* ListaProyectil::impacto(Enemigo e) {
 	for (int i = 0; i < contador; i++)
 	{
-		if (Interaccion::impacto(*(lista_Pro[i]), e))
+		if (Interaccion::colision(*(lista_Pro[i]), e))
 			return lista_Pro[i];
 	}
 	return 0; //no hay colisión
@@ -107,7 +107,7 @@ Proyectil* ListaProyectil::impacto(Obstaculo& o)
 {
 	for (int i = 0; i < contador; i++)
 	{
-		if (Interaccion::impacto(*(lista_Pro[i]), o))
+		if (Interaccion::colision(*(lista_Pro[i]), o))
 			return lista_Pro[i];
 	}
 	return 0; //no hay colisión

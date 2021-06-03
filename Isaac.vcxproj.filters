@@ -19,6 +19,7 @@
     <ClCompile Include="src\GestorDeTeclado.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\CoordinadorIsaac.cpp" />
+    <ClCompile Include="src\Puerta.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Caja.h" />
@@ -40,5 +41,7 @@
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\CoordinadorIsaac.h" />
     <ClInclude Include="src\Macros.h" />
+    <ClInclude Include="src\Puerta.h" />
+    <ClInclude Include="src\GestorSprites.h" />
   </ItemGroup>
 </Project>

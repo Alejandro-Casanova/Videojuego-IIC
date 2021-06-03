@@ -55,7 +55,7 @@ void Mundo::mueve()
 	if (auxi != 0) { disparosPlayer.eliminar(auxi);
 	malapersona.setPos(-130, 0);
 	}*/
-	_roomActual->gestionarDisparos(disparosPlayer); //Colisiones de los disparos con el entorno y enemigos
+	_piso.getRoomActual()->gestionarDisparos(disparosPlayer); //Colisiones de los disparos con el entorno y enemigos
 }
 
 
@@ -86,6 +86,9 @@ void Mundo::tecla() {
 		}
 	}
 	jugador.tecla();
+	if (GestorDeTeclado::isKeyPressed(' ')){
+		_piso.cambiaRoom();
+	}
 }
 
 void Mundo::teclaEspecial()
@@ -102,7 +105,7 @@ void Mundo::inicializa()
 	//LLAMADAS DE INICIALIZACION
 	jugador.inicializa();
 	malapersona.inicializa();
-	_piso.inicializa(&jugador, _roomActual);
+	_piso.inicializa(&jugador);
 	
 
 	

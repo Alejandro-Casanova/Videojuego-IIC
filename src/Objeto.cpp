@@ -1,5 +1,6 @@
 #include "Objeto.h"
 #include "Macros.h"
+#include "GestorSprites.h"
 
 Objeto::Objeto(const char* ruta_de_textura, Vector2D posicion, obj_t t) : rtt(t), _sprite{ ruta_de_textura }
 {
@@ -15,22 +16,22 @@ void Objeto::dibuja()
 	_sprite.draw();
 }
 
-void Objeto::dimensionaSprite(int pxWidth, int pxHeight)
-{
-	float width, height;
-	if (pxWidth >= pxHeight) {
-		width = TILE_WIDTH / 2.0f;
-		height = TILE_WIDTH * pxHeight / 2.0f / pxWidth;
-		_sprite.setSize(width, height);
-		
-	}
-	else {
-		width = TILE_WIDTH * pxWidth / pxHeight / 2.0f;
-		height = TILE_WIDTH / 2.0f;
-		_sprite.setSize(width, height);
-	}
-	_sprite.setCenter(width / 2.0f, height / 2.0f);
-}
+//void Objeto::dimensionaSprite(int pxWidth, int pxHeight)
+//{
+//	float width, height;
+//	if (pxWidth >= pxHeight) {
+//		width = TILE_WIDTH / 2.0f;
+//		height = TILE_WIDTH * pxHeight / 2.0f / pxWidth;
+//		_sprite.setSize(width, height);
+//		
+//	}
+//	else {
+//		width = TILE_WIDTH * pxWidth / pxHeight / 2.0f;
+//		height = TILE_WIDTH / 2.0f;
+//		_sprite.setSize(width, height);
+//	}
+//	_sprite.setCenter(width / 2.0f, height / 2.0f);
+//}
 
 Objeto* Factoria::create(const Objeto& ob)
 {
