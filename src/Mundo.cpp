@@ -9,8 +9,6 @@
 #include "Personaje.h"
 #include "GestorDeTeclado.h"
 
-using namespace std;
-
 Mundo::Mundo() : _piso{&jugador}
 {
 	disparosPlayer.setFriendly(true);
@@ -57,30 +55,9 @@ void Mundo::mueve()
 
 
 void Mundo::tecla() {
-	//DISPARO
-	if (GestorDeTeclado::isKeyDown('j') || GestorDeTeclado::isKeyDown('k') || GestorDeTeclado::isKeyDown('l') || GestorDeTeclado::isKeyDown('i')) {
-		if (jugador.dispara()) { //Indica si el jugador está listo para disparar
-			// Creacion de un proyectil
-			Proyectil* d = new Proyectil();
-			//	proyectil.setOrigen(Vector2D.player)
-			Vector2D pos = jugador.getPos();
-			d->setPos(pos.x, pos.y);
-			disparosPlayer.agregar(d);
-			Vector2D proyp = d->getPos();
 
-			float vel = jugador.getBulletSpeed();
-			if (GestorDeTeclado::isKeyDown('j'))
-				d->setVel(-vel, 0);
-			else if (GestorDeTeclado::isKeyDown('l'))
-				d->setVel(vel, 0);
-			else if (GestorDeTeclado::isKeyDown('i'))
-				d->setVel(0, vel);
-			else if (GestorDeTeclado::isKeyDown('k'))
-				d->setVel(0, -vel);
-
-		}
-	}
 	jugador.tecla();
+
 	if (GestorDeTeclado::isKeyPressed(' ')){
 		if (_piso.cambiaRoom()) {
 			disparosPlayer.destruirContenido();
@@ -90,7 +67,9 @@ void Mundo::tecla() {
 
 void Mundo::teclaEspecial()
 {
-	
+	Proyectil* aux = jugador.dispara();
+	if (aux != nullptr) disparosPlayer.agregar(aux);
+
 	jugador.teclaEspecial();
 }
 
@@ -103,8 +82,6 @@ void Mundo::inicializa()
 	//LLAMADAS DE INICIALIZACION
 	jugador.inicializa();
 	_piso.inicializa(&jugador);
-	
-
 	
 }
 

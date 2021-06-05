@@ -9,7 +9,7 @@ Personaje::~Personaje(){
 
 }
 
-bool Personaje::dispara()
+bool Personaje::puedeDisparar()
 {
 	if (_shootCounter == _shootSpeed) { //Si el contador está lleno
 		_shootCounter = 0;

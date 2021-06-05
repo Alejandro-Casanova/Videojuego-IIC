@@ -191,7 +191,7 @@ void Room::setRoom()
 
 void Room::disparos() {
 	for (auto i : _enemigos){
-		if (i->dispara()) {		//Indica si el enemigo está listo para disparar
+		if (i->puedeDisparar()) {		//Indica si el enemigo está listo para disparar
 		// Creacion de un proyectil
 			Proyectil* d = new Proyectil();
 			//	proyectil.setOrigen(Vector2D.player)
