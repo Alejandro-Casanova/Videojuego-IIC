@@ -14,7 +14,7 @@ public:
 	void inicializa() override;
 	virtual void mueve(float) override;
 
-	virtual bool dispara();
+	virtual bool puedeDisparar(); //Indica si el personaje está listo para disparar
 	virtual bool recibeHerida(float daño); //Devuelve true si se ha producido la muerte
 
 	

@@ -99,8 +99,8 @@ void Piso::setPiso()
 		_roomLayout[i].resize(_layout[i].size()); //Dimensiona las columnas del vector
 		for (int j = 0; j < _layout[i].size(); j++) {
 			if(_layout[i][j] == 'S') {
-				_roomLayout[i][j] = new Room(0, "res/texturas/rooms/Basement1.png", _playerPtr);
-				_roomLayout[i][j]->inicializa("res/rooms/1.txt");
+				_roomLayout[i][j] = new Room(0, "res/texturas/rooms/tutorial_room.png", _playerPtr);
+				_roomLayout[i][j]->inicializa("res/rooms/0.txt");
 				_rooms.push_back(_roomLayout[i][j]);//Será la room inicial
 				break;
 			}

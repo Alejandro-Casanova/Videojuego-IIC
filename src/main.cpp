@@ -63,42 +63,30 @@ void OnDraw(void){
 }
 
 void OnKeyboardDown(unsigned char key, int x_t, int y_t){
-	
-	//LLAMADAS DE TECLADO
-	GestorDeTeclado::update(); //Necesario para el correcto funcionamiento
-	GestorDeTeclado::pressKey(key);
-	
-	isaac.tecla();
 
+	GestorDeTeclado::pressKey(key);
 	
 	glutPostRedisplay();
 }
 
 void OnKeyboardUp(unsigned char key, int x_t, int y_t) {
-	GestorDeTeclado::update(); //Necesario para el correcto funcionamiento
-	GestorDeTeclado::releaseKey(key);
-	
-	isaac.tecla();
 
+	GestorDeTeclado::releaseKey(key);
 	
 	glutPostRedisplay();
 }
 
 void onSpecialKeyboardDown(int key, int x, int y)
 {
-	GestorDeTeclado::update(); //Necesario para el correcto funcionamiento
-	GestorDeTeclado::pressKey(key);
-	
-	isaac.teclaEspecial();
+
+	GestorDeTeclado::pressSpecialKey(key);
 	
 	glutPostRedisplay();
 }
 
 void onSpecialKeyboardUp(int key, int x, int y) {
-	GestorDeTeclado::update(); //Necesario para el correcto funcionamiento
-	GestorDeTeclado::releaseKey(key);
 
-	isaac.teclaEspecial();
+	GestorDeTeclado::releaseSpecialKey(key);
 	
 	glutPostRedisplay();
 }
@@ -106,10 +94,12 @@ void onSpecialKeyboardUp(int key, int x, int y) {
 void OnTimer(int value){
 
 	//CÓDIGO DE ANIMACION
+	isaac.tecla();
+	isaac.teclaEspecial();
 	isaac.mueve();
 	
-	//GestorDeTeclado::update();
-	//no borrar estas lineas
+	//LLAMADAS ESENCIALES
+	GestorDeTeclado::update();
 	glutTimerFunc(25, OnTimer, 0);
 	glutPostRedisplay();
 }

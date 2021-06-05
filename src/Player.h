@@ -2,6 +2,7 @@
 
 #include "Personaje.h"
 #include "ETSIDI.h"
+class Proyectil;
 
 class Player : public Personaje
 {
@@ -17,7 +18,7 @@ public:
 	virtual void mueve(float) override;
 
 	virtual bool recibeHerida(float damage) override;
-	virtual bool dispara() override;
+	virtual Proyectil* dispara();  //Devuelve un proyectil si se produce el disparo, en caso contrario devuelve nullptr
 
 	Vector2D getHealth() const { return Vector2D{ _healthCounter, _healthStat }; }
 	int getLlaves() const { return _llaves; }

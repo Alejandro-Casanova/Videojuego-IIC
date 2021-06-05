@@ -29,6 +29,7 @@ private:
 	float z_ojo = 0;
 
 	Piso _piso;
+	std::vector<Piso*> _pisos;
 	Player jugador;
 	GUI _gui{ &jugador };
 	//Enemigo malapersona; //TEMPORAL

@@ -5,8 +5,11 @@
 #include "Caja.h"
 #include <vector>
 #include "GestorSprites.h"
+#include "Macros.h"
 class Player;
 class ListaProyectil;
+
+//CLASE ENEMIGO GENÉRICA///////////////////////////////////////////////////
 
 class Enemigo : public Personaje
 {
@@ -15,9 +18,9 @@ public:
 	Enemigo(Vector2D posicion, Player* playerPtr); //Almacena posicion y un puntero al jugador
 	virtual ~Enemigo();
 
-	virtual void dibuja() override;
+	virtual void dibuja() override = 0;
 	void inicializa() override;
-	virtual bool dispara() override;
+	virtual bool puedeDisparar() override;
 	
 	float getMeleeDamage() const { return _meleeDamage; }
 
@@ -34,6 +37,7 @@ protected:
 class EnemigoA : public Enemigo { //Tiene un único sprite
 public:
 	EnemigoA(Vector2D posicion, Player* playerPtr, const char* ruta_de_textura);
+	virtual void dibuja() override = 0;
 protected:
 	ETSIDI::Sprite _sprite;
 };
@@ -41,6 +45,7 @@ protected:
 class EnemigoB : public Enemigo { //Tiene una secuencia de sprites para el cuerpo y una para la cabeza
 public:
 	EnemigoB(Vector2D posicion, Player* playerPtr, const char* ruta_body, int body_sprite_cols, const char* ruta_head, int head_sprite_cols);
+	virtual void dibuja() override = 0;
 protected:
 	ETSIDI::SpriteSequence _head, _body;
 };
@@ -69,12 +74,6 @@ private:
 
 
 ///BOSS GUSANO////////////////////////////////////////////////////////////////////
-
-//Parámetros del BOSS
-const float DIST_ENTRE_MODULOS = TILE_WIDTH * 0.85f;
-const float SALUD_MAX = 18.0f;
-const int N_MODULOS = 6;
-const float T_ROAR = 10.0f;
 
 class BossGusano : public Enemigo {
 	

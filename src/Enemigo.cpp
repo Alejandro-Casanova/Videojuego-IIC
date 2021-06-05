@@ -5,6 +5,8 @@
 #include "Player.h"
 #include "ListaProyectil.h"
 
+//CLASE ENEMIGO GENÉRICA (ABSTRACTA)//////////////////////////////////77
+
 Enemigo::~Enemigo() {
 
 }
@@ -18,9 +20,9 @@ void Enemigo::inicializa()
 
 }
 
-bool Enemigo::dispara()
+bool Enemigo::puedeDisparar()
 {
-	if (_dispara)return Personaje::dispara();
+	if (_dispara) return Personaje::puedeDisparar();
 	return false;
 }
 
@@ -33,6 +35,8 @@ void Enemigo::follow(Entidad* ptr)
 	Vector2D dir = ptr->getPos() - _posicion;
 	_velocidad = dir.unitario() * _speedStat;
 }
+
+//SUBCLASES DE ENEMIGOS (ABSTRACTAS)
 
 EnemigoA::EnemigoA(Vector2D posicion, Player* playerPtr, const char* ruta_de_textura) 
 	: Enemigo(posicion, playerPtr), _sprite{ ruta_de_textura } {
@@ -239,7 +243,7 @@ bool BossGusano::recibeHerida(float damage)
 	
 	if (!_modulos.empty()) {//Impacto a la cabeza causa daño a todos los módulos
 		for (int i = _modulos.size() - 1; i >= 0; i--) {
-			if (_modulos[i].recibeHerida(damage / 4.0f))
+			if (_modulos[i].recibeHerida(damage / N_MODULOS))
 				_modulos.erase(_modulos.begin() + i);
 		}
 
