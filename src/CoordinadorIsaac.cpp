@@ -129,8 +129,6 @@ void CoordinadorIsaac::tecla() {
 }
 
 
-
-
 void CoordinadorIsaac::mueve() {
 	if (estado ==JUEGO) { 
 		mundo.mueve(); 

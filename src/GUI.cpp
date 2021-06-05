@@ -22,8 +22,6 @@ GUI::GUI(Player* playerPtr) : _playerPtr(playerPtr)
 	GestorSprites::dimensionaSprite(24, 20, TILE_WIDTH / 2.0f, *_sprites[0]);
 	GestorSprites::dimensionaSprite(25, 14, TILE_WIDTH / 2.0f, *_sprites[1]);
 	GestorSprites::dimensionaSprite(23, 31, TILE_WIDTH / 2.0f, *_sprites[2]);
-
-	
 }
 
 GUI::~GUI()
@@ -35,7 +33,6 @@ GUI::~GUI()
 
 void GUI::dibuja()
 {
-	
 	ETSIDI::setTextColor(1, 1, 0);
 	ETSIDI::setFont("res/font/upheavtt.ttf", 14);
 	ETSIDI::printxy("ISAAC", _origen.x, _origen.y);
