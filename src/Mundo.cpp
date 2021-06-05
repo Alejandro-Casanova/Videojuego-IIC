@@ -111,6 +111,11 @@ void Mundo::inicializa()
 	
 }
 
+int Mundo::JuegoAcabado() {
+	//0= juego sigue, 1=victoria, 2=derrota, 3=empate
+	
+	return 0;
+}
 
 
 
