@@ -45,13 +45,13 @@ EnemigoB::EnemigoB(Vector2D posicion, Player* playerPtr, const char* ruta_body, 
 	: Enemigo(posicion, playerPtr), _body{ ruta_body, body_sprite_cols }, _head{ ruta_head, head_sprite_cols } {
 }
 
-/// FATTY
+/// FATTY ///////////////////////
 
 Fatty::~Fatty(){
 
 }
 
-Fatty::Fatty(Vector2D pos, Player* playerPtr) : EnemigoA(pos, playerPtr, "res/texturas/fatty.png") {
+Fatty::Fatty(Vector2D pos, Player* playerPtr) : EnemigoA(pos, playerPtr, "res/texturas/enemigos/fatty.png") {
 
 	_sprite.setSize(_dims.x, _dims.y);
 	_sprite.setCenter(_dims.x / 2.0f, _dims.y / 2.0f);
@@ -73,7 +73,7 @@ void Fatty::mueve(float t) {
 }
 
 ///////////// caca
-Caca::Caca(Vector2D pos, Player* const playerPtr) : EnemigoA(pos, playerPtr, "res/texturas/caca.png")
+Caca::Caca(Vector2D pos, Player* const playerPtr) : EnemigoA(pos, playerPtr, "res/texturas/enemigos/caca.png")
 {
 	_sprite.setSize(_dims.x, _dims.y);
 	_sprite.setCenter(_dims.x / 2.0f, _dims.y / 2.0f);
@@ -98,7 +98,7 @@ Caca::~Caca()
 {
 }
 
-/// BOSS GUSANO
+/// BOSS GUSANO /////////////////////////////////////
 
 BossGusano::BossGusano(Player* playerPtr) : Enemigo(Vector2D{ 0.0f, 0.0f }, playerPtr)
 {

@@ -7,17 +7,19 @@ class Player;
 class Piso
 {
 public:
-	Piso(Player* playerPtr);
+	Piso(Player* playerPtr, const char* ruta_de_layout = "res/pisos/1.txt");
+	~Piso();
 	void mueve();
 	void dibuja();
 
 	bool cambiaRoom(); //Cambia de room si el jugador usa las puertas
+	bool cambiaPiso(); //Accede al siguiente piso si el jugador usa la trampilla
 
-	void inicializa(Player* pptr); //Inicialia con un puntero al jugador y una referencia a un puntero a la room actual
+	void inicializa(const char* ruta_de_layout); //Inicialia con un puntero al jugador y una referencia a un puntero a la room actual
 	void cargaLayout(const char* ruta_de_archivo); //Carga el layout del piso desde un .txt
 	void setPiso(); //Configura las distintas rooms y puertas que conectan las mismas
 
-	Room* getRoomActual() { return _rooms[_roomActual]; }
+	Room* roomActual() { return _rooms[_roomActual]; }
 	void setRoomActual(int nRoom) { if(nRoom != -1) _roomActual = nRoom; }
 
 private:

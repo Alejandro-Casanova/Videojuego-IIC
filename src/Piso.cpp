@@ -3,8 +3,17 @@
 #include "Player.h"
 #include <fstream>
 
-Piso::Piso(Player* playerPtr) : _playerPtr(playerPtr)
+Piso::Piso(Player* playerPtr, const char* ruta_de_layout) : _playerPtr(playerPtr)
 {
+	inicializa(ruta_de_layout);
+}
+
+Piso::~Piso() {
+
+	//Libera la memoria
+	for (auto &i : _rooms) {
+		delete i;
+	}
 
 }
 
@@ -22,18 +31,18 @@ void Piso::dibuja()
 
 bool Piso::cambiaRoom()
 {
-	auto* puerta = _rooms[_roomActual]->puertaActual();
+	auto* puerta = roomActual()->puertaActual();
 	if (puerta != nullptr && puerta->isOpen()) {
 		setRoomActual(puerta->getNextRoom()->getIndice());
-
+		roomActual()->disparosEnemigos.destruirContenido();
 		//Invierte la posicion del jugador para que aparezca al otro lado de la puerta
-		switch (puerta->getTipo()) {
-		case Puerta::TIPO::DOWN:
-		case Puerta::TIPO::UP:
+		switch (puerta->getOrientacion()) {
+		case PuertaRoom::ORIENTACION::DOWN:
+		case PuertaRoom::ORIENTACION::UP:
 			_playerPtr->flipPos(false, true);
 			break;
-		case Puerta::TIPO::LEFT:
-		case Puerta::TIPO::RIGHT:
+		case PuertaRoom::ORIENTACION::LEFT:
+		case PuertaRoom::ORIENTACION::RIGHT:
 			_playerPtr->flipPos(true, false);
 			break;
 		default:
@@ -45,10 +54,9 @@ bool Piso::cambiaRoom()
 }
 
 
-void Piso::inicializa(Player* pptr)
+void Piso::inicializa(const char* ruta_de_layout)
 {
-	cargaLayout("res/pisos/1.txt");
-	_playerPtr = pptr;
+	cargaLayout(ruta_de_layout);
 	setPiso();
 }
 
@@ -136,9 +144,9 @@ void Piso::setPiso()
 			if (roomPtr != nullptr) { //Encuentra room
 				if (aux != nullptr) { //Hay room anterior
 					if(_layout[row][col] == 'B' || _layout[row][col-1] == 'B') //Comprueba si se trata de la puerta del boss
-						roomPtr->addPuerta(new PuertaBoss(aux, Puerta::TIPO::LEFT));
+						roomPtr->addPuerta(new PuertaBoss(aux, PuertaRoom::ORIENTACION::LEFT));
 					else
-						roomPtr->addPuerta(new Puerta(aux, Puerta::TIPO::LEFT));
+						roomPtr->addPuerta(new PuertaRoom(aux, PuertaRoom::ORIENTACION::LEFT));
 				}
 				aux = roomPtr;
 			}
@@ -155,9 +163,9 @@ void Piso::setPiso()
 			if (roomPtr != nullptr) { //Encuentra room
 				if (aux != nullptr) { //Hay room anterior
 					if (_layout[row][col] == 'B' || _layout[row][col + 1] == 'B') //Comprueba si se trata de la puerta del boss
-						roomPtr->addPuerta(new PuertaBoss(aux, Puerta::TIPO::RIGHT));
+						roomPtr->addPuerta(new PuertaBoss(aux, PuertaRoom::ORIENTACION::RIGHT));
 					else
-						roomPtr->addPuerta(new Puerta(aux, Puerta::TIPO::RIGHT));
+						roomPtr->addPuerta(new PuertaRoom(aux, PuertaRoom::ORIENTACION::RIGHT));
 				}
 				aux = roomPtr;
 			}
@@ -174,9 +182,9 @@ void Piso::setPiso()
 			if (roomPtr != nullptr) { //Encuentra room
 				if (aux != nullptr) { //Hay room anterior
 					if (_layout[row][col] == 'B' || _layout[row - 1][col] == 'B') //Comprueba si se trata de la puerta del boss
-						roomPtr->addPuerta(new PuertaBoss(aux, Puerta::TIPO::UP));
+						roomPtr->addPuerta(new PuertaBoss(aux, PuertaRoom::ORIENTACION::UP));
 					else
-						roomPtr->addPuerta(new Puerta(aux, Puerta::TIPO::UP));
+						roomPtr->addPuerta(new PuertaRoom(aux, PuertaRoom::ORIENTACION::UP));
 				}
 				aux = roomPtr;
 			}
@@ -193,9 +201,9 @@ void Piso::setPiso()
 			if (roomPtr != nullptr) { //Encuentra room
 				if (aux != nullptr) { //Hay room anterior
 					if (_layout[row][col] == 'B' || _layout[row + 1][col] == 'B') //Comprueba si se trata de la puerta del boss
-						roomPtr->addPuerta(new PuertaBoss(aux, Puerta::TIPO::DOWN));
+						roomPtr->addPuerta(new PuertaBoss(aux, PuertaRoom::ORIENTACION::DOWN));
 					else
-						roomPtr->addPuerta(new Puerta(aux, Puerta::TIPO::DOWN));
+						roomPtr->addPuerta(new PuertaRoom(aux, PuertaRoom::ORIENTACION::DOWN));
 				}
 				aux = roomPtr;
 			}
