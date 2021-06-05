@@ -3,16 +3,24 @@
 #include "Mundo.h" 
 
 class CoordinadorIsaac { 
+protected:
+	Mundo mundo;
+	enum  Estado { INICIO, JUEGO, GAMEOVER, FIN, PAUSA, LEADERBOARD };
+	Estado estado;
+	//ETSIDI::GLTexture _texturaInicial = { 0, 0, 0 };
+	ETSIDI::Sprite _sprite = "res/texturas/logo.png";
+
+	
 public:
 	CoordinadorIsaac();
 	virtual ~CoordinadorIsaac();
+	void dibuja();
+	void tecla();
+	void mueve();
 	void teclaEspecial(); 
-	void tecla(); 
-	void inicializa();
-	void mueve(); 
-	void dibuja(); 
-protected: 
-	enum class Estado { INICIO, JUEGO, GAMEOVER, FIN, PAUSA }; 
-	Estado estado = Estado::JUEGO; //TEMPORAL
-	Mundo mundo;
+	 
+	void inicializa() { mundo.inicializa(); }
+	
+	
+
 };

@@ -1,9 +1,17 @@
 #include "Player.h"
 #include "GestorDeTeclado.h"
 #include <iostream>
+#include "Macros.h"
+#include "GestorSprites.h"
+#include "Proyectil.h"
+
 
 Player::Player()
 {
+	_healthStat = 5.0f;
+	_healthCounter = _healthStat;
+	_speedStat = 35.0f;
+	_bulletSpeed = 35.0f;
 }
 
 Player::~Player()
@@ -12,32 +20,33 @@ Player::~Player()
 
 void Player::tecla()
 {
+	
 	//Movimiento
 	if (GestorDeTeclado::isKeyPressed('a')) {
-		_velocidad.x -= 20.0f;
+		_velocidad.x -= _speedStat;
 	} 
 	if (GestorDeTeclado::isKeyUnPressed('a')) {
-		_velocidad.x += 20.0f;
+		_velocidad.x += _speedStat;
 	}
 	if (GestorDeTeclado::isKeyPressed('d')) {
-		_velocidad.x += 20.0f;
+		_velocidad.x += _speedStat;
 	}
 	if (GestorDeTeclado::isKeyUnPressed('d')) {
-		_velocidad.x -= 20.0f;
+		_velocidad.x -= _speedStat;
 	}
 	if (GestorDeTeclado::isKeyPressed('w')) {
-		_velocidad.y += 20.0f;
+		_velocidad.y += _speedStat;
 	}
 	if (GestorDeTeclado::isKeyUnPressed('w')) {
-		_velocidad.y -= 20.0f;
+		_velocidad.y -= _speedStat;
 	}
 	if (GestorDeTeclado::isKeyPressed('s')) {
-		_velocidad.y -= 20.0f;
+		_velocidad.y -= _speedStat;
 	}
 	if (GestorDeTeclado::isKeyUnPressed('s')) {
-		_velocidad.y += 20.0f;
+		_velocidad.y += _speedStat;
 	}
-
+	
 	//Disparo
 	//ObjetoMovil::mueve(t);
 	//sprite.loop();
@@ -90,27 +99,33 @@ void Player::dibuja()
 		}
 	}
 
-	//GUI�O Y ORIENTACION CABEZA
-	if (GestorDeTeclado::isKeyDown('k')) {
+	//GUIÑO Y ORIENTACION CABEZA
+	if (GestorDeTeclado::isSpecialKeyDown(GLUT_KEY_DOWN)) {
 		if (_shootCounter > 0.2f) _head.setState(0);
 		else _head.setState(1);
 	}
-	if (GestorDeTeclado::isKeyDown('l')) {
+	if (GestorDeTeclado::isSpecialKeyDown(GLUT_KEY_RIGHT)) {
 		if (_shootCounter > 0.2f) _head.setState(2);
 		else _head.setState(3);
 	}
-	if (GestorDeTeclado::isKeyDown('i')) {
+	if (GestorDeTeclado::isSpecialKeyDown(GLUT_KEY_UP)) {
 		if (_shootCounter > 0.2f) _head.setState(4);
 		else _head.setState(5);
 	}
-	if (GestorDeTeclado::isKeyDown('j')) {
+	if (GestorDeTeclado::isSpecialKeyDown(GLUT_KEY_LEFT)) {
 		if (_shootCounter > 0.2f) _head.setState(6);
 		else _head.setState(7);
 	}
 	if (_shootCounter > 0.2f && (_head.getState() % 2)) _head.setState(_head.getState() - 1); //Evita que se quede con los ojos cerrados
 
-	_head.draw();
-	_body.draw();
+	if (_damageTimer != 0) {
+		_especial.setState(1);
+		_especial.draw();
+	}
+	else {
+		_head.draw();
+		_body.draw();
+	}
 	//std::cout << _sprite.getState();
 
 	glPopMatrix();
@@ -118,16 +133,129 @@ void Player::dibuja()
 
 void Player::inicializa(){
 
+	GestorSprites::dimensionaSprite(32, 15, 8.0f, _body);
 	_body.setCenter(4, 6);
-	_body.setSize(8, 3.75);
-	_head.setCenter(6, 4);
-	_head.setSize(12, 8.4);
+	//_body.setSize(8, 3.75);
+	GestorSprites::dimensionaSprite(40, 28, 12.0f, _head);
+	//_head.setCenter(6, 4);
+	//_head.setSize(12, 8.4);
+	GestorSprites::dimensionaSprite(40, 36, 12.0f, _especial);
 	setRadio(5.0f);
-	//_setPos(0.0f, -7.5f);
 }
 
 void Player::mueve(float t)
 {
 	Personaje::mueve(t);
 	_body.loop();
+
+	//Gestion de la invulnerabilidad
+	_damageTimer -= t;
+	if (_damageTimer < 0) _damageTimer = 0;
+	//std::cout << _damageTimer << "   " << _healthCounter << std::endl;
 }
+
+bool Player::recibeHerida(float damage)
+{
+	if (_damageTimer == 0) {
+		_damageTimer = T_INVULNERABLE;
+		ETSIDI::play("res/audio/ow.wav");
+		return Personaje::recibeHerida(damage);
+	}
+	return false;
+	
+}
+
+Proyectil* Player::dispara()
+{
+	//DISPARO
+	if (GestorDeTeclado::isSpecialKeyDown(GLUT_KEY_LEFT) || GestorDeTeclado::isSpecialKeyDown(GLUT_KEY_DOWN) || GestorDeTeclado::isSpecialKeyDown(GLUT_KEY_RIGHT) || GestorDeTeclado::isSpecialKeyDown(GLUT_KEY_UP)) {
+		if (Personaje::puedeDisparar()) { //Indica si el jugador está listo para disparar
+			ETSIDI::play("res/audio/agua.wav");
+			// Creacion de un proyectil
+			Proyectil* d = new Proyectil();
+			//	proyectil.setOrigen(Vector2D.player)
+			Vector2D pos = getPos();
+			d->setPos(pos.x, pos.y);
+			Vector2D proyp = d->getPos();
+
+			float vel = getBulletSpeed();
+			if (GestorDeTeclado::isSpecialKeyDown(GLUT_KEY_LEFT))
+				d->setVel(-vel, 0);
+			else if (GestorDeTeclado::isSpecialKeyDown(GLUT_KEY_RIGHT))
+				d->setVel(vel, 0);
+			else if (GestorDeTeclado::isSpecialKeyDown(GLUT_KEY_UP))
+				d->setVel(0, vel);
+			else if (GestorDeTeclado::isSpecialKeyDown(GLUT_KEY_DOWN))
+				d->setVel(0, -vel);
+
+			return d;
+
+		}
+	}
+	/*if (Personaje::dispara()) {
+		ETSIDI::play("res/audio/agua.wav");
+		return true;
+	}
+	return false;*/
+	return nullptr;
+}
+
+void Player::flipPos(bool H, bool V)
+{
+	if (H) _posicion.x *= -1;
+	if (V) _posicion.y *= -1;
+}
+
+
+/*
+//				INTENTO FALLIDO DE LOGRAR UN MOVIMIENTO DIRECCIONAL
+
+	int a = 0, w = 0, s = 0, d = 0, nteclas = 0;
+	float angulo1 = 0, angulo2 = 0, angulo3 = 0, angulo4 = 0, angulot = 0;
+	if (GestorDeTeclado::isKeyPressed('a')){
+		a = 1;
+		angulo1 = PI;
+	}
+	if (GestorDeTeclado::isKeyUnPressed('a')) {
+		a = 0;
+		angulo1 = 0;
+	}
+
+	if (GestorDeTeclado::isKeyPressed('w')) {
+		w = 1;
+		angulo2 = PI/2;
+	}
+	if (GestorDeTeclado::isKeyUnPressed('w')) {
+		w = 0;
+		angulo2 = 0;
+	}
+
+	if (GestorDeTeclado::isKeyPressed('d')) {
+		d = 1;
+		angulo3 = 2*PI;
+	}
+	if (GestorDeTeclado::isKeyUnPressed('d')) {
+		d = 0;
+		angulo3 = 0;
+	}
+
+	if (GestorDeTeclado::isKeyPressed('s')) {
+		s = 1;
+		angulo4 = PI*1.5F;
+	}
+	if (GestorDeTeclado::isKeyUnPressed('s')) {
+		s = 0;
+		angulo4 = 0;
+	}
+
+	nteclas = a + w + d + s;
+	angulot = angulo1 + angulo2 + angulo3 + angulo4;
+	if (nteclas != 0) {
+		_velocidad.x = _speedStat * cos(angulot/nteclas);
+		_velocidad.y = _speedStat * sin(angulot/nteclas);
+
+	}
+	else if (nteclas == 0 && angulot == 0) {
+		_velocidad = 0, 0;
+	}
+*/

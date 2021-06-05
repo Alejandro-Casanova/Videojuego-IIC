@@ -17,33 +17,9 @@ void Entidad::mueve(float t)
 	_velocidad = _velocidad + _aceleracion * t;
 }
 
-void Entidad::setPos(float x, float y)
-{
-	_posicion.x = x;
-	_posicion.y = y;
-}
-
-void Entidad::setVel(float vx, float vy)
-{
-	_velocidad.x = vx;
-	_velocidad.y = vy;
-}
-
-
-void Entidad::setAcel(float ax, float ay)
-{
-	_aceleracion.x = ax;
-	_aceleracion.y = ay;
-
-}
-
-Vector2D Entidad::getPos() {
-
-	return _posicion;
-}
-
 void Entidad::dibujaHitbox() const
 {
+	//Dibuja hitbox circular
 	float x = _posicion.x;
 	float y = _posicion.y;
 	glBegin(GL_LINES);
@@ -60,7 +36,6 @@ void Entidad::dibujaHitbox() const
 	}
 	glEnd();
 }
-
 
 void Entidad::inicializa()
 {

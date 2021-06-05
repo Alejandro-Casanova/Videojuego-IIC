@@ -1,7 +1,7 @@
 .vs
 tmp
 deps
-res/full/
+res/texturas/full/
 
 #Vaciar bin
 bin/*

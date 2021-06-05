@@ -14,11 +14,12 @@ public:
 	Vector2D operator + (Vector2D) const;
 	Vector2D operator += (Vector2D);
 	Vector2D operator -= (Vector2D);
+	Vector2D operator *=(float f);
 	float operator *(Vector2D) const; 
 	Vector2D operator *(float) const; 
 	Vector2D operator +(float) const;
 
-	void set(float x, float y);
+	void set(float nx, float ny);
 
 //ATRIBUTOS
 	float x = 0;

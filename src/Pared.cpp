@@ -23,7 +23,7 @@ void Pared::dibuja() const{
 	glEnd();
 }
 
-float Pared::distancia(Vector2D punto, Vector2D* direccion)
+float Pared::distancia(Vector2D punto, Vector2D* direccion) const
 {
 	Vector2D u = (punto - _limite1);
 	Vector2D v = (_limite2 - _limite1).unitario();

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Macros.h"
 #include "Caja.h"
 #include <ETSIDI.h>
 
@@ -9,27 +10,35 @@ class Obstaculo
 {
 	friend class Interaccion;
 public:
-	Obstaculo();
 	Obstaculo(Vector2D posicion, const char* ruta_de_textura);
-	Obstaculo(const char* ruta_de_textura, Caja hitBox);
-	Obstaculo(Caja hitBox);
 
-	void dibuja() const;
+	void dibuja();
 
-	void cargaTextura(const char* ruta_de_textura);
 	void setHitBox(Vector2D vert1, Vector2D vert2){ _hitBox.setParedes(vert1, vert2); } //Vértices opuestos de la caja
 	void setBordeTextura(float bordeTextura) { _bordeTextura = bordeTextura; }
+	const Caja& getHitBox() const { return _hitBox; }
 
+protected:
 	Caja _hitBox;
 	Vector2D _posicion;
 	bool _playerFlag = true, _bulletFlag = true; //Define si se realiza colisión con jugador o proyectil
-	double _ancho = 10, _alto = 10; //Dimensiones predeterminadas
+	double _ancho = TILE_WIDTH, _alto = TILE_WIDTH; //Dimensiones predeterminadas
 	float _bordeTextura = 0.0f; //Por si la hit-box es menor que la textura
-	ETSIDI::GLTexture _textura = { 0, 0, 0 };
-	
-	
-private:
-	
+	ETSIDI::Sprite _sprite;
 };
 
+
+class Roca : public Obstaculo {
+public:
+	Roca(Vector2D posicion);
+private:
+
+};
+
+class Hueco : public Obstaculo {
+public:
+	Hueco(Vector2D posicion);
+private:
+
+};
 

@@ -9,35 +9,33 @@ Personaje::~Personaje(){
 
 }
 
-bool Personaje::dispara()
+bool Personaje::puedeDisparar()
 {
-	if (_shootCounter == _shootSpeed) {
+	if (_shootCounter == _shootSpeed) { //Si el contador está lleno
 		_shootCounter = 0;
 		return true;
 	}
 	return false;
 }
 
-void Personaje::dibuja()
+bool Personaje::recibeHerida(float daño)
 {
-	//glPushMatrix();
-	glTranslatef(_posicion.x, _posicion.y, 0);
-	_color.ponColor();
-    glutSolidSphere(_radio, 20, 20);
-	//glPopMatrix();
-	glTranslatef(-_posicion.x, -_posicion.y, 0);
+	_healthCounter -= daño;
+	if (_healthCounter <= 0) return true;
+	return false;
 }
 
 void Personaje::inicializa()
 {
 	setColor(122,40,80);
-	setRadio(5);
-	setPos(40,0);
+	setRadio(5.0f);
+	setPos(0.0f, 0.0f);
 }
 
 void Personaje::mueve(float t)
 {
 	Entidad::mueve(t);
-	if (_shootCounter < _shootSpeed) _shootCounter += t;
-	else _shootCounter = _shootSpeed;
+	//Actualiza el contador de disparos
+	if (_shootCounter < _shootSpeed) _shootCounter += t; //Aumenta el contador
+	else _shootCounter = _shootSpeed; //Si se sobrepasa el umbral
 }

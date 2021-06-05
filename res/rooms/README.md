@@ -2,8 +2,12 @@ Archivos de Room:
 'R': Roca
 '.': Espacio
 'H': Hueco en el suelo
+'L': Llave
+'M': Moneda
 
-Archivos de Floor
-'.': Hueco
-'S': Room Inicial
-'R': Room Normal
+Enemigos:
+'F': Fatty
+'C': Caca
+
+Notas:
+-Las dimensiones del layout deben ser 7x13
