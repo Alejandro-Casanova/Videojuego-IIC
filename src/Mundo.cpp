@@ -86,9 +86,14 @@ void Mundo::inicializa()
 }
 
 int Mundo::JuegoAcabado() {
-	//0= juego sigue, 1=victoria, 2=derrota, 3=empate
 	
-	return 0;
+	if (jugador.getHealthCounter() > 0)
+		return 0;
+
+	else
+		return 1;
+
+	
 }
 
 

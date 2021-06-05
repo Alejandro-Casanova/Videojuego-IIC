@@ -22,6 +22,7 @@ class Player;
 class Room
 {
 	friend class ListaProyectil;
+	
 
 public:
 	Room(float indice, const char* ruta_de_textura, Player* playerPtr);
