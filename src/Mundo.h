@@ -33,6 +33,7 @@ private:
 	int final_juego;
 
 	Piso _piso;
+	std::vector<Piso*> _pisos;
 	Player jugador;
 	GUI _gui{ &jugador };
 	//Enemigo malapersona; //TEMPORAL

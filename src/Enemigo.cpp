@@ -6,6 +6,8 @@
 #include "Player.h"
 #include "ListaProyectil.h"
 
+//CLASE ENEMIGO GEN脡RICA (ABSTRACTA)//////////////////////////////////77
+
 Enemigo::~Enemigo() {
 
 }
@@ -19,9 +21,9 @@ void Enemigo::inicializa()
 	intervalo = 100;
 }
 
-bool Enemigo::dispara()
+bool Enemigo::puedeDisparar()
 {
-	if (_dispara)return Personaje::dispara();
+	if (_dispara) return Personaje::puedeDisparar();
 	return false;
 }
 
@@ -57,6 +59,9 @@ void Enemigo::mov_erratico() {
 		intervalo = 100;
 	}
 }
+
+
+//SUBCLASES DE ENEMIGOS (ABSTRACTAS)
 
 EnemigoA::EnemigoA(Vector2D posicion, Player* playerPtr, const char* ruta_de_textura) 
 	: Enemigo(posicion, playerPtr), _sprite{ ruta_de_textura } {
@@ -140,7 +145,7 @@ BossGusano::BossGusano(Player* playerPtr) : Enemigo(Vector2D{ 0.0f, 0.0f }, play
 
 void BossGusano::dibuja()
 {
-	//Orientaci髇 de la cabeza
+	//Orientaci贸n de la cabeza
 	if (_velocidad.x < -0.01) {//IZQUIERDA
 		_head.flip(true, false);
 		_headRoja.flip(true, false);
@@ -200,7 +205,7 @@ void BossGusano::mueve(float t, Caja& cajaRoom)
 {
 	mueveCadena();
 	
-	//Si s髄o queda la cabeza, sigue al jugador
+	//Si s贸lo queda la cabeza, sigue al jugador
 	if (_modulos.empty()) {
 		follow(_playerPtr);
 		//Rugido
@@ -210,7 +215,7 @@ void BossGusano::mueve(float t, Caja& cajaRoom)
 		}
 		_contadorRoar += t;
 	}
-	//Si quedan m骴ulos, se mueve aleatoriamente
+	//Si quedan m贸dulos, se mueve aleatoriamente
 	else if (ETSIDI::lanzaDado() < (0.1 / 15.0)) {//MEJORABLE
 		float aux = _velocidad.x;
 		_velocidad.x = _velocidad.y;
@@ -266,9 +271,9 @@ bool BossGusano::recibeHerida(float damage)
 	_contador = 0;
 	_healthCounter -= damage;
 	
-	if (!_modulos.empty()) {//Impacto a la cabeza causa da駉 a todos los m骴ulos
+	if (!_modulos.empty()) {//Impacto a la cabeza causa da帽o a todos los m贸dulos
 		for (int i = _modulos.size() - 1; i >= 0; i--) {
-			if (_modulos[i].recibeHerida(damage / 4.0f))
+			if (_modulos[i].recibeHerida(damage / N_MODULOS))
 				_modulos.erase(_modulos.begin() + i);
 		}
 

@@ -30,6 +30,8 @@ Puerta::Puerta(Room* room, TIPO t, const char* ruta, int pxW, int pxH, float max
 	}
 
 	GestorSprites::dimensionaSprite(pxW, pxH, maxDim, _sprite);
+
+	open();
 	
 }
 

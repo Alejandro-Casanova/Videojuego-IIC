@@ -9,3 +9,8 @@
 #define T_INVULNERABLE 0.75F //Tiempo de invulnerabilidad tras recibir daño
 #define PI       3.14159265358979323846	//pi
 
+//Parámetros del BOSS GUSANO
+const float DIST_ENTRE_MODULOS = TILE_WIDTH * 0.85f;
+const float SALUD_MAX = 18.0f;
+const int N_MODULOS = 6;
+const float T_ROAR = 8.0f;

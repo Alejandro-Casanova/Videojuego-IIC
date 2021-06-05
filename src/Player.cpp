@@ -3,7 +3,8 @@
 #include <iostream>
 #include "Macros.h"
 #include "GestorSprites.h"
-#include <math.h>
+#include "Proyectil.h"
+
 
 Player::Player()
 {
@@ -98,20 +99,20 @@ void Player::dibuja()
 		}
 	}
 
-	//GUI�O Y ORIENTACION CABEZA
-	if (GestorDeTeclado::isKeyDown('k')) {
+	//GUIÑO Y ORIENTACION CABEZA
+	if (GestorDeTeclado::isSpecialKeyDown(GLUT_KEY_DOWN)) {
 		if (_shootCounter > 0.2f) _head.setState(0);
 		else _head.setState(1);
 	}
-	if (GestorDeTeclado::isKeyDown('l')) {
+	if (GestorDeTeclado::isSpecialKeyDown(GLUT_KEY_RIGHT)) {
 		if (_shootCounter > 0.2f) _head.setState(2);
 		else _head.setState(3);
 	}
-	if (GestorDeTeclado::isKeyDown('i')) {
+	if (GestorDeTeclado::isSpecialKeyDown(GLUT_KEY_UP)) {
 		if (_shootCounter > 0.2f) _head.setState(4);
 		else _head.setState(5);
 	}
-	if (GestorDeTeclado::isKeyDown('j')) {
+	if (GestorDeTeclado::isSpecialKeyDown(GLUT_KEY_LEFT)) {
 		if (_shootCounter > 0.2f) _head.setState(6);
 		else _head.setState(7);
 	}
@@ -164,13 +165,39 @@ bool Player::recibeHerida(float damage)
 	
 }
 
-bool Player::dispara()
+Proyectil* Player::dispara()
 {
-	if (Personaje::dispara()) {
+	//DISPARO
+	if (GestorDeTeclado::isSpecialKeyDown(GLUT_KEY_LEFT) || GestorDeTeclado::isSpecialKeyDown(GLUT_KEY_DOWN) || GestorDeTeclado::isSpecialKeyDown(GLUT_KEY_RIGHT) || GestorDeTeclado::isSpecialKeyDown(GLUT_KEY_UP)) {
+		if (Personaje::puedeDisparar()) { //Indica si el jugador está listo para disparar
+			ETSIDI::play("res/audio/agua.wav");
+			// Creacion de un proyectil
+			Proyectil* d = new Proyectil();
+			//	proyectil.setOrigen(Vector2D.player)
+			Vector2D pos = getPos();
+			d->setPos(pos.x, pos.y);
+			Vector2D proyp = d->getPos();
+
+			float vel = getBulletSpeed();
+			if (GestorDeTeclado::isSpecialKeyDown(GLUT_KEY_LEFT))
+				d->setVel(-vel, 0);
+			else if (GestorDeTeclado::isSpecialKeyDown(GLUT_KEY_RIGHT))
+				d->setVel(vel, 0);
+			else if (GestorDeTeclado::isSpecialKeyDown(GLUT_KEY_UP))
+				d->setVel(0, vel);
+			else if (GestorDeTeclado::isSpecialKeyDown(GLUT_KEY_DOWN))
+				d->setVel(0, -vel);
+
+			return d;
+
+		}
+	}
+	/*if (Personaje::dispara()) {
 		ETSIDI::play("res/audio/agua.wav");
 		return true;
 	}
-	return false;
+	return false;*/
+	return nullptr;
 }
 
 void Player::flipPos(bool H, bool V)

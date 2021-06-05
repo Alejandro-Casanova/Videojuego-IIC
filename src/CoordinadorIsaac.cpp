@@ -29,7 +29,8 @@ void CoordinadorIsaac::dibuja() {
 		glLoadIdentity();
 		gluLookAt(0, 0, 30, 0, 0, 0, 0, 1, 0);
 		glEnable(GL_LIGHTING);
-		//GestorSprites::dimensionaSprite(362, 103, TILE_WIDTH / 2.0f, _sprite);
+		GestorSprites::dimensionaSprite(362, 103, 15, _sprite);
+		_sprite.draw();
 		ETSIDI::setTextColor(0, 0, 0);
 		ETSIDI::setFont("res/font/upheavtt.ttf", 50);
 		ETSIDI::printxy("The Binding of Isaac", -10, 2);
