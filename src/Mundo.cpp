@@ -104,7 +104,7 @@ void Mundo::inicializa()
 
 int Mundo::JuegoAcabado() {
 	
-	if (jugador.getHealthCounter() > 0)
+	if (_jugador.getHealthCounter() > 0)
 		return 0;
 
 	else
