@@ -1,11 +1,12 @@
 #include "Enemigo.h"
 #include <iostream>
+#include <random>
 #include "Interaccion.h"
 #include "GestorSprites.h"
 #include "Player.h"
 #include "ListaProyectil.h"
 
-//CLASE ENEMIGO GEN蒖ICA (ABSTRACTA)//////////////////////////////////77
+//CLASE ENEMIGO GEN脡RICA (ABSTRACTA)//////////////////////////////////77
 
 Enemigo::~Enemigo() {
 
@@ -17,7 +18,7 @@ Enemigo::Enemigo(Vector2D posicion, Player* playerPtr) :  _playerPtr(playerPtr) 
 
 void Enemigo::inicializa()
 {
-
+	intervalo = 100;
 }
 
 bool Enemigo::puedeDisparar()
@@ -35,6 +36,30 @@ void Enemigo::follow(Entidad* ptr)
 	Vector2D dir = ptr->getPos() - _posicion;
 	_velocidad = dir.unitario() * _speedStat;
 }
+
+void Enemigo::mov_erratico() {
+	Vector2D target;	
+	if (intervalo != 0) intervalo--;
+
+	if (intervalo == 0){
+		std::random_device rd;
+		std::mt19937_64 gen(rd());
+		std::uniform_int_distribution<> distr1(0, 1), distrx(-50,50), distry(-25,25);
+		if (distr1(gen)) {
+			target = _playerPtr->getPos() - _posicion;
+			_velocidad = target.unitario() * _speedStat;
+			std::cout << "IN " << target.x << " " << target.y << std::endl;
+		}
+		else {
+			target.x = _posicion.x + distrx(gen);
+			target.y = _posicion.y + distry(gen);
+			_velocidad = target.unitario() * _speedStat;
+			std::cout << "OUT " << target.x << " " << target.y << std::endl;
+		}
+		intervalo = 100;
+	}
+}
+
 
 //SUBCLASES DE ENEMIGOS (ABSTRACTAS)
 
@@ -78,6 +103,7 @@ Caca::Caca(Vector2D pos, Player* const playerPtr) : EnemigoA(pos, playerPtr, "re
 	_sprite.setSize(_dims.x, _dims.y);
 	_sprite.setCenter(_dims.x / 2.0f, _dims.y / 2.0f);
 	_radio = 5.0f;
+	_dispara = false;
 }
 
 void Caca::dibuja()
@@ -90,13 +116,17 @@ void Caca::dibuja()
 void Caca::mueve(float t) 
 {
 	Enemigo::mueve(t);
-	follow(_playerPtr);
+	mov_erratico();
+	//follow(_playerPtr);
 	//_spriteCaca.loop();
 }
 
 Caca::~Caca()
 {
 }
+
+
+
 
 /// BOSS GUSANO
 
@@ -115,7 +145,7 @@ BossGusano::BossGusano(Player* playerPtr) : Enemigo(Vector2D{ 0.0f, 0.0f }, play
 
 void BossGusano::dibuja()
 {
-	//Orientaci髇 de la cabeza
+	//Orientaci贸n de la cabeza
 	if (_velocidad.x < -0.01) {//IZQUIERDA
 		_head.flip(true, false);
 		_headRoja.flip(true, false);
@@ -175,7 +205,7 @@ void BossGusano::mueve(float t, Caja& cajaRoom)
 {
 	mueveCadena();
 	
-	//Si s髄o queda la cabeza, sigue al jugador
+	//Si s贸lo queda la cabeza, sigue al jugador
 	if (_modulos.empty()) {
 		follow(_playerPtr);
 		//Rugido
@@ -185,7 +215,7 @@ void BossGusano::mueve(float t, Caja& cajaRoom)
 		}
 		_contadorRoar += t;
 	}
-	//Si quedan m骴ulos, se mueve aleatoriamente
+	//Si quedan m贸dulos, se mueve aleatoriamente
 	else if (ETSIDI::lanzaDado() < (0.1 / 15.0)) {//MEJORABLE
 		float aux = _velocidad.x;
 		_velocidad.x = _velocidad.y;
@@ -241,7 +271,7 @@ bool BossGusano::recibeHerida(float damage)
 	_contador = 0;
 	_healthCounter -= damage;
 	
-	if (!_modulos.empty()) {//Impacto a la cabeza causa da駉 a todos los m骴ulos
+	if (!_modulos.empty()) {//Impacto a la cabeza causa da帽o a todos los m贸dulos
 		for (int i = _modulos.size() - 1; i >= 0; i--) {
 			if (_modulos[i].recibeHerida(damage / N_MODULOS))
 				_modulos.erase(_modulos.begin() + i);
