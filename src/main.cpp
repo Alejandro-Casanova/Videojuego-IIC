@@ -36,6 +36,7 @@ int main(int argc, char* argv[]){
 	glutKeyboardUpFunc(OnKeyboardUp);
 	glutSpecialFunc(onSpecialKeyboardDown); 
 	glutSpecialUpFunc(onSpecialKeyboardUp);
+	glutSetKeyRepeat(GLUT_KEY_REPEAT_ON);
 
 	///INICIALIZACIONES
 	isaac.inicializa();

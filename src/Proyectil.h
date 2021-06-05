@@ -13,9 +13,9 @@ public:
 	void dibuja() override;
 	void inicializa() override;
 	void setOrigen(float ox, float oy);
-
+	int getDamage() const { return _damage; }
 private:
-	
+	int _damage = 1.0f;
 	Vector2D _origen;
 	float distancia = 0.0f;			// longitud que recorre un disparo desde el origen
 };

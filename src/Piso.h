@@ -1,13 +1,13 @@
 #pragma once
 
 #include "Room.h"
-class Personaje;
+class Player;
 
 
 class Piso
 {
 public:
-	Piso();
+	Piso(Player* playerPtr);
 	void mueve();
 	void dibuja();
 

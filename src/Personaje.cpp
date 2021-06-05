@@ -18,7 +18,7 @@ bool Personaje::dispara()
 	return false;
 }
 
-bool Personaje::recibeHerida(int daño)
+bool Personaje::recibeHerida(float daño)
 {
 	_healthCounter -= daño;
 	if (_healthCounter <= 0) return true;

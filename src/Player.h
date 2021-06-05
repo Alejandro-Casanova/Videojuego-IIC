@@ -16,13 +16,16 @@ public:
 	void inicializa() override;
 	virtual void mueve(float) override;
 
-	virtual bool recibeHerida(int daño) override;
+	virtual bool recibeHerida(float damage) override;
+	virtual bool dispara() override;
 
+	Vector2D getHealth() const { return Vector2D{ _healthCounter, _healthStat }; }
 	int getLlaves() const { return _llaves; }
 	int getDinero() const { return _dinero; }
 
 	void flipPos(bool H, bool V);
 private:
+	float _healthStat = 2.0f; //Salud Máxima
 	int _llaves = 0;
 	int _dinero = 0;
 	float _damageTimer = 0; //Controla el umbral de invulnerabilidad del jugador tras recibir daño
