@@ -1,5 +1,6 @@
 #include "Enemigo.h"
 #include <iostream>
+#include <random>
 #include "Interaccion.h"
 #include "GestorSprites.h"
 #include "Player.h"
@@ -15,7 +16,7 @@ Enemigo::Enemigo(Vector2D posicion, Player* playerPtr) :  _playerPtr(playerPtr) 
 
 void Enemigo::inicializa()
 {
-
+	intervalo = 100;
 }
 
 bool Enemigo::dispara()
@@ -32,6 +33,29 @@ void Enemigo::follow(Entidad* ptr)
 {
 	Vector2D dir = ptr->getPos() - _posicion;
 	_velocidad = dir.unitario() * _speedStat;
+}
+
+void Enemigo::mov_erratico() {
+	Vector2D target;	
+	if (intervalo != 0) intervalo--;
+
+	if (intervalo == 0){
+		std::random_device rd;
+		std::mt19937_64 gen(rd());
+		std::uniform_int_distribution<> distr1(0, 1), distrx(-50,50), distry(-25,25);
+		if (distr1(gen)) {
+			target = _playerPtr->getPos() - _posicion;
+			_velocidad = target.unitario() * _speedStat;
+			std::cout << "IN " << target.x << " " << target.y << std::endl;
+		}
+		else {
+			target.x = _posicion.x + distrx(gen);
+			target.y = _posicion.y + distry(gen);
+			_velocidad = target.unitario() * _speedStat;
+			std::cout << "OUT " << target.x << " " << target.y << std::endl;
+		}
+		intervalo = 100;
+	}
 }
 
 EnemigoA::EnemigoA(Vector2D posicion, Player* playerPtr, const char* ruta_de_textura) 
@@ -74,6 +98,7 @@ Caca::Caca(Vector2D pos, Player* const playerPtr) : EnemigoA(pos, playerPtr, "re
 	_sprite.setSize(_dims.x, _dims.y);
 	_sprite.setCenter(_dims.x / 2.0f, _dims.y / 2.0f);
 	_radio = 5.0f;
+	_dispara = false;
 }
 
 void Caca::dibuja()
@@ -86,13 +111,17 @@ void Caca::dibuja()
 void Caca::mueve(float t) 
 {
 	Enemigo::mueve(t);
-	follow(_playerPtr);
+	mov_erratico();
+	//follow(_playerPtr);
 	//_spriteCaca.loop();
 }
 
 Caca::~Caca()
 {
 }
+
+
+
 
 /// BOSS GUSANO
 

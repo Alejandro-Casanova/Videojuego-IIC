@@ -31,10 +31,10 @@ void CoordinadorIsaac::dibuja() {
 		glEnable(GL_LIGHTING);
 		//GestorSprites::dimensionaSprite(362, 103, TILE_WIDTH / 2.0f, _sprite);
 		ETSIDI::setTextColor(0, 0, 0);
-		ETSIDI::setFont("bin/fuentes/Bitwise.ttf", 50);
+		ETSIDI::setFont("res/font/upheavtt.ttf", 50);
 		ETSIDI::printxy("The Binding of Isaac", -10, 2);
 		ETSIDI::setTextColor(0.5, 0.5, 0.5);
-		ETSIDI::setFont("bin/fuentes/Bitwise.ttf", 12);
+		ETSIDI::setFont("res/font/upheavtt.ttf", 12);
 		ETSIDI::printxy("Pulse 'Q' para empezar a jugar", -10, -3);
 		ETSIDI::printxy("Pulse 'R' para ver las maximas puntuaciones", -10, -4);
 		ETSIDI::printxy("Pulse 'L' para leer el leaderboard", -10, -5);
@@ -125,12 +125,6 @@ void CoordinadorIsaac::tecla() {
 	
 
 	
-}
-
-void CoordinadorIsaac::inicializa()
-{
-	mundo.inicializa();
-
 }
 
 
