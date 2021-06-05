@@ -127,11 +127,7 @@ void CoordinadorIsaac::tecla() {
 	
 }
 
-void CoordinadorIsaac::inicializa()
-{
-	mundo.inicializa();
 
-}
 
 
 void CoordinadorIsaac::mueve() {
