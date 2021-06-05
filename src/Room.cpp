@@ -219,8 +219,10 @@ void Room::setParedes(float ancho, float alto)
 
 void Room::muerte()
 {
+	
 	std::cout << "\n\n\nMORISTEEEEEEEEEEEEEEEEEEEEEEE\n\n\n"; //PROVISIONAL
-	exit(0);
+	
+	//exit(0);
 }
 
 void Room::gestionarDisparos(ListaProyectil& listaP) {
