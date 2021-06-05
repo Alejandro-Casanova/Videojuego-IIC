@@ -33,7 +33,7 @@ public:
 
 class Corazon : public Objeto {
 public:
-	Corazon(Vector2D pos) : Objeto("res/texturas/container.png", pos, obj_t::CORAZON) { GestorSprites::dimensionaSprite(24, 20, TILE_WIDTH / 2.0f, _sprite); }
+	Corazon(Vector2D pos) : Objeto("res/texturas/red_heart.png", pos, obj_t::CORAZON) { GestorSprites::dimensionaSprite(24, 17, TILE_WIDTH / 2.0f, _sprite); }
 
 	std::ostream& print(std::ostream& o = std::cout) const override { o << "soy un corazon" << std::endl; return o; }
 };

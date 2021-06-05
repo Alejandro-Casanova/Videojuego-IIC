@@ -1,17 +1,17 @@
 #pragma once
 
 #include "Room.h"
-class Personaje;
+class Player;
 
 
 class Piso
 {
 public:
-	Piso();
+	Piso(Player* playerPtr);
 	void mueve();
 	void dibuja();
 
-	void cambiaRoom(); //Cambia de room si el jugador usa las puertas
+	bool cambiaRoom(); //Cambia de room si el jugador usa las puertas
 
 	void inicializa(Player* pptr); //Inicialia con un puntero al jugador y una referencia a un puntero a la room actual
 	void cargaLayout(const char* ruta_de_archivo); //Carga el layout del piso desde un .txt

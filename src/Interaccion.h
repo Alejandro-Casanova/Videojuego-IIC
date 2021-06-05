@@ -11,9 +11,10 @@ class Interaccion
 {
 public:
 	//Las funciones rebote detienen el cuerpo ante la colision
-	static void rebote(Entidad& p, Caja c);
-	static bool rebote(Entidad& e, Pared p);
+	static bool rebote(Entidad& p, Caja c, bool velMod = false);
+	static bool rebote(Entidad& e, Pared p, bool velMod = false); //Si el booleano es true, modifica la velocidad de la entidad para que rebote
 	static void rebote(Entidad& p, Obstaculo& o);
+	static bool rebote(Entidad& a, Entidad& b);
 
 	//Las funciones impacto tan solo devuelven true si ocurre colisión
 	//NOTA: Gracias a la herencia podrían definirse para recibir una referencia a entidad, siendo así más genéricas

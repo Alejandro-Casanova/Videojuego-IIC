@@ -11,6 +11,15 @@ ListaProyectil::ListaProyectil()
 	}
 }
 
+ListaProyectil::ListaProyectil(bool fr) {
+	friendly = fr;
+	contador = 0;
+	for (int i = 0; i < MAX_PROYECTILES; i++)
+	{
+		lista_Pro[i] = 0; //Por ahora los 100 valores del puntero no apuntan a nada
+	}
+}
+
 ListaProyectil::~ListaProyectil()
 {
 }
@@ -43,6 +52,14 @@ void ListaProyectil::eliminar(int index) {
 		lista_Pro[i] = lista_Pro[i + 1];
 }
 
+void ListaProyectil::setFriendly(bool h) {
+	friendly = h;
+}
+
+bool ListaProyectil::isFriend() {
+	return friendly;
+}
+
 
 void ListaProyectil::eliminar(Proyectil* f)
 {
@@ -50,6 +67,7 @@ void ListaProyectil::eliminar(Proyectil* f)
 		if (lista_Pro[i] == f)
 		{
 			eliminar(i);
+			ETSIDI::play("res/audio/hit.wav");
 			return;
 		}
 }
@@ -94,11 +112,12 @@ Proyectil* ListaProyectil::colision(Caja c)
 	return 0; //no hay colisión
 }
 
-Proyectil* ListaProyectil::impacto(Enemigo e) {
+Proyectil* ListaProyectil::impacto(Entidad& e) {
 	for (int i = 0; i < contador; i++)
 	{
-		if (Interaccion::colision(*(lista_Pro[i]), e))
+		if (Interaccion::colision(*(lista_Pro[i]), e)) {
 			return lista_Pro[i];
+		}
 	}
 	return 0; //no hay colisión
 }

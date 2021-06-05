@@ -79,3 +79,10 @@ Vector2D Vector2D::operator-=(Vector2D v)
 	y -= v.y;
 	return *this;
 }
+
+Vector2D Vector2D::operator*=(float f)
+{
+	x *= f;
+	y *= f;
+	return *this;
+}

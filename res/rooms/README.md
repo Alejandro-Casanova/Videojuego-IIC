@@ -4,9 +4,10 @@ Archivos de Room:
 'H': Hueco en el suelo
 'L': Llave
 'M': Moneda
-'S': Salud, Corazón
 
-Archivos de Floor
-'.': Hueco
-'S': Room Inicial
-'R': Room Normal
+Enemigos:
+'F': Fatty
+'C': Caca
+
+Notas:
+-Las dimensiones del layout deben ser 7x13

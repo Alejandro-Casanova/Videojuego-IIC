@@ -75,6 +75,7 @@ void CoordinadorIsaac::dibuja() {
 
 void CoordinadorIsaac::tecla() {
 	
+
 	if (estado == INICIO) {
 		if (GestorDeTeclado::isKeyPressed('q')) {
 			mundo.inicializa();
@@ -122,6 +123,14 @@ void CoordinadorIsaac::tecla() {
 		}
 	}
 	
+
+	
+}
+
+void CoordinadorIsaac::inicializa()
+{
+	mundo.inicializa();
+
 }
 
 
@@ -158,7 +167,7 @@ void CoordinadorIsaac::teclaEspecial() {
 //		//ETSIDI::setFont("fuentes/Bitwise.ttf", 12);
 //		//ETSIDI::printxy("PULSE LA TECLA -E- PARA EMPEZAR", -5, 7);
 //		//ETSIDI::printxy("PULSE LA TECLA -S- PARA SALIR", -5, 6);
-//		//ETSIDI::printxy("Alejandro Casanova Martín", 2, 1);
+//		//ETSIDI::printxy("Alejandro Casanova MartÃ­n", 2, 1);
 //	}
 //	else if (estado == Estado::JUEGO) {
 //		mundo.dibuja();
@@ -169,7 +178,7 @@ void CoordinadorIsaac::teclaEspecial() {
 //		ETSIDI::printxy("Pang", -10, 9);
 //		ETSIDI::setTextColor(1, 1, 1);
 //		ETSIDI::setFont("fuentes/Bitwise.ttf", 12);
-//		ETSIDI::printxy("Alejandro Casanova Martín", 4, 9);*/
+//		ETSIDI::printxy("Alejandro Casanova MartÃ­n", 4, 9);*/
 //
 //		//Dibuja contador de disparos
 //		/*std::stringstream contador;
@@ -199,7 +208,7 @@ void CoordinadorIsaac::teclaEspecial() {
 //	else if (estado == Estado::FIN) { 
 //		mundo.dibuja(); 
 //		/*ETSIDI::setFont("fuentes/Bitwise.ttf", 16); 
-//		ETSIDI::printxy("ENHORABUENA, ¡Has triunfado!", -5, 10); 
+//		ETSIDI::printxy("ENHORABUENA, Â¡Has triunfado!", -5, 10); 
 //		ETSIDI::printxy("Pulsa -C- para continuar", -5, 9);*/
 //	}
 //}

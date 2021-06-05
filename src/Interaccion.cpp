@@ -8,21 +8,23 @@
 #include "Enemigo.h"
 #include "Vector2D.h"
 
-void Interaccion::rebote(Entidad& p, Caja c)
+bool Interaccion::rebote(Entidad& p, Caja c, bool velMod)
 {
-	rebote(p, c._dcha);
-	rebote(p, c._izq);
-	rebote(p, c._sup);
-	rebote(p, c._inf);
+	if(rebote(p, c._dcha, velMod) || rebote(p, c._izq, velMod) || rebote(p, c._sup, velMod) || rebote(p, c._inf, velMod)) return true;
+	return false;
 }
 
-bool Interaccion::rebote(Entidad& e, Pared p)
+bool Interaccion::rebote(Entidad& e, Pared p, bool velMod)
 {
 	Vector2D dir;
 	float dif = p.distancia(e._posicion, &dir) - e._radio;
 	if (dif <= 0.0f){
 		//Separa los cuerpos
 		e._posicion -= (dir * dif);
+		if (velMod) {
+			Vector2D v_inicial = e._velocidad;
+			e._velocidad = v_inicial - dir * 2.0 * (v_inicial * dir);
+		}
 		return true;
 	}
 	return false;
@@ -30,6 +32,22 @@ bool Interaccion::rebote(Entidad& e, Pared p)
 
 void Interaccion::rebote(Entidad& p, Obstaculo& o){
 	rebote(p, o._hitBox);
+}
+
+bool Interaccion::rebote(Entidad& a, Entidad& b)
+{
+	Vector2D dir = a.getPos() - b.getPos();
+	if (dir.modulo() < a._radio + b._radio) {
+		float dist = (a._radio + b._radio - dir.modulo()) / 2.0f;
+		Vector2D separar = dir.unitario();
+		Vector2D newpos = a.getPos() + separar * dist;
+		a.setPos(newpos.x, newpos.y);
+		newpos = b.getPos() - separar * dist;
+		b.setPos(newpos.x, newpos.y);
+		return true;
+	}
+	return false;
+
 }
 
 
