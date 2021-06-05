@@ -15,7 +15,7 @@ public:
 	void setOrigen(float ox, float oy);
 	int getDamage() const { return _damage; }
 private:
-	int _damage = 1.0f;
+	int _damage = 1;
 	Vector2D _origen;
 	float distancia = 0.0f;			// longitud que recorre un disparo desde el origen
 };

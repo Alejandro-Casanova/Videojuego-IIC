@@ -10,7 +10,8 @@
 #include "Macros.h"
 #include "Enemigo.h"
 
-Room::Room(float indice, const char* ruta_de_textura, Player* playerPtr) : _indice(indice), _sprite{ruta_de_textura}, _playerPtr(playerPtr)
+Room::Room(float indice, const char* ruta_de_textura, Player* playerPtr, ROOM_TYPE tipo) 
+	: _indice(indice), _sprite{ruta_de_textura}, _playerPtr(playerPtr), _tipo(tipo)
 {
 	_sprite.setPos(0, 0);
 	GestorSprites::dimensionaSprite(468, 285, _ancho + 2.0f * ROOM_BORDE_TEXTURA, _sprite); //Se ha estrechado un poco la textura para adaptarla a l hitbox de la habitacion
@@ -28,6 +29,10 @@ Room::~Room()
 	}
 
 	for (auto i : _obstaculos) {
+		delete i;
+	}
+
+	for (auto i : _puertas) {
 		delete i;
 	}
 }
@@ -206,7 +211,7 @@ void Room::disparos() {
 	}
 }
 
-void Room::addPuerta(Puerta* newPuerta)
+void Room::addPuerta(PuertaRoom* newPuerta)
 {
 	_puertas.push_back(newPuerta);
 }
@@ -265,7 +270,7 @@ void Room::gestionarDisparos(ListaProyectil& listaP) {
 	}
 }
 
-Puerta* Room::puertaActual()
+PuertaRoom* Room::puertaActual()
 {
 	for (auto& c : _puertas) {
 		if (Interaccion::colision(*_playerPtr, c->getHitBox()))
@@ -275,7 +280,7 @@ Puerta* Room::puertaActual()
 }
 
 BossRoom::BossRoom(float indice, const char* ruta_de_textura, Player* playerPtr) 
-	: Room(indice, ruta_de_textura, playerPtr), _gusano{ new BossGusano(playerPtr) }
+	: Room(indice, ruta_de_textura, playerPtr, ROOM_TYPE::BOSS), _gusano{ new BossGusano(playerPtr) }, _trampilla(Vector2D(0.0f, 0.0f))
 {
 	_enemigos.emplace_back(_gusano);
 }
@@ -286,7 +291,9 @@ BossRoom::~BossRoom() {
 void BossRoom::dibuja()
 {
 	//if (_gusano != nullptr) _gusano->dibuja();
+	if (_trampilla.isOpen()) _trampilla.dibuja();
 	Room::dibuja();
+	
 	
 }
 
@@ -295,6 +302,7 @@ void BossRoom::mueve()
 	if (_enemigos.empty() && _gusano != nullptr) {
 		_gusano = nullptr;
 		ETSIDI::play("res/audio/victory.wav");
+		_trampilla.open();
 	}
 
 	else if (_gusano != nullptr) {
@@ -305,14 +313,6 @@ void BossRoom::mueve()
 			}
 		}
 	}
-	//else if (!_enemigos.empty()){
-	//	dynamic_cast<BossGusano*>(_enemigos[0])->mueve(T_CONST, _paredes); // Movimiento del gusano
-	//	if (dynamic_cast<BossGusano*>(_enemigos[0])->rebote(*_playerPtr)) { //Gusano tiene una funcion interna para gestionar la colision con todos sus módulos
-	//		if (_playerPtr->recibeHerida(_enemigos[0]->getMeleeDamage())) { //Daño al jugador
-	//			muerte();
-	//		}
-	//	}
-	//}
 	Room::mueve();
 	
 }
@@ -321,15 +321,16 @@ void BossRoom::gestionarDisparos(ListaProyectil& listaP)
 {
 	Room::gestionarDisparos(listaP);
 	if (_gusano != nullptr) { //Si el gusano sigue vivo
-		//if (dynamic_cast<BossGusano*>(_enemigos[0])->gestionarDisparos(listaP)) {
-		//	delete _enemigos[0];
-		//	_enemigos.erase(_enemigos.begin());
-		//	//_gusano = nullptr;
-		//	ETSIDI::play("res/audio/victory.wav");
-		//}
 		_gusano->gestionarDisparos(listaP);
-			
-		
 	}
+}
+
+bool BossRoom::juntoTrampilla()
+{
+	
+	if (Interaccion::colision(*_playerPtr, _trampilla.getHitBox()) && _trampilla.isOpen())
+		return true;
+	
+	return false;
 }
 

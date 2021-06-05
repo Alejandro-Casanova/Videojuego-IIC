@@ -28,18 +28,22 @@ public:
 	
 
 
+	void siguientePiso(); //Pasa al siguiente piso
+
 private:
 	float x_ojo = 0;
 	float y_ojo = 0;
 	float z_ojo = 0;
 	int final_juego = 0;
 
-	Piso _piso;
-	std::vector<Piso*> _pisos;
-	Player jugador;
-	GUI _gui{ &jugador };
+	//int _pisoActual = 0; //Indica el piso activo
+	//std::vector<Piso*> _pisos;
+	Player _jugador;
+	int _contadorPisos = 0;
+	Piso* _piso = nullptr;
+	GUI _gui{ &_jugador };
 	//Enemigo malapersona; //TEMPORAL
-	ListaProyectil disparosPlayer;
+	ListaProyectil _disparosPlayer;
 
 	//Room* _roomActual = nullptr;
 };

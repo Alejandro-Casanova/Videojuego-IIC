@@ -9,13 +9,19 @@
 #include "Personaje.h"
 #include "GestorDeTeclado.h"
 
-Mundo::Mundo() : _piso{&jugador}
+Mundo::Mundo() //: _piso{&jugador}
 {
-	disparosPlayer.setFriendly(true);
+	_disparosPlayer.setFriendly(true);
+
+	//_pisos.resize(2);
+	_piso = new Piso(&_jugador, "res/pisos/1.txt");
+	
 }
 
 Mundo::~Mundo()
 {
+	//for (auto& i : _pisos) delete i;
+	if (_piso != nullptr) delete _piso;
 }
 
 
@@ -28,49 +34,60 @@ void Mundo::dibuja()
 	///LLAMADAS PARA DIBUJAR
 	_gui.dibuja();
 	
-	jugador.dibuja();
+	_jugador.dibuja();
 
-	_piso.dibuja();
+	_piso->dibuja();
 
 	//malapersona.dibuja();
 
-	disparosPlayer.dibuja();
+	_disparosPlayer.dibuja();
+}
+
+void Mundo::siguientePiso()
+{
+	delete _piso;
+	_contadorPisos++;
+	_piso = new Piso(&_jugador, "res/pisos/2.txt");
 }
 
 void Mundo::mueve()
 {
 	//LLAMADAS DE ANIMACION
-	_piso.mueve();
-	disparosPlayer.mueve(T_CONST);
+	_piso->mueve();
+	_disparosPlayer.mueve(T_CONST);
 
-	jugador.mueve(T_CONST);
+	_jugador.mueve(T_CONST);
   
 	//Interaccion::rebote(malapersona, _piso._room._paredes);
 	/*Proyectil* auxi = disparosPlayer.impacto();
 	if (auxi != 0) { disparosPlayer.eliminar(auxi);
 	malapersona.setPos(-130, 0);
 	}*/
-	_piso.getRoomActual()->gestionarDisparos(disparosPlayer); //Colisiones de los disparos con el entorno y enemigos
+	_piso->roomActual()->gestionarDisparos(_disparosPlayer); //Colisiones de los disparos con el entorno y enemigos
 }
 
 
 void Mundo::tecla() {
 
-	jugador.tecla();
+	_jugador.tecla();
 
 	if (GestorDeTeclado::isKeyPressed(' ')){
-		if (_piso.cambiaRoom()) {
-			disparosPlayer.destruirContenido();
+		if (_piso->cambiaRoom()) {
+			_disparosPlayer.destruirContenido();
+		}
+		else if (_piso->roomActual()->tipo() == Room::ROOM_TYPE::BOSS) {
+			BossRoom* aux = dynamic_cast<BossRoom*>(_piso->roomActual());
+			if (aux->juntoTrampilla()) siguientePiso();
 		}
 	}
 }
 
 void Mundo::teclaEspecial()
 {
-	Proyectil* aux = jugador.dispara();
-	if (aux != nullptr) disparosPlayer.agregar(aux);
+	Proyectil* aux = _jugador.dispara();
+	if (aux != nullptr) _disparosPlayer.agregar(aux);
 
-	jugador.teclaEspecial();
+	_jugador.teclaEspecial();
 }
 
 void Mundo::inicializa()
@@ -80,8 +97,8 @@ void Mundo::inicializa()
 	z_ojo=140.0f;
 	
 	//LLAMADAS DE INICIALIZACION
-	jugador.inicializa();
-	_piso.inicializa(&jugador);
+	_jugador.inicializa();
+	//_piso.inicializa(&jugador);
 	
 }
 

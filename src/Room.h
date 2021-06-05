@@ -21,11 +21,12 @@ class Player;
 
 class Room
 {
-	friend class ListaProyectil;
-	
+	friend class Piso;
 
 public:
-	Room(float indice, const char* ruta_de_textura, Player* playerPtr);
+	enum class ROOM_TYPE { NORMAL, BOSS };
+
+	Room(float indice, const char* ruta_de_textura, Player* playerPtr, ROOM_TYPE tipo = ROOM_TYPE::NORMAL);
 	virtual ~Room();
 
 	virtual void mueve();
@@ -35,10 +36,10 @@ public:
 
 	void inicializa(const char* ruta_de_layout);
 	void cargaLayout(const char* ruta_de_archivo);
-	void setRoom(); //Inicializa Obst·culos, Enemigos, etc...
+	void setRoom(); //Inicializa Obst√°culos, Enemigos, etc...
 
-	void addPuerta(Puerta* newPuerta); //AÒade una puerta a la room
-	Puerta* puertaActual();//Devuelve la puerta que est· en contacto con el jugador, en caso de no haber ninguna, devuelve nullptr
+	void addPuerta(PuertaRoom* newPuerta); //A√±ade una puerta a la room
+	PuertaRoom* puertaActual();//Devuelve la puerta que est√° en contacto con el jugador, en caso de no haber ninguna, devuelve nullptr
 	void muerte(); //El jugador muere
 	virtual void gestionarDisparos(ListaProyectil& listaP); //Colisiones de los proyectiles con diferentes elementos de la room
 
@@ -47,8 +48,10 @@ public:
 	void setAlto(float alto) { _alto = alto; }
 	int getIndice() const { return _indice; }
 	bool puertasAbiertas() const { return _puertasAbiertas; }
+	ROOM_TYPE tipo() const { return _tipo; }
 
 protected:
+	ROOM_TYPE _tipo;
 	const int _indice; //Identifica la room, para diferenciarla del resto de rooms del piso
 	float _ancho = ROOM_WIDTH;
 	float _alto = ROOM_HEIGHT;
@@ -59,13 +62,13 @@ protected:
 	Vector2D origen=(-_ancho / 2.0f, +_alto / 2.0f - 10.0f);
 
 	Player* _playerPtr = nullptr;
-	std::vector<std::string> _layout; //Dimensiones de la habitaciÛn 7x13
+	std::vector<std::string> _layout; //Dimensiones de la habitaci√≥n 7x13
 	std::vector<Obstaculo*> _obstaculos;
 	std::vector<Enemigo*> _enemigos;
 	std::vector<Objeto*> _objetos;
 	ETSIDI::Sprite _sprite;
 	//Puerta _puerta{nullptr};
-	std::vector<Puerta*> _puertas;
+	std::vector<PuertaRoom*> _puertas;
 	
 };
 
@@ -78,8 +81,11 @@ public:
 	void mueve() override;
 	virtual void gestionarDisparos(ListaProyectil& listaP) override;
 
+	bool juntoTrampilla(); //Devuelve true si el jugador se encuentra junto a la trampilla y √©sta est√° abierta
+
 private:
 	BossGusano* _gusano = nullptr;
+	Trampilla _trampilla;
 	//bool _bossIsDead = false;
 
 };
