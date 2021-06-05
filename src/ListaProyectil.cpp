@@ -67,6 +67,7 @@ void ListaProyectil::eliminar(Proyectil* f)
 		if (lista_Pro[i] == f)
 		{
 			eliminar(i);
+			ETSIDI::play("res/audio/hit.wav");
 			return;
 		}
 }
@@ -114,8 +115,9 @@ Proyectil* ListaProyectil::colision(Caja c)
 Proyectil* ListaProyectil::impacto(Entidad& e) {
 	for (int i = 0; i < contador; i++)
 	{
-		if (Interaccion::colision(*(lista_Pro[i]), e))
+		if (Interaccion::colision(*(lista_Pro[i]), e)) {
 			return lista_Pro[i];
+		}
 	}
 	return 0; //no hay colisión
 }

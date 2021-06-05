@@ -8,3 +8,6 @@ Archivos de Room:
 Enemigos:
 'F': Fatty
 'C': Caca
+
+Notas:
+-Las dimensiones del layout deben ser 7x13

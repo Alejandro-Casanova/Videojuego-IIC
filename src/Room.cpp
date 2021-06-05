@@ -8,8 +8,9 @@
 #include "Objeto.h"
 #include "GestorDeTeclado.h"
 #include "Macros.h"
+#include "Enemigo.h"
 
-Room::Room(float indice, const char* ruta_de_textura) : _indice(indice), _sprite{ruta_de_textura}
+Room::Room(float indice, const char* ruta_de_textura, Player* playerPtr) : _indice(indice), _sprite{ruta_de_textura}, _playerPtr(playerPtr)
 {
 	_sprite.setPos(0, 0);
 	GestorSprites::dimensionaSprite(468, 285, _ancho + 2.0f * ROOM_BORDE_TEXTURA, _sprite); //Se ha estrechado un poco la textura para adaptarla a l hitbox de la habitacion
@@ -33,16 +34,26 @@ Room::~Room()
 
 void Room::mueve()
 {
+	if (_puertasAbiertas && !_enemigos.empty()) {
+		for (auto& i : _puertas) i->close();
+		_puertasAbiertas = false;
+		ETSIDI::play("res/audio/door_close.wav");
+	}
+	if (_enemigos.empty() && !_puertasAbiertas) { //Se abren las puertas al morir todos los enemigos
+		for (auto& i : _puertas) i->open();
+		_puertasAbiertas = true;
+		ETSIDI::play("res/audio/door_open.wav");
+	}
 
 	//Colision jugador con paredes y obstaculos
-	Interaccion::rebote(*_player_ptr, _paredes);
+	Interaccion::rebote(*_playerPtr, _paredes);
 	for (auto& c : _obstaculos) {
-		Interaccion::rebote(*_player_ptr, *c);
+		Interaccion::rebote(*_playerPtr, *c);
 	}
 
 	//Movimiento enemigos
 	for (auto &i : _enemigos) {
-		i->mueve(0.025f);
+		i->mueve(T_CONST);
 	}
 
 	//Colisiones enemigos con paredes y obstáculos
@@ -64,8 +75,8 @@ void Room::mueve()
 
 	//Colisiones del jugador con los enemigos y DAÑO melee
 	for (auto& i : _enemigos) {
-		if (Interaccion::rebote(*_player_ptr, *i))
-			if (_player_ptr->recibeHerida(i->getMeleeDamage()))
+		if (Interaccion::rebote(*_playerPtr, *i))
+			if (_playerPtr->recibeHerida(i->getMeleeDamage()))
 				muerte();
 	}
 
@@ -105,12 +116,11 @@ void Room::dibuja()
 	Room::gestionarDisparos(disparosEnemigos);
 }
 
-void Room::inicializa(const char* ruta_de_layout, Player* pptr)
+void Room::inicializa(const char* ruta_de_layout)
 {
 	setParedes(_ancho, _alto);
 	cargaLayout(ruta_de_layout);
 
-	_player_ptr = pptr;
 	setRoom();
 	for (auto i : _enemigos) {
 		i->inicializa();
@@ -157,10 +167,10 @@ void Room::setRoom()
 				_obstaculos.emplace_back(new Hueco(origen + Vector2D(10.0f * j, -10.0f * i)));
 			}
 			else if (chr == 'F') {
-				_enemigos.emplace_back(new Fatty(origen+Vector2D(10.0f * j, -10.0f * i), _player_ptr));
+				_enemigos.emplace_back(new Fatty(origen+Vector2D(10.0f * j, -10.0f * i), _playerPtr));
 			}
 			else if (chr == 'C') {
-				_enemigos.emplace_back(new Caca(origen + Vector2D(10.0f * j, -10.0f * i), _player_ptr));
+				_enemigos.emplace_back(new Caca(origen + Vector2D(10.0f * j, -10.0f * i), _playerPtr));
 			}
 			else if (chr == 'L') {
 				_objetos.emplace_back(Factoria::create(Objeto::obj_t::LLAVE, origen + Vector2D(10.0f * j, -10.0f * i)));
@@ -189,7 +199,7 @@ void Room::disparos() {
 			d->setPos(pos.x, pos.y);
 			d->setColor(200, 20, 20);
 			disparosEnemigos.agregar(d);
-			Vector2D target = _player_ptr->getPos() - pos;
+			Vector2D target = _playerPtr->getPos() - pos;
 			Vector2D dir = target.unitario();
 			d->setVel(15*dir.x , 15*dir.y);
 		}
@@ -222,7 +232,7 @@ void Room::gestionarDisparos(ListaProyectil& listaP) {
 			Proyectil* auxi = listaP.impacto(*_enemigos[j]);
 			if (auxi != 0) {
 				listaP.eliminar(auxi);
-				if (_enemigos[j]->recibeHerida(_player_ptr->getShotDamage())) {
+				if (_enemigos[j]->recibeHerida(_playerPtr->getShotDamage())) {
 					delete _enemigos[j];
 					_enemigos.erase(_enemigos.begin() + j);
 				}
@@ -230,12 +240,12 @@ void Room::gestionarDisparos(ListaProyectil& listaP) {
 		}
 	}
 	else{	//Interacciones de los Proyectiles de los Enemigos
-		Proyectil* auxi = listaP.impacto(*_player_ptr);
+		Proyectil* auxi = listaP.impacto(*_playerPtr);
 		if (auxi != 0) {
-			listaP.eliminar(auxi);
-			if (_player_ptr->recibeHerida(1)) { //VALOR PROVISIONAL, incluir informacion de daño en los disparos???
+			if (_playerPtr->recibeHerida(auxi->getDamage())) {
 				muerte();
 			}
+			listaP.eliminar(auxi);
 		}
 	}
 
@@ -256,8 +266,68 @@ void Room::gestionarDisparos(ListaProyectil& listaP) {
 Puerta* Room::puertaActual()
 {
 	for (auto& c : _puertas) {
-		if (Interaccion::colision(*_player_ptr, c->getHitBox()))
+		if (Interaccion::colision(*_playerPtr, c->getHitBox()))
 			return c;
 	}
 	return nullptr;
 }
+
+BossRoom::BossRoom(float indice, const char* ruta_de_textura, Player* playerPtr) 
+	: Room(indice, ruta_de_textura, playerPtr), _gusano{ new BossGusano(playerPtr) }
+{
+	_enemigos.emplace_back(_gusano);
+}
+BossRoom::~BossRoom() {
+	//if (_gusano != nullptr) delete _gusano;
+}
+
+void BossRoom::dibuja()
+{
+	//if (_gusano != nullptr) _gusano->dibuja();
+	Room::dibuja();
+	
+}
+
+void BossRoom::mueve()
+{
+	if (_enemigos.empty() && _gusano != nullptr) {
+		_gusano = nullptr;
+		ETSIDI::play("res/audio/victory.wav");
+	}
+
+	else if (_gusano != nullptr) {
+		_gusano->mueve(T_CONST, _paredes); // Movimiento del gusano
+		if (_gusano->rebote(*_playerPtr)){ //Gusano tiene una funcion interna para gestionar la colision con todos sus módulos
+			if (_playerPtr->recibeHerida(_gusano->getMeleeDamage())) { //Daño al jugador
+				muerte();
+			}
+		}
+	}
+	//else if (!_enemigos.empty()){
+	//	dynamic_cast<BossGusano*>(_enemigos[0])->mueve(T_CONST, _paredes); // Movimiento del gusano
+	//	if (dynamic_cast<BossGusano*>(_enemigos[0])->rebote(*_playerPtr)) { //Gusano tiene una funcion interna para gestionar la colision con todos sus módulos
+	//		if (_playerPtr->recibeHerida(_enemigos[0]->getMeleeDamage())) { //Daño al jugador
+	//			muerte();
+	//		}
+	//	}
+	//}
+	Room::mueve();
+	
+}
+
+void BossRoom::gestionarDisparos(ListaProyectil& listaP)
+{
+	Room::gestionarDisparos(listaP);
+	if (_gusano != nullptr) { //Si el gusano sigue vivo
+		//if (dynamic_cast<BossGusano*>(_enemigos[0])->gestionarDisparos(listaP)) {
+		//	delete _enemigos[0];
+		//	_enemigos.erase(_enemigos.begin());
+		//	//_gusano = nullptr;
+		//	ETSIDI::play("res/audio/victory.wav");
+		//}
+		_gusano->gestionarDisparos(listaP);
+			
+		
+	}
+}
+

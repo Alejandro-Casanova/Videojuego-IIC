@@ -11,7 +11,7 @@
 
 using namespace std;
 
-Mundo::Mundo()
+Mundo::Mundo() : _piso{&jugador}
 {
 	disparosPlayer.setFriendly(true);
 }
@@ -68,14 +68,15 @@ void Mundo::tecla() {
 			disparosPlayer.agregar(d);
 			Vector2D proyp = d->getPos();
 
+			float vel = jugador.getBulletSpeed();
 			if (GestorDeTeclado::isKeyDown('j'))
-				d->setVel(-35, 0);
+				d->setVel(-vel, 0);
 			else if (GestorDeTeclado::isKeyDown('l'))
-				d->setVel(35, 0);
+				d->setVel(vel, 0);
 			else if (GestorDeTeclado::isKeyDown('i'))
-				d->setVel(0, 35);
+				d->setVel(0, vel);
 			else if (GestorDeTeclado::isKeyDown('k'))
-				d->setVel(0, -35);
+				d->setVel(0, -vel);
 
 		}
 	}
@@ -101,7 +102,6 @@ void Mundo::inicializa()
 	
 	//LLAMADAS DE INICIALIZACION
 	jugador.inicializa();
-	//malapersona.inicializa();
 	_piso.inicializa(&jugador);
 	
 

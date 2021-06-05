@@ -8,6 +8,8 @@ Player::Player()
 {
 	_healthStat = 5.0f;
 	_healthCounter = _healthStat;
+	_speedStat = 35.0f;
+	_bulletSpeed = 35.0f;
 }
 
 Player::~Player()
@@ -18,28 +20,28 @@ void Player::tecla()
 {
 	//Movimiento
 	if (GestorDeTeclado::isKeyPressed('a')) {
-		_velocidad.x -= 20.0f;
+		_velocidad.x -= _speedStat;
 	} 
 	if (GestorDeTeclado::isKeyUnPressed('a')) {
-		_velocidad.x += 20.0f;
+		_velocidad.x += _speedStat;
 	}
 	if (GestorDeTeclado::isKeyPressed('d')) {
-		_velocidad.x += 20.0f;
+		_velocidad.x += _speedStat;
 	}
 	if (GestorDeTeclado::isKeyUnPressed('d')) {
-		_velocidad.x -= 20.0f;
+		_velocidad.x -= _speedStat;
 	}
 	if (GestorDeTeclado::isKeyPressed('w')) {
-		_velocidad.y += 20.0f;
+		_velocidad.y += _speedStat;
 	}
 	if (GestorDeTeclado::isKeyUnPressed('w')) {
-		_velocidad.y -= 20.0f;
+		_velocidad.y -= _speedStat;
 	}
 	if (GestorDeTeclado::isKeyPressed('s')) {
-		_velocidad.y -= 20.0f;
+		_velocidad.y -= _speedStat;
 	}
 	if (GestorDeTeclado::isKeyUnPressed('s')) {
-		_velocidad.y += 20.0f;
+		_velocidad.y += _speedStat;
 	}
 
 	//Disparo
@@ -146,17 +148,27 @@ void Player::mueve(float t)
 	//Gestion de la invulnerabilidad
 	_damageTimer -= t;
 	if (_damageTimer < 0) _damageTimer = 0;
-	std::cout << _damageTimer << "   " << _healthCounter << std::endl;
+	//std::cout << _damageTimer << "   " << _healthCounter << std::endl;
 }
 
-bool Player::recibeHerida(int daño)
+bool Player::recibeHerida(float damage)
 {
 	if (_damageTimer == 0) {
 		_damageTimer = T_INVULNERABLE;
-		return Personaje::recibeHerida(daño);
+		ETSIDI::play("res/audio/ow.wav");
+		return Personaje::recibeHerida(damage);
 	}
 	return false;
 	
+}
+
+bool Player::dispara()
+{
+	if (Personaje::dispara()) {
+		ETSIDI::play("res/audio/agua.wav");
+		return true;
+	}
+	return false;
 }
 
 void Player::flipPos(bool H, bool V)
