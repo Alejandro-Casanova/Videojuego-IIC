@@ -5,6 +5,7 @@
 #include "GestorSprites.h"
 #include "Proyectil.h"
 
+
 Player::Player()
 {
 	_healthStat = 5.0f;
@@ -19,6 +20,7 @@ Player::~Player()
 
 void Player::tecla()
 {
+	
 	//Movimiento
 	if (GestorDeTeclado::isKeyPressed('a')) {
 		_velocidad.x -= _speedStat;
@@ -44,7 +46,7 @@ void Player::tecla()
 	if (GestorDeTeclado::isKeyUnPressed('s')) {
 		_velocidad.y += _speedStat;
 	}
-
+	
 	//Disparo
 	//ObjetoMovil::mueve(t);
 	//sprite.loop();
@@ -97,7 +99,7 @@ void Player::dibuja()
 		}
 	}
 
-	//GUI—O Y ORIENTACION CABEZA
+	//GUI√ëO Y ORIENTACION CABEZA
 	if (GestorDeTeclado::isSpecialKeyDown(GLUT_KEY_DOWN)) {
 		if (_shootCounter > 0.2f) _head.setState(0);
 		else _head.setState(1);
@@ -167,7 +169,7 @@ Proyectil* Player::dispara()
 {
 	//DISPARO
 	if (GestorDeTeclado::isSpecialKeyDown(GLUT_KEY_LEFT) || GestorDeTeclado::isSpecialKeyDown(GLUT_KEY_DOWN) || GestorDeTeclado::isSpecialKeyDown(GLUT_KEY_RIGHT) || GestorDeTeclado::isSpecialKeyDown(GLUT_KEY_UP)) {
-		if (Personaje::puedeDisparar()) { //Indica si el jugador est· listo para disparar
+		if (Personaje::puedeDisparar()) { //Indica si el jugador est√° listo para disparar
 			ETSIDI::play("res/audio/agua.wav");
 			// Creacion de un proyectil
 			Proyectil* d = new Proyectil();
@@ -203,3 +205,57 @@ void Player::flipPos(bool H, bool V)
 	if (H) _posicion.x *= -1;
 	if (V) _posicion.y *= -1;
 }
+
+
+/*
+//				INTENTO FALLIDO DE LOGRAR UN MOVIMIENTO DIRECCIONAL
+
+	int a = 0, w = 0, s = 0, d = 0, nteclas = 0;
+	float angulo1 = 0, angulo2 = 0, angulo3 = 0, angulo4 = 0, angulot = 0;
+	if (GestorDeTeclado::isKeyPressed('a')){
+		a = 1;
+		angulo1 = PI;
+	}
+	if (GestorDeTeclado::isKeyUnPressed('a')) {
+		a = 0;
+		angulo1 = 0;
+	}
+
+	if (GestorDeTeclado::isKeyPressed('w')) {
+		w = 1;
+		angulo2 = PI/2;
+	}
+	if (GestorDeTeclado::isKeyUnPressed('w')) {
+		w = 0;
+		angulo2 = 0;
+	}
+
+	if (GestorDeTeclado::isKeyPressed('d')) {
+		d = 1;
+		angulo3 = 2*PI;
+	}
+	if (GestorDeTeclado::isKeyUnPressed('d')) {
+		d = 0;
+		angulo3 = 0;
+	}
+
+	if (GestorDeTeclado::isKeyPressed('s')) {
+		s = 1;
+		angulo4 = PI*1.5F;
+	}
+	if (GestorDeTeclado::isKeyUnPressed('s')) {
+		s = 0;
+		angulo4 = 0;
+	}
+
+	nteclas = a + w + d + s;
+	angulot = angulo1 + angulo2 + angulo3 + angulo4;
+	if (nteclas != 0) {
+		_velocidad.x = _speedStat * cos(angulot/nteclas);
+		_velocidad.y = _speedStat * sin(angulot/nteclas);
+
+	}
+	else if (nteclas == 0 && angulot == 0) {
+		_velocidad = 0, 0;
+	}
+*/

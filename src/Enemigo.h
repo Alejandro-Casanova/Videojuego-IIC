@@ -27,8 +27,10 @@ public:
 protected:
 	Vector2D _dims{ 13.0f, 13.0f }; //Dimensiones del sprite
 	void follow(Entidad* ptr); //Modifica la velocidad del enemigo para seguir a una entidad genérica (a menudo será el jugador)
+	void mov_erratico();
+	float intervalo;			//valor de apoyo para el intervalo entre movimientos u acciones de un enemigo
 	Entidad* _playerPtr = nullptr; //Almacena un puntero al jugador para poder seguirlo
-	bool _dispara = true; //Indica si el enemigo dispara
+	bool _dispara; //Indica si el enemigo dispara
 	float _meleeDamage = 1.0f;
 	
 
@@ -71,6 +73,7 @@ public:
 
 private:
 };
+
 
 
 ///BOSS GUSANO////////////////////////////////////////////////////////////////////

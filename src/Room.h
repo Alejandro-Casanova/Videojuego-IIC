@@ -22,7 +22,6 @@ class Player;
 class Room
 {
 	friend class Piso;
-	//friend class ListaProyectil;
 
 public:
 	enum class ROOM_TYPE { NORMAL, BOSS };
@@ -37,10 +36,10 @@ public:
 
 	void inicializa(const char* ruta_de_layout);
 	void cargaLayout(const char* ruta_de_archivo);
-	void setRoom(); //Inicializa Obst·culos, Enemigos, etc...
+	void setRoom(); //Inicializa Obst√°culos, Enemigos, etc...
 
-	void addPuerta(PuertaRoom* newPuerta); //AÒade una puerta a la room
-	PuertaRoom* puertaActual();//Devuelve la puerta que est· en contacto con el jugador, en caso de no haber ninguna, devuelve nullptr
+	void addPuerta(PuertaRoom* newPuerta); //A√±ade una puerta a la room
+	PuertaRoom* puertaActual();//Devuelve la puerta que est√° en contacto con el jugador, en caso de no haber ninguna, devuelve nullptr
 	void muerte(); //El jugador muere
 	virtual void gestionarDisparos(ListaProyectil& listaP); //Colisiones de los proyectiles con diferentes elementos de la room
 
@@ -63,7 +62,7 @@ protected:
 	Vector2D origen=(-_ancho / 2.0f, +_alto / 2.0f - 10.0f);
 
 	Player* _playerPtr = nullptr;
-	std::vector<std::string> _layout; //Dimensiones de la habitaciÛn 7x13
+	std::vector<std::string> _layout; //Dimensiones de la habitaci√≥n 7x13
 	std::vector<Obstaculo*> _obstaculos;
 	std::vector<Enemigo*> _enemigos;
 	std::vector<Objeto*> _objetos;
@@ -82,7 +81,7 @@ public:
 	void mueve() override;
 	virtual void gestionarDisparos(ListaProyectil& listaP) override;
 
-	bool juntoTrampilla(); //Devuelve true si el jugador se encuentra junto a la trampilla y Èsta est· abierta
+	bool juntoTrampilla(); //Devuelve true si el jugador se encuentra junto a la trampilla y √©sta est√° abierta
 
 private:
 	BossGusano* _gusano = nullptr;

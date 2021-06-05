@@ -13,6 +13,7 @@
 class Mundo{
 friend class ListaProyectil;
 
+
 public: 
 	Mundo();
 	virtual ~Mundo();
@@ -22,6 +23,10 @@ public:
 	void inicializa();
 	void mueve();
 	void dibuja();
+	int JuegoAcabado(); //devuelve un 0 si no se ha acabado, un 1 si se ha perdido y un 2 si se ha ganado
+
+	
+
 
 	void siguientePiso(); //Pasa al siguiente piso
 
@@ -29,6 +34,7 @@ private:
 	float x_ojo = 0;
 	float y_ojo = 0;
 	float z_ojo = 0;
+	int final_juego = 0;
 
 	//int _pisoActual = 0; //Indica el piso activo
 	//std::vector<Piso*> _pisos;
