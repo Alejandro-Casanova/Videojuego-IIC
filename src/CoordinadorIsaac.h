@@ -8,7 +8,7 @@ protected:
 	enum  Estado { INICIO, JUEGO, GAMEOVER, FIN, PAUSA, LEADERBOARD };
 	Estado estado;
 	//ETSIDI::GLTexture _texturaInicial = { 0, 0, 0 };
-	//ETSIDI::Sprite _sprite = "res/texturas/logo.png";
+	ETSIDI::Sprite _sprite = "res/texturas/logo.png";
 
 	
 public:
