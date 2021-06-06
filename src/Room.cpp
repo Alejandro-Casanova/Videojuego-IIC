@@ -98,6 +98,9 @@ void Room::dibujaHitBox() const
 
 void Room::dibuja()
 {
+
+	disparosEnemigos.dibuja();
+
 	//_puerta.dibuja();
 	for (auto i : _puertas) {
 		i->dibuja();
@@ -117,7 +120,6 @@ void Room::dibuja()
   
 	_sprite.draw();
 
-	disparosEnemigos.dibuja();
 	Room::gestionarDisparos(disparosEnemigos);
 }
 
@@ -174,8 +176,14 @@ void Room::setRoom()
 			else if (chr == 'F') {
 				_enemigos.emplace_back(new Fatty(origen+Vector2D(10.0f * j, -10.0f * i), _playerPtr));
 			}
+			else if (chr == 'E') {
+				_enemigos.emplace_back(new Esqueleto(origen + Vector2D(10.0f * j, -10.0f * i), _playerPtr));
+			}
 			else if (chr == 'C') {
 				_enemigos.emplace_back(new Caca(origen + Vector2D(10.0f * j, -10.0f * i), _playerPtr));
+			}
+			else if (chr == 'Z') {
+				_enemigos.emplace_back(new Zombie(origen + Vector2D(10.0f * j, -10.0f * i), _playerPtr));
 			}
 			else if (chr == 'L') {
 				_objetos.emplace_back(Factoria::create(Objeto::obj_t::LLAVE, origen + Vector2D(10.0f * j, -10.0f * i)));
@@ -196,18 +204,20 @@ void Room::setRoom()
 
 void Room::disparos() {
 	for (auto i : _enemigos){
-		if (i->puedeDisparar()) {		//Indica si el enemigo está listo para disparar
-		// Creacion de un proyectil
-			Proyectil* d = new Proyectil();
-			//	proyectil.setOrigen(Vector2D.player)
-			Vector2D pos = i->getPos();
-			d->setPos(pos.x, pos.y);
-			d->setColor(200, 20, 20);
-			disparosEnemigos.agregar(d);
-			Vector2D target = _playerPtr->getPos() - pos;
-			Vector2D dir = target.unitario();
-			d->setVel(15*dir.x , 15*dir.y);
-		}
+		//if (i->puedeDisparar()) {		//Indica si el enemigo está listo para disparar
+		//// Creacion de un proyectil
+		//	Proyectil* d = new Proyectil();
+		//	//	proyectil.setOrigen(Vector2D.player)
+		//	Vector2D pos = i->getPos();
+		//	d->setPos(pos.x, pos.y);
+		//	d->setColor(200, 20, 20);
+		//	disparosEnemigos.agregar(d);
+		//	Vector2D target = _playerPtr->getPos() - pos;
+		//	Vector2D dir = target.unitario();
+		//	d->setVel(15*dir.x , 15*dir.y);
+		//}
+		auto aux = i->dispara();
+		if (aux != nullptr) disparosEnemigos.agregar(aux);
 	}
 }
 
