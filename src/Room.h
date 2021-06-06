@@ -22,6 +22,7 @@ class Player;
 class Room
 {
 	friend class Piso;
+	friend class Interaccion;
 
 public:
 	enum class ROOM_TYPE { NORMAL, BOSS };

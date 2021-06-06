@@ -16,21 +16,21 @@ PuertaRoom::PuertaRoom(Room* room, ORIENTACION t, const char* ruta, int pxW, int
 	switch (t) {
 	case ORIENTACION::DOWN:
 		_sprite.flip(false, true);
-		_posicion.set(0.0f, -(PUERTA_DIST_V + offset));
+		_posicion.setXY(0.0f, -(PUERTA_DIST_V + offset));
 		GestorSprites::dimensionaHitBox(pxW, pxH, maxDim, _posicion, _hitBox);
 		break;
 	case ORIENTACION::LEFT:
 		_sprite.setAngle(+90.0);
-		_posicion.set(-(PUERTA_DIST_H + offset), 0.0f);
+		_posicion.setXY(-(PUERTA_DIST_H + offset), 0.0f);
 		GestorSprites::dimensionaHitBox(pxW, pxH, maxDim, _posicion, _hitBox, true);
 		break;
 	case ORIENTACION::RIGHT:
 		_sprite.setAngle(-90.0);
-		_posicion.set(PUERTA_DIST_H + offset, 0.0f);
+		_posicion.setXY(PUERTA_DIST_H + offset, 0.0f);
 		GestorSprites::dimensionaHitBox(pxW, pxH, maxDim, _posicion, _hitBox, true);
 		break;
 	case ORIENTACION::UP:
-		_posicion.set(0.0f, PUERTA_DIST_V + offset);
+		_posicion.setXY(0.0f, PUERTA_DIST_V + offset);
 		GestorSprites::dimensionaHitBox(pxW, pxH, maxDim, _posicion, _hitBox);
 		break;
 	default: std::cerr << "Tipo de puerta no previsto. \n";

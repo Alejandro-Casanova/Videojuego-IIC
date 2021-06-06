@@ -87,6 +87,7 @@ void Room::mueve()
 
 	Room::disparos();
 	disparosEnemigos.mueve(T_CONST);
+	Room::gestionarDisparos(disparosEnemigos);
 }
 
 void Room::dibujaHitBox() const
@@ -101,10 +102,6 @@ void Room::dibuja()
 
 	disparosEnemigos.dibuja();
 
-	//_puerta.dibuja();
-	for (auto i : _puertas) {
-		i->dibuja();
-	}
 
 	for (auto i : _enemigos) {
 		i->dibuja();
@@ -117,10 +114,15 @@ void Room::dibuja()
 	for (auto i : _obstaculos) {
 		i->dibuja();
 	}
+
+
+	for (auto i : _puertas) {
+		i->dibuja();
+	}
   
 	_sprite.draw();
 
-	Room::gestionarDisparos(disparosEnemigos);
+
 }
 
 void Room::inicializa(const char* ruta_de_layout)
@@ -174,16 +176,25 @@ void Room::setRoom()
 				_obstaculos.emplace_back(new Hueco(origen + Vector2D(10.0f * j, -10.0f * i)));
 			}
 			else if (chr == 'F') {
-				_enemigos.emplace_back(new Fatty(origen+Vector2D(10.0f * j, -10.0f * i), _playerPtr));
+				_enemigos.emplace_back(new Fatty(origen+Vector2D(10.0f * j, -10.0f * i), _playerPtr, this));
+			}
+			else if (chr == 'A') {
+				_enemigos.emplace_back(new Mosca(origen + Vector2D(10.0f * j, -10.0f * i), _playerPtr, this));
+			}
+			else if (chr == 'N') {
+				_enemigos.emplace_back(new Naranja(origen + Vector2D(10.0f * j, -10.0f * i), _playerPtr, this));
 			}
 			else if (chr == 'E') {
-				_enemigos.emplace_back(new Esqueleto(origen + Vector2D(10.0f * j, -10.0f * i), _playerPtr));
+				_enemigos.emplace_back(new Esqueleto(origen + Vector2D(10.0f * j, -10.0f * i), _playerPtr, this));
+			}
+			else if (chr == 'W') {
+				_enemigos.emplace_back(new Weeper(origen + Vector2D(10.0f * j, -10.0f * i), _playerPtr, this));
 			}
 			else if (chr == 'C') {
-				_enemigos.emplace_back(new Caca(origen + Vector2D(10.0f * j, -10.0f * i), _playerPtr));
+				_enemigos.emplace_back(new Caca(origen + Vector2D(10.0f * j, -10.0f * i), _playerPtr, this));
 			}
 			else if (chr == 'Z') {
-				_enemigos.emplace_back(new Zombie(origen + Vector2D(10.0f * j, -10.0f * i), _playerPtr));
+				_enemigos.emplace_back(new Zombie(origen + Vector2D(10.0f * j, -10.0f * i), _playerPtr, this));
 			}
 			else if (chr == 'L') {
 				_objetos.emplace_back(Factoria::create(Objeto::obj_t::LLAVE, origen + Vector2D(10.0f * j, -10.0f * i)));
@@ -290,7 +301,7 @@ PuertaRoom* Room::puertaActual()
 }
 
 BossRoom::BossRoom(float indice, const char* ruta_de_textura, Player* playerPtr) 
-	: Room(indice, ruta_de_textura, playerPtr, ROOM_TYPE::BOSS), _gusano{ new BossGusano(playerPtr) }, _trampilla(Vector2D(0.0f, 0.0f))
+	: Room(indice, ruta_de_textura, playerPtr, ROOM_TYPE::BOSS), _gusano{ new BossGusano(playerPtr, this) }, _trampilla(Vector2D(0.0f, 0.0f))
 {
 	_enemigos.emplace_back(_gusano);
 }
