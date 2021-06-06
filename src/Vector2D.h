@@ -1,4 +1,5 @@
 #pragma once
+#include "Macros.h"
 
 //Obtenido del juego PANG de las prácticas de laboratorio
 class Vector2D {
@@ -19,7 +20,8 @@ public:
 	Vector2D operator *(float) const; 
 	Vector2D operator +(float) const;
 
-	void set(float nx, float ny);
+	void setXY(float nx, float ny);
+	void set(float modulo, float angulo); //Ángulo en grados
 
 //ATRIBUTOS
 	float x = 0;

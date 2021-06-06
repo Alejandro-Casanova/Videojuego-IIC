@@ -12,7 +12,7 @@ Enemigo::~Enemigo() {
 
 }
 
-Enemigo::Enemigo(Vector2D posicion, Player* playerPtr) :  _playerPtr(playerPtr) {
+Enemigo::Enemigo(Vector2D posicion, Player* playerPtr, Room* roomPtr) :  _playerPtr(playerPtr) , _roomPtr(roomPtr){
 	_posicion = posicion;
 }
 
@@ -73,11 +73,37 @@ void Enemigo::mov_erratico() {
 	}
 }
 
+void Enemigo::flee(Entidad* ptr)
+{
+	Vector2D dir = _posicion - ptr->getPos();
+	_velocidad = dir.unitario() * _speedStat * 2.0f;
+}
 
-//SUBCLASES DE ENEMIGOS (ABSTRACTAS)
+void Enemigo::stalk(Entidad* ptr, float distance)
+{
+	Vector2D dir = _posicion - ptr->getPos();
+	float dist = dir.modulo();
+	if (dist < distance - 1.0f) flee(ptr);
+	else if (dist > distance + 1.0f) follow(ptr);
+	else _velocidad = 0;
 
-EnemigoA::EnemigoA(Vector2D posicion, Player* playerPtr, const char* ruta_de_textura) 
-	: Enemigo(posicion, playerPtr), _sprite{ ruta_de_textura } {
+}
+
+void Enemigo::roam(float prob)
+{
+	if(ETSIDI::lanzaDado() < prob * T_CONST){ //Probabilidad del 20% cada segundo
+		double angulo = ETSIDI::lanzaDado(360.0); //Ángulo aleatorio entre 0 y 360
+		std::cout << angulo << std::endl;
+		_velocidad.set(_speedStat, angulo); //Dirección aleatoria
+	}
+	Interaccion::rebote(*this, *_roomPtr, true);
+}
+
+
+//SUBCLASES DE ENEMIGOS (ABSTRACTAS) Definidas según el tipo de animación
+
+EnemigoA::EnemigoA(Vector2D posicion, Player* playerPtr, Room* roomPtr, const char* ruta_de_textura) 
+	: Enemigo(posicion, playerPtr, roomPtr), _sprite{ ruta_de_textura } {
 }
 
 void EnemigoA::dibuja() {
@@ -86,8 +112,8 @@ void EnemigoA::dibuja() {
 	_sprite.draw();
 }
 
-EnemigoB::EnemigoB(Vector2D posicion, Player* playerPtr, const char* ruta_body, int body_sprite_cols, const char* ruta_head, int head_sprite_cols)
-	: Enemigo(posicion, playerPtr), _body{ ruta_body, body_sprite_cols, 2 }, _head{ ruta_head, head_sprite_cols } {
+EnemigoB::EnemigoB(Vector2D posicion, Player* playerPtr, Room* roomPtr, const char* ruta_body, int body_sprite_cols, const char* ruta_head, int head_sprite_cols, int animation_ms_step, int body_sprite_rows)
+	: Enemigo(posicion, playerPtr, roomPtr), _body{ ruta_body, body_sprite_cols, body_sprite_rows, animation_ms_step }, _head{ ruta_head, head_sprite_cols, 1, animation_ms_step } {
 }
 
 void EnemigoB::dibuja() {
@@ -97,8 +123,7 @@ void EnemigoB::dibuja() {
 	glTranslatef(_posicion.x, _posicion.y, 0);
 	glColor3f(1.0f, 0.0f, 0.0f);
 
-	_head.setState(1);
-	//gestion de direccion y animacion
+	//Gestion de direccion y animacion
 	if (_velocidad.x > 0.01) {//DERECHA
 		_body.flip(false, false);
 		_head.flip(false, false);
@@ -107,11 +132,14 @@ void EnemigoB::dibuja() {
 		_body.flip(true, false);
 		_head.flip(true, false);
 	}
-	if (_velocidad.y > 0.01 && _velocidad.y > abs(_velocidad.x) ){//ARRIBA
-		_head.setState(2);
-	}
-	else if (_velocidad.y < -0.01 && abs(_velocidad.y) > abs(_velocidad.x) ){//ABAJO
-		_head.setState(0);
+	if (_headAnimation == 0) { //Animación de la cabeza, cuando hay sprites diferentes según el movimiento vertical
+		_head.setState(1);
+		if (_velocidad.y > 0.01 && _velocidad.y > abs(_velocidad.x)) {//ARRIBA
+			_head.setState(2);
+		}
+		else if (_velocidad.y < -0.01 && abs(_velocidad.y) > abs(_velocidad.x)) {//ABAJO
+			_head.setState(0);
+		}
 	}
 	//QUIETO
 	if ((_velocidad.x < 0.01) && (_velocidad.x > -0.01) && (_velocidad.y < 0.01) && (_velocidad.y > -0.01))
@@ -137,8 +165,26 @@ void EnemigoB::dibuja() {
 	glPopMatrix();
 }
 
+EnemigoC::EnemigoC(Vector2D posicion, Player* playerPtr, Room* roomPtr, const char* ruta_de_textura, int sprite_cols, int spriteRows, int animation_ms_step)
+	: Enemigo(posicion, playerPtr, roomPtr), _sprite{ ruta_de_textura, sprite_cols, spriteRows, animation_ms_step }
+{
+}
+
+void EnemigoC::dibuja()
+{
+	dibujaHitbox();
+
+	glPushMatrix();
+	glTranslatef(_posicion.x, _posicion.y, 0);
+	glColor3f(1.0f, 0.0f, 0.0f);
+
+	_sprite.draw();
+
+	glPopMatrix();
+}
+
 //// ZOMBIE /////////////////////////
-Zombie::Zombie(Vector2D pos, Player* playerPtr) :EnemigoB(pos, playerPtr, "res/texturas/enemigos/zombie_body_full.png", 10, "res/texturas/enemigos/zombie_head.png", 1){
+Zombie::Zombie(Vector2D pos, Player* playerPtr, Room* roomPtr) :EnemigoB(pos, playerPtr, roomPtr, "res/texturas/enemigos/zombie_body_full.png", 10, "res/texturas/enemigos/zombie_head.png", 1){
 	GestorSprites::dimensionaSprite(38, 35, TILE_WIDTH * 1.25f, _head);
 	GestorSprites::dimensionaSprite(26, 22, TILE_WIDTH, _body, 4);
 	_dispara = false;
@@ -152,7 +198,7 @@ void Zombie::mueve(float t) {
 }
 
 //// ESQUELETO /////////////////////////
-Esqueleto::Esqueleto(Vector2D pos, Player* playerPtr) :EnemigoB(pos, playerPtr, "res/texturas/enemigos/skelly_full_body.png", 10, "res/texturas/enemigos/skelly_head.png", 3) {
+Esqueleto::Esqueleto(Vector2D pos, Player* playerPtr, Room* roomPtr) :EnemigoB(pos, playerPtr, roomPtr, "res/texturas/enemigos/skelly_full_body.png", 10, "res/texturas/enemigos/skelly_head.png", 3) {
 	GestorSprites::dimensionaSprite(32, 33, TILE_WIDTH * 1.2f, _head);
 	GestorSprites::dimensionaSprite(26, 22, TILE_WIDTH, _body, 5);
 	_dispara = true;
@@ -182,6 +228,26 @@ void Esqueleto::mueve(float t) {
 	_body.loop();
 }
 
+// WEEPER ///////////////
+
+Weeper::Weeper(Vector2D pos, Player* playerPtr, Room* roomPtr)
+	: EnemigoB(pos, playerPtr, roomPtr, "res/texturas/enemigos/weeper_body_full.png", 10, "res/texturas/enemigos/weeper_head.png", 6) {
+
+	_radio = 5.0f;
+	GestorSprites::dimensionaSprite(44, 42, TILE_WIDTH * 1.2f, _head);
+	GestorSprites::dimensionaSprite(66, 39, TILE_WIDTH, _body, 5.0f);
+	_speedStat = 12.5f;
+	_headAnimation = 1;
+	_dispara = true;
+
+}
+
+void Weeper::mueve(float t) {
+	Personaje::mueve(t);
+	stalk(_playerPtr, 50.0f);
+	_body.loop();
+	_head.loop();
+}
 
 /// FATTY ///////////////////////
 
@@ -189,25 +255,102 @@ Fatty::~Fatty(){
 
 }
 
-Fatty::Fatty(Vector2D pos, Player* playerPtr) : EnemigoA(pos, playerPtr, "res/texturas/enemigos/fatty.png") {
+Fatty::Fatty(Vector2D pos, Player* playerPtr, Room* roomPtr)
+	: EnemigoB(pos, playerPtr, roomPtr, "res/texturas/enemigos/fatty_body_full.png", 12, "res/texturas/enemigos/fatty_head.png", 6, 200) {
 
-	_sprite.setSize(_dims.x, _dims.y);
-	_sprite.setCenter(_dims.x / 2.0f, _dims.y / 2.0f);
+	//_sprite.setSize(_dims.x, _dims.y);
+	//_sprite.setCenter(_dims.x / 2.0f, _dims.y / 2.0f);
 	_radio = 5.0f;
+	GestorSprites::dimensionaSprite(34, 30, TILE_WIDTH * 1.2f, _head);
+	GestorSprites::dimensionaSprite(66, 39, TILE_WIDTH * 2.0f, _body, 5.5f);
+	_speedStat = 7.5f;
+	_headAnimation = 1;
 }
 
 void Fatty::mueve(float t) {
 	Personaje::mueve(t);
 	follow(_playerPtr);
-	//_spriteFatty.loop();
+	_body.loop();
+	_head.loop();
 
 }
 
-///////////// caca
-Caca::Caca(Vector2D pos, Player* const playerPtr) : EnemigoA(pos, playerPtr, "res/texturas/enemigos/caca.png")
+/// NARANJA ///////////////////
+Naranja::Naranja(Vector2D pos, Player* const playerPtr, Room* roomPtr)
+	: EnemigoC(pos, playerPtr, roomPtr, "res/texturas/enemigos/orange.png", 4, 3)
 {
-	_sprite.setSize(_dims.x, _dims.y);
-	_sprite.setCenter(_dims.x / 2.0f, _dims.y / 2.0f);
+	_radio = 1;
+	GestorSprites::dimensionaSprite(32, 32, TILE_WIDTH, _sprite, -1.0f);
+}
+
+void Naranja::dibuja()
+{
+	int fase = floor(_contador / _tFase);
+
+	if (_contador <= 0)_sprite.setState(9);
+	else if (fase < _nFases - 1) {
+		_sprite.setState(_nFases -1 - fase);
+	}
+	dibujaHitbox();
+
+	glPushMatrix();
+	glTranslatef(_posicion.x, _posicion.y, 0);
+	glColor3f(1.0f, 0.0f, 0.0f);
+
+	_sprite.draw();
+
+	glPopMatrix();
+}
+
+void Naranja::mueve(float t)
+{
+	//Ajuste del radio de la hitbox
+	_radio = 1 + 2.5f * _contador / 10.0f;
+	if (_radio < 1) _radio = 1;
+
+	if (_contador < _nFases * _tFase) { //La naranja va creciendo
+		_contador += t;
+		_dispara = false;
+	}
+	else { //Al alcanzar tamaño máximo, dispara
+		_contador = _nFases * _tFase;
+		_dispara = true;
+	}
+	//std::cout << _contador << std::endl;
+	Personaje::mueve(t);
+	_sprite.loop();
+}
+
+bool Naranja::recibeHerida(float damage)
+{
+	if (_contador < _tFase) return Personaje::recibeHerida(damage);
+	_contador -= (damage * 4 / _tFase);
+	return false;
+}
+
+// MOSCA /////////////////////
+Mosca::Mosca(Vector2D pos, Player* const playerPtr, Room* roomPtr)
+	: EnemigoC(pos, playerPtr, roomPtr, "res/texturas/enemigos/fly.png", 2)
+{
+	_velocidad.set(_speedStat, ETSIDI::lanzaDado(360));
+	_radio = 2.0f;
+	_shootSpeed = 2.0f;
+	_dispara = true;
+	GestorSprites::dimensionaSprite(32, 32, TILE_WIDTH, _sprite);
+}
+
+void Mosca::mueve(float t)
+{
+	Personaje::mueve(t);
+	_sprite.loop();
+	roam(0.3f); //30% de probabilidad de cambiar su trayectoria cada segundo
+}
+
+///////////// CACA ////////////////////////
+Caca::Caca(Vector2D pos, Player* const playerPtr, Room* roomPtr) : EnemigoA(pos, playerPtr, roomPtr, "res/texturas/enemigos/caca.png")
+{
+	_sprite.setSize(13, 13);
+	_sprite.setCenter(13 / 2.0f, 13 / 2.0f);
 	_radio = 5.0f;
 	_dispara = false;
 }
@@ -226,7 +369,7 @@ Caca::~Caca()
 
 /// BOSS GUSANO /////////////////////////////////////
 
-BossGusano::BossGusano(Player* playerPtr) : Enemigo(Vector2D{ 0.0f, 0.0f }, playerPtr)
+BossGusano::BossGusano(Player* playerPtr, Room* roomPtr) : Enemigo(Vector2D{ 0.0f, 0.0f }, playerPtr, roomPtr)
 {
 	_speedStat = 25.0f;
 	_dispara = false;
@@ -408,3 +551,5 @@ void BossGusano::mueve(float t)
 {
 	Personaje::mueve(t);
 }
+
+

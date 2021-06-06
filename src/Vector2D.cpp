@@ -60,12 +60,6 @@ Vector2D Vector2D::operator+(float escalar) const
 	return Vector2D(x + escalar, y + escalar);
 }
 
-void Vector2D::set(float nx, float ny)
-{
-	x = nx;
-	y = ny;
-}
-
 Vector2D Vector2D::operator+=(Vector2D v)
 {
 	x += v.x;
@@ -85,4 +79,15 @@ Vector2D Vector2D::operator*=(float f)
 	x *= f;
 	y *= f;
 	return *this;
+}
+
+void Vector2D::setXY(float nx, float ny)
+{
+	x = nx;
+	y = ny;
+}
+
+void Vector2D::set(float modulo, float angulo) {
+	x = modulo * cosf(angulo * 2.0 * PI / 360.0f);
+	y = modulo * sinf(angulo * 2.0 * PI / 360.0f);
 }

@@ -27,7 +27,7 @@ public:
 	void dibuja() override;
 	void mueve(float t) override;
 private:
-	ETSIDI::Sprite _sprite{ "res/texturas/bone.png" };
+	ETSIDI::Sprite _sprite{ "res/texturas/enemigos/bone.png" };
 
 };
 

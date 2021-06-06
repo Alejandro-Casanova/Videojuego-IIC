@@ -9,6 +9,7 @@
 class Player;
 class ListaProyectil;
 class Proyectil;
+class Room;
 
 //CLASE ENEMIGO GENÉRICA///////////////////////////////////////////////////
 
@@ -16,7 +17,7 @@ class Enemigo : public Personaje
 {
 	friend class Interaccion;
 public:
-	Enemigo(Vector2D posicion, Player* playerPtr); //Almacena posicion y un puntero al jugador
+	Enemigo(Vector2D posicion, Player* playerPtr, Room* roomPtr); //Almacena posicion y un puntero al jugador
 	virtual ~Enemigo();
 
 	virtual void dibuja() override = 0;
@@ -28,12 +29,17 @@ public:
 	virtual Proyectil* dispara();
 
 protected:
-	Vector2D _dims{ 13.0f, 13.0f }; //Dimensiones del sprite
+	//Funciones de Movimiento
 	void follow(Entidad* ptr); //Modifica la velocidad del enemigo para seguir a una entidad genérica (a menudo será el jugador)
 	void mov_erratico();
+	void flee(Entidad* ptr); //Modifica la velocidad del enemigo para huir de una entidad genérica
+	void stalk(Entidad* ptr, float distance); //Se mantiene a una distancia del jugador, y huye si éste se acerca demasiado
+	void roam(float prob); //Se mueve aleatoriamente y rebota contra las paredes. Recibe un número entre 0.0f y 1.0f que define la probabilidad que tiene el enemigo de cambiar su trayectoria cada segundo que pasa
+
 	float intervalo;			//valor de apoyo para el intervalo entre movimientos u acciones de un enemigo
 	Entidad* _playerPtr = nullptr; //Almacena un puntero al jugador para poder seguirlo
-	bool _dispara; //Indica si el enemigo dispara
+	Room* _roomPtr = nullptr; //Almacena puntero a la room actual para gestionar colisiones y pathfinding
+	bool _dispara = false; //Indica si el enemigo dispara
 	float _meleeDamage = 1.0f;
 	
 
@@ -41,7 +47,7 @@ protected:
 
 class EnemigoA : public Enemigo { //Tiene un único sprite
 public:
-	EnemigoA(Vector2D posicion, Player* playerPtr, const char* ruta_de_textura);
+	EnemigoA(Vector2D posicion, Player* playerPtr, Room* roomPtr, const char* ruta_de_textura);
 	virtual void dibuja() override;
 	virtual void mueve(float t) override = 0;
 protected:
@@ -50,52 +56,100 @@ protected:
 
 class EnemigoB : public Enemigo { //Tiene una secuencia de sprites para el cuerpo y una para la cabeza
 public:
-	EnemigoB(Vector2D posicion, Player* playerPtr, const char* ruta_body, int body_sprite_cols, const char* ruta_head, int head_sprite_cols);
+	EnemigoB(Vector2D posicion, Player* playerPtr, Room* roomPtr, const char* ruta_body, int body_sprite_cols, const char* ruta_head, int head_sprite_cols, int animation_ms_step = 50, int body_sprite_rows = 2);
 	virtual void dibuja() override;
 	virtual void mueve(float t) override = 0;
 protected:
 	ETSIDI::SpriteSequence _head, _body;
+	int _headAnimation = 0; //Indica el tipo de animación de la cabeza
+};
+
+class EnemigoC : public Enemigo { //Tiene un único spriteSequence
+public:
+	EnemigoC(Vector2D posicion, Player* playerPtr, Room* roomPtr, const char* ruta_de_textura, int sprite_cols, int spriteRows = 1, int animation_ms_step = 50);
+	virtual void dibuja() override;
+	virtual void mueve(float t) override = 0;
+protected:
+	ETSIDI::SpriteSequence _sprite;
 };
 
 // Zombie /////////
 class Zombie : public EnemigoB {
 public:
-	Zombie(Vector2D pos, Player* playerPtr);
+	Zombie(Vector2D pos, Player* playerPtr, Room* roomPtr);
 	void mueve(float t) override;
 private:
 
 };
 
-// Esqueleto
+// Esqueleto ///////////////////////////////////
 class Esqueleto : public EnemigoB {
 public:
-	Esqueleto(Vector2D pos, Player* playerPtr);
+	Esqueleto(Vector2D pos, Player* playerPtr, Room* roomPtr);
 	Proyectil* dispara() override;
 	void mueve(float t) override;
 private:
 
 };
 
+// WEEPER /////////////////////////////
+
+class Weeper : public EnemigoB {
+public:
+	Weeper(Vector2D pos, Player* playerPtr, Room* roomPtr);
+	void mueve(float t) override;
+private:
+
+};
+
+// FATTY ////////////////
+class Fatty : public EnemigoB {
+public:
+	Fatty(const Vector2D pos, Player* const PlayerPtr, Room* roomPtr);
+	virtual ~Fatty();
+
+	void mueve(float t) override;
+
+private:
+};
+
+// NARANJA ////////////////////
+class Naranja : public EnemigoC {
+public:
+	Naranja(Vector2D pos, Player* const playerPtr, Room* roomPtr);
+	
+	virtual void dibuja() override;
+	virtual void mueve(float t) override;
+	bool recibeHerida(float damage) override;
+
+private:
+	float _contador = 0;
+	float _tFase = 1; //Tiempo entre las distintas fases del enemigo
+	const int _nFases = 10;
+};
+
+// MOSCA /////////////////
+class Mosca : public EnemigoC {
+public:
+	Mosca(Vector2D pos, Player* const playerPtr, Room* roomPtr);
+
+	//virtual void dibuja() override;
+	virtual void mueve(float t) override;
+
+private:
+};
+
+// CACA //////////
+
 class Caca : public EnemigoA {
 public:
-	Caca(Vector2D pos, Player* const playerPtr);
+	Caca(Vector2D pos, Player* const playerPtr, Room* roomPtr);
 	virtual ~Caca();
 
 	virtual void mueve(float t) override;
 
 private:
 };
-
-class Fatty : public EnemigoA {
-public:
-	Fatty(const Vector2D pos, Player* const PlayerPtr);
-	virtual ~Fatty();
-
-	virtual void mueve(float t) override;
-
-private:
-};
-
 
 
 ///BOSS GUSANO////////////////////////////////////////////////////////////////////
@@ -146,7 +200,7 @@ class BossGusano : public Enemigo {
 		ETSIDI::SpriteSequence _spriteRojo{ "res/texturas/boss/gusano_body_r.png", 2 , 1, 75 };
 	};
 public:
-	BossGusano(Player* playerPtr);
+	BossGusano(Player* playerPtr, Room* roomPtr);
 
 	void dibuja() override;
 	void mueve(float t) override;
