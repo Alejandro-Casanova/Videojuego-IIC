@@ -8,6 +8,7 @@
 #include "Macros.h"
 class Player;
 class ListaProyectil;
+class Proyectil;
 
 //CLASE ENEMIGO GENÉRICA///////////////////////////////////////////////////
 
@@ -20,9 +21,11 @@ public:
 
 	virtual void dibuja() override = 0;
 	void inicializa() override;
-	virtual bool puedeDisparar() override;
+	virtual void mueve(float t) override = 0;
 	
+	virtual bool puedeDisparar() override;
 	float getMeleeDamage() const { return _meleeDamage; }
+	virtual Proyectil* dispara();
 
 protected:
 	Vector2D _dims{ 13.0f, 13.0f }; //Dimensiones del sprite
@@ -39,7 +42,8 @@ protected:
 class EnemigoA : public Enemigo { //Tiene un único sprite
 public:
 	EnemigoA(Vector2D posicion, Player* playerPtr, const char* ruta_de_textura);
-	virtual void dibuja() override = 0;
+	virtual void dibuja() override;
+	virtual void mueve(float t) override = 0;
 protected:
 	ETSIDI::Sprite _sprite;
 };
@@ -47,9 +51,29 @@ protected:
 class EnemigoB : public Enemigo { //Tiene una secuencia de sprites para el cuerpo y una para la cabeza
 public:
 	EnemigoB(Vector2D posicion, Player* playerPtr, const char* ruta_body, int body_sprite_cols, const char* ruta_head, int head_sprite_cols);
-	virtual void dibuja() override = 0;
+	virtual void dibuja() override;
+	virtual void mueve(float t) override = 0;
 protected:
 	ETSIDI::SpriteSequence _head, _body;
+};
+
+// Zombie /////////
+class Zombie : public EnemigoB {
+public:
+	Zombie(Vector2D pos, Player* playerPtr);
+	void mueve(float t) override;
+private:
+
+};
+
+// Esqueleto
+class Esqueleto : public EnemigoB {
+public:
+	Esqueleto(Vector2D pos, Player* playerPtr);
+	Proyectil* dispara() override;
+	void mueve(float t) override;
+private:
+
 };
 
 class Caca : public EnemigoA {
@@ -57,7 +81,6 @@ public:
 	Caca(Vector2D pos, Player* const playerPtr);
 	virtual ~Caca();
 
-	virtual void dibuja() override;
 	virtual void mueve(float t) override;
 
 private:
@@ -68,7 +91,6 @@ public:
 	Fatty(const Vector2D pos, Player* const PlayerPtr);
 	virtual ~Fatty();
 
-	virtual void dibuja() override;
 	virtual void mueve(float t) override;
 
 private:
@@ -127,6 +149,7 @@ public:
 	BossGusano(Player* playerPtr);
 
 	void dibuja() override;
+	void mueve(float t) override;
 	void mueve(float t, Caja& cajaRoom); //El gusano se desplaza aleatoriamente por la room NOTA: NO SOBREESCRIBE LA FUNCION "MUEVE" DE ENEMIGO
 	void mueveCadena(); //Se encarga del movimiento relativo entre los módulos del robot
 	bool recibeHerida(float damage) override; //Devuelve true al morir el boss
