@@ -104,6 +104,7 @@ void Room::dibuja()
 
 	for (auto i : _objetos) {
 		i->dibuja();
+		
 	}
 
 	for (auto i : _obstaculos) {
@@ -114,6 +115,7 @@ void Room::dibuja()
 
 	disparosEnemigos.dibuja();
 	Room::gestionarDisparos(disparosEnemigos);
+	Room::gestionarObjetos();
 }
 
 void Room::inicializa(const char* ruta_de_layout)
@@ -328,6 +330,20 @@ void BossRoom::gestionarDisparos(ListaProyectil& listaP)
 		_gusano->gestionarDisparos(listaP);
 			
 		
+	}
+}
+
+void Room::gestionarObjetos() {
+
+
+	for (int j = _objetos.size() - 1; j >= 0; j--) {
+		if (Interaccion::colision(*_objetos[j], *_playerPtr) == true) {
+			_objetos[j]->eliminar(_objetos[j]);
+			_objetos.erase(_objetos.begin() + j);
+
+
+			
+		}
 	}
 }
 

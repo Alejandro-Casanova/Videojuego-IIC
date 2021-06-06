@@ -6,6 +6,7 @@ class Pared;
 class Obstaculo;
 class Proyectil;
 class Enemigo;
+class Objeto;
 
 class Interaccion
 {
