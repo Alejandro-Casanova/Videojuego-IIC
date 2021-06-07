@@ -14,10 +14,13 @@ int sign(float x) {
 
 Player::Player()
 {
-	_healthStat = 5.0f;
-	_healthCounter = _healthStat;
-	_speedStat = 35.0f;
-	_bulletSpeed = 35.0f;
+
+	//inicializa();
+
+	GestorSprites::dimensionaSprite(32, 15, 8.0f, _body);
+	_body.setCenter(4, 6);
+	GestorSprites::dimensionaSprite(40, 28, 12.0f, _head);
+	GestorSprites::dimensionaSprite(40, 36, 12.0f, _especial);
 }
 
 Player::~Player()
@@ -57,6 +60,10 @@ void Player::tecla()
 		_velocidad.y += _speedStat;
 	}
 	
+	//Para corregir posibles errores, si ninguna tecla direccional está pulsada, se detiene al jugador
+	if (!GestorDeTeclado::isKeyDown('a') && !GestorDeTeclado::isKeyDown('d')) _velocidad.x = 0;
+	if (!GestorDeTeclado::isKeyDown('w') && !GestorDeTeclado::isKeyDown('s')) _velocidad.y = 0;
+
 	if (_velocidad.modulo() > _speedStat) //Si el módulo de la velocidad es mayor de lo que debe, realiza la corrección
 		_velocidad = _velocidad.unitario() * _speedStat;
 }
@@ -141,15 +148,25 @@ void Player::dibuja()
 }
 
 void Player::inicializa(){
-
-	GestorSprites::dimensionaSprite(32, 15, 8.0f, _body);
-	_body.setCenter(4, 6);
-	//_body.setSize(8, 3.75);
-	GestorSprites::dimensionaSprite(40, 28, 12.0f, _head);
-	//_head.setCenter(6, 4);
-	//_head.setSize(12, 8.4);
-	GestorSprites::dimensionaSprite(40, 36, 12.0f, _especial);
 	setRadio(5.0f);
+	setPos(0.0f, 0.0f);
+	inicializaStats();
+	
+}
+
+void Player::inicializaStats()
+{
+	_llaves = 0;
+	_dinero = 0;
+	_healthStat = SALUD_JUGADOR;
+	_healthCounter = _healthStat;
+	_speedStat = VELOCIDAD_JUGADOR;
+	_bulletSpeed = VEL_PROYECTIL_JUGADOR;
+	_bulletSpeed = VEL_PROYECTIL_JUGADOR;
+	_shootSpeed = VEL_DISPARO_JUGADOR;
+	_shotDamage = DAMAGE_DISPARO_JUGADOR;
+	_damageTimer = 0;
+	_shootCounter = 0;
 }
 
 void Player::mueve(float t)

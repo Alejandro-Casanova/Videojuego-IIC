@@ -6,7 +6,7 @@
 #include "Player.h"
 #include "ListaProyectil.h"
 
-//CLASE ENEMIGO GENÉRICA (ABSTRACTA)//////////////////////////////////77
+//CLASE ENEMIGO GENÉRICA (ABSTRACTA) //////////////////////////////////
 
 Enemigo::~Enemigo() {
 
@@ -91,9 +91,8 @@ void Enemigo::stalk(Entidad* ptr, float distance)
 
 void Enemigo::roam(float prob)
 {
-	if(ETSIDI::lanzaDado() < prob * T_CONST){ //Probabilidad del 20% cada segundo
+	if(ETSIDI::lanzaDado() < prob * double(T_CONST)){ //Probabilidad del 20% cada segundo
 		double angulo = ETSIDI::lanzaDado(360.0); //Ángulo aleatorio entre 0 y 360
-		std::cout << angulo << std::endl;
 		_velocidad.set(_speedStat, angulo); //Dirección aleatoria
 	}
 	Interaccion::rebote(*this, *_roomPtr, true);
@@ -172,6 +171,13 @@ EnemigoC::EnemigoC(Vector2D posicion, Player* playerPtr, Room* roomPtr, const ch
 
 void EnemigoC::dibuja()
 {
+	//Gestion de direccion y animacion
+	if (_velocidad.x > 0.01) //DERECHA
+		_sprite.flip(false, false);
+	else if (_velocidad.x < -0.01) //IZQUIERDA
+		_sprite.flip(true, false);
+	
+
 	dibujaHitbox();
 
 	glPushMatrix();
@@ -285,7 +291,7 @@ Naranja::Naranja(Vector2D pos, Player* const playerPtr, Room* roomPtr)
 
 void Naranja::dibuja()
 {
-	int fase = floor(_contador / _tFase);
+	int fase = (int)floor(_contador / _tFase);
 
 	if (_contador <= 0)_sprite.setState(9);
 	else if (fase < _nFases - 1) {
@@ -459,7 +465,7 @@ void BossGusano::mueve(float t, Caja& cajaRoom)
 		float aux = _velocidad.x;
 		_velocidad.x = _velocidad.y;
 		_velocidad.y = aux;
-		if (ETSIDI::lanzaMoneda) _velocidad *= -1;
+		if (ETSIDI::lanzaMoneda()) _velocidad *= -1;
 	}
 
 	Interaccion::rebote(*this, cajaRoom, true);  //Invierte la velocidad al chocar con la pared
@@ -511,7 +517,7 @@ bool BossGusano::recibeHerida(float damage)
 	_healthCounter -= damage;
 	
 	if (!_modulos.empty()) {//Impacto a la cabeza causa daño a todos los módulos
-		for (int i = _modulos.size() - 1; i >= 0; i--) {
+		for (int i = (int)_modulos.size() - 1; i >= 0; i--) {
 			if (_modulos[i].recibeHerida(damage / N_MODULOS))
 				_modulos.erase(_modulos.begin() + i);
 		}
@@ -525,10 +531,10 @@ bool BossGusano::gestionarDisparos(ListaProyectil& listaP)
 {
 	bool hit = false;
 	//Impactos en los modulos
-	for (int i = _modulos.size() - 1; i >= 0; i--) {
+	for (int i = (int)_modulos.size() - 1; i >= 0; i--) {
 		Proyectil* aux = listaP.impacto(_modulos[i]);
 		if (aux != nullptr) {
-			if (_modulos[i].recibeHerida(aux->getDamage()))
+			if (_modulos[i].recibeHerida((float)aux->getDamage()))
 				_modulos.erase(_modulos.begin() + i);
 			listaP.eliminar(aux);
 			hit = true;

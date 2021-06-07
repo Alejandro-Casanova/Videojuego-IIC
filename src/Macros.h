@@ -14,3 +14,10 @@ const float DIST_ENTRE_MODULOS = TILE_WIDTH * 0.85f;
 const float SALUD_MAX = 1.0f;
 const int N_MODULOS = 6;
 const float T_ROAR = 8.0f;
+
+//Parámetros iniciales del jugador
+const float SALUD_JUGADOR = 5.0f;
+const float VELOCIDAD_JUGADOR = 35.0f;
+const float VEL_PROYECTIL_JUGADOR = 35.0f;
+const float VEL_DISPARO_JUGADOR = 1.0f;
+const float DAMAGE_DISPARO_JUGADOR = 1.0f;

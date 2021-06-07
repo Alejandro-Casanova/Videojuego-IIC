@@ -5,7 +5,8 @@
 
 Piso::Piso(Player* playerPtr, const char* ruta_de_layout) : _playerPtr(playerPtr)
 {
-	inicializa(ruta_de_layout);
+	cargaLayout(ruta_de_layout);
+	//inicializa();
 }
 
 Piso::~Piso() {
@@ -35,6 +36,7 @@ bool Piso::cambiaRoom()
 	if (puerta != nullptr && puerta->isOpen()) {
 		setRoomActual(puerta->getNextRoom()->getIndice());
 		roomActual()->disparosEnemigos.destruirContenido();
+
 		//Invierte la posicion del jugador para que aparezca al otro lado de la puerta
 		switch (puerta->getOrientacion()) {
 		case PuertaRoom::ORIENTACION::DOWN:
@@ -54,9 +56,18 @@ bool Piso::cambiaRoom()
 }
 
 
-void Piso::inicializa(const char* ruta_de_layout)
+void Piso::inicializa()
 {
-	cargaLayout(ruta_de_layout);
+	for (auto& i : _rooms) {
+		if (i != nullptr) {
+			delete i;
+			i = nullptr;
+		}
+	}
+	if(!_rooms.empty()) _rooms.clear();
+	//_layout.clear();
+	if(!_roomLayout.empty()) _roomLayout.clear();
+
 	setPiso();
 }
 
@@ -124,7 +135,7 @@ void Piso::setPiso()
 				_rooms.push_back(_roomLayout[i][j]);
 				break;
 			case 'B':
-				_roomLayout[i][j] = new BossRoom(_rooms.size(), "res/texturas/rooms/Basement1.png", _playerPtr);
+				_roomLayout[i][j] = new BossRoom(int(_rooms.size()), "res/texturas/rooms/Basement1.png", _playerPtr);
 				_roomLayout[i][j]->inicializa("res/rooms/B1.txt");
 				_rooms.push_back(_roomLayout[i][j]);
 				break;
@@ -137,9 +148,9 @@ void Piso::setPiso()
 
 	///CONFIGURA LAS PUERTAS
 	//Barrido por filas de izquierda a derecha (puertas izquierdas)
-	for (int row = 0; row < _roomLayout.size(); row++) {
+	for (size_t row = 0; row < _roomLayout.size(); row++) {
 		Room* aux = nullptr;
-		for (int col = 0; col < _roomLayout[row].size(); col++) {
+		for (size_t col = 0; col < _roomLayout[row].size(); col++) {
 			auto& roomPtr = _roomLayout[row][col];
 			if (roomPtr != nullptr) { //Encuentra room
 				if (aux != nullptr) { //Hay room anterior
@@ -156,13 +167,13 @@ void Piso::setPiso()
 		}
 	}
 	//Barrido por filas de derecha a izquierda (puertas derechas)
-	for (int row = 0; row < _roomLayout.size(); row++) {
+	for (size_t row = 0; row < _roomLayout.size(); row++) {
 		Room* aux = nullptr;
-		for (int col = _roomLayout[row].size() - 1; col >= 0; col--) {
+		for (int col = int(_roomLayout[row].size()) - 1; col >= 0; col--) {
 			auto& roomPtr = _roomLayout[row][col];
 			if (roomPtr != nullptr) { //Encuentra room
 				if (aux != nullptr) { //Hay room anterior
-					if (_layout[row][col] == 'B' || _layout[row][col + 1] == 'B') //Comprueba si se trata de la puerta del boss
+					if (_layout[row][col] == 'B' || _layout[row][col + size_t(1)] == 'B') //Comprueba si se trata de la puerta del boss
 						roomPtr->addPuerta(new PuertaBoss(aux, PuertaRoom::ORIENTACION::RIGHT));
 					else
 						roomPtr->addPuerta(new PuertaRoom(aux, PuertaRoom::ORIENTACION::RIGHT));
@@ -175,9 +186,9 @@ void Piso::setPiso()
 		}
 	}
 	//Barrido por columnas de arriba a abajo (puertas superiores)
-	for (int col = 0; col < _roomLayout[0].size(); col++) { //La matriz debe ser rectangular para que funcione
+	for (size_t col = 0; col < _roomLayout[0].size(); col++) { //La matriz debe ser rectangular para que funcione
 		Room* aux = nullptr;
-		for (int row = 0; row < _roomLayout.size(); row++) {
+		for (size_t row = 0; row < _roomLayout.size(); row++) {
 			auto& roomPtr = _roomLayout[row][col];
 			if (roomPtr != nullptr) { //Encuentra room
 				if (aux != nullptr) { //Hay room anterior
@@ -194,13 +205,13 @@ void Piso::setPiso()
 		}
 	}
 	//Barrido por columnas de abajo a arriba (puertas inferiores)
-	for (int col = 0; col < _roomLayout[0].size(); col++) { //La matriz debe ser rectangular para que funcione
+	for (size_t col = 0; col < _roomLayout[0].size(); col++) { //La matriz debe ser rectangular para que funcione
 		Room* aux = nullptr;
-		for (int row = _roomLayout.size() - 1; row >= 0; row--) {
+		for (int row = int(_roomLayout.size()) - 1; row >= 0; row--) {
 			auto& roomPtr = _roomLayout[row][col];
 			if (roomPtr != nullptr) { //Encuentra room
 				if (aux != nullptr) { //Hay room anterior
-					if (_layout[row][col] == 'B' || _layout[row + 1][col] == 'B') //Comprueba si se trata de la puerta del boss
+					if (_layout[row][col] == 'B' || _layout[row + size_t(1)][col] == 'B') //Comprueba si se trata de la puerta del boss
 						roomPtr->addPuerta(new PuertaBoss(aux, PuertaRoom::ORIENTACION::DOWN));
 					else
 						roomPtr->addPuerta(new PuertaRoom(aux, PuertaRoom::ORIENTACION::DOWN));
