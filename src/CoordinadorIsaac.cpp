@@ -10,7 +10,6 @@
 
 CoordinadorIsaac:: CoordinadorIsaac()
 {
-	estado = PREINICIO;
 } 
 
 CoordinadorIsaac::~CoordinadorIsaac()
@@ -116,10 +115,10 @@ void CoordinadorIsaac::dibuja() {
 		ETSIDI::printxy("2. Utilice las flechas para disparar.", -13, 6);
 		ETSIDI::printxy("3. Utilice la barra espaciadora cuando se encuentre", -13, 4);
 		ETSIDI::printxy("cerca de una puerta para utilizarla.", -13, 3);
-		ETSIDI::printxy("4. Si se pulsa P en cualquier momento del juego, se pausara", -13, 1);
-		ETSIDI::printxy("El juego consiste en avanzar por las mazmorras a la vez que se va derrotando  ", -18, -2);
+		ETSIDI::printxy("4. Pulse P en cualquier momento para pausar el juego", -13, 1);
+		ETSIDI::printxy("El objetivo del juego es avanzar por las mazmorras a la vez que se va derrotando  ", -18, -2);
 		ETSIDI::printxy("a los enemigos que aparecen en las diferentes habitaciones. ", -18, -3);
-		ETSIDI::printxy("El objetivo es bajar a la estancia mas profunda, para ello habra que derrotar", -18, -4);
+		ETSIDI::printxy("La meta es bajar a la estancia mas profunda, para ello debe derrotarse", -18, -4);
 		ETSIDI::printxy("al jefe de cada piso.", -18, -5);
 		ETSIDI::printxy("Pulse 'R' para volver al menu de inicio", -13, -8);
 		
@@ -144,13 +143,13 @@ void CoordinadorIsaac::tecla() {
 		if (GestorDeTeclado::isKeyPressed('q')) {
 			estado = INICIO;
 		}
-			break;
+		break;
 		
 		
 	case(INICIO):
 
 		if (GestorDeTeclado::isKeyPressed('j')) {
-			mundo.inicializa();
+			//mundo.inicializa();  //El mundo ya se inicializa con el constructor
 			estado = JUEGO;
 		} 
 
@@ -179,7 +178,7 @@ void CoordinadorIsaac::tecla() {
 
 		}
 		else if (mundo.JuegoAcabado() == 1)
-			estado =GAMEOVER;
+			estado = GAMEOVER;
 		else if (mundo.JuegoAcabado() == 2)
 			estado = FIN;
 		
@@ -203,6 +202,7 @@ void CoordinadorIsaac::tecla() {
 			else if (GestorDeTeclado::isKeyPressed('r')) { //Vuelve al menu inicial
 
 				estado = INICIO;
+				mundo.inicializa(); //Reestablece el mundo
 			}
 		break;
 		
@@ -211,6 +211,7 @@ void CoordinadorIsaac::tecla() {
 		if (GestorDeTeclado::isKeyPressed('r')) {//Vuelve al menu inicial
 			
 			estado = INICIO;
+			mundo.inicializa(); //Reestablece el mundo
 		}
 		if (GestorDeTeclado::isKeyPressed('s')) {//Sale del juego
 
@@ -223,6 +224,7 @@ void CoordinadorIsaac::tecla() {
 		if (GestorDeTeclado::isKeyPressed('r')) {//Vuelve al menu inicial
 			
 			estado = INICIO;
+			mundo.inicializa(); //Reestablece el mundo
 		}
 		if (GestorDeTeclado::isKeyPressed('s')) {//Sale del juego
 

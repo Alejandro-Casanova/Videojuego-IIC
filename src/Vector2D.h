@@ -21,7 +21,7 @@ public:
 	Vector2D operator +(float) const;
 
 	void setXY(float nx, float ny);
-	void set(float modulo, float angulo); //Ángulo en grados
+	void set(double modulo, double angulo); //Ángulo en grados
 
 //ATRIBUTOS
 	float x = 0;
