@@ -28,6 +28,10 @@ Objeto* Factoria::create(const Objeto& ob)
 	else if (ob.type() == Objeto::obj_t::LLAVE) {
 		return new Llave(dynamic_cast<const Llave&>(ob));
 	}
+	else if (ob.type() == Objeto::obj_t::PILL) {
+		return new Pill(dynamic_cast<const Pill&>(ob));
+	}
+
 
 	std::cerr << "error al tratar de construir un objeto desconocido- factory::create(...)";
 	return nullptr;
@@ -42,6 +46,8 @@ Objeto* Factoria::create(Objeto::obj_t t, Vector2D pos) {
 		return new Moneda(pos);
 	case Objeto::obj_t::LLAVE:
 		return new Llave(pos);
+	case Objeto::obj_t::PILL:
+		return new Pill(pos);
 	default:
 		std::cerr << "incorrect type-factory::create()" << std::endl;
 		return nullptr;

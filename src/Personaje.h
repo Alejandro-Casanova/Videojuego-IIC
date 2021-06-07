@@ -16,7 +16,9 @@ public:
 
 	virtual bool puedeDisparar(); //Indica si el personaje está listo para disparar
 	virtual bool recibeHerida(float daño); //Devuelve true si se ha producido la muerte
-
+	virtual void modSpeed(float vel);
+	virtual void modShootingSpeed(float velP);
+	virtual void modShootDamage(float dmg);
 	
 	float getShotDamage() const { return _shotDamage; }
 	float getShootSpeed() const { return _shootSpeed; }

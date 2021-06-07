@@ -12,7 +12,7 @@
 class Objeto : public Entidad
 {	
 public:
-	enum class obj_t { OBJETO = 0, CORAZON, MONEDA, LLAVE };
+	enum class obj_t { OBJETO = 0, CORAZON, MONEDA, LLAVE, PILL };
 protected:
 	Objeto(const char* ruta_de_textura, Vector2D posicion = { 0.0f, 0.0f }, obj_t t = obj_t::OBJETO);
 	//void dimensionaSprite(int pxWidth, int pxHeight); //Ajusta las proporciones del sprite para que no se deforme la textura
@@ -51,7 +51,14 @@ class Llave : public Objeto {
 public:
 	Llave(Vector2D pos) : Objeto("res/texturas/key.png", pos, obj_t::LLAVE) { GestorSprites::dimensionaSprite(23, 31, TILE_WIDTH / 2.0f, _sprite); }
 	
-	std::ostream& print(std::ostream& o = std::cout) const { o << "soy una Moneda" << std::endl; return o; }
+	std::ostream& print(std::ostream& o = std::cout) const { o << "soy una LLave" << std::endl; return o; }
+};
+
+class Pill : public Objeto {
+public:
+	Pill(Vector2D pos) : Objeto("res/texturas/pills/1.png", pos, obj_t::PILL) { GestorSprites::dimensionaSprite(23, 31, TILE_WIDTH / 2.0f, _sprite); }
+
+	std::ostream& print(std::ostream& o = std::cout) const { o << "soy una Pastilla" << std::endl; return o; }
 };
 
 class Factoria

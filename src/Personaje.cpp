@@ -39,3 +39,18 @@ void Personaje::mueve(float t)
 	if (_shootCounter < _shootSpeed) _shootCounter += t; //Aumenta el contador
 	else _shootCounter = _shootSpeed; //Si se sobrepasa el umbral
 }
+
+void Personaje::modSpeed(float vel) 
+{
+	_speedStat = vel;
+}
+
+void Personaje::modShootingSpeed(float velP)
+{
+	_shootSpeed = velP;
+}
+
+void Personaje::modShootDamage(float dmg) 
+{
+	_shotDamage = dmg;
+}

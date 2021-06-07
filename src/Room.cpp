@@ -213,6 +213,9 @@ void Room::setRoom()
 			else if (chr == 'M') {
 				_objetos.emplace_back(Factoria::create(Objeto::obj_t::MONEDA, origen + Vector2D(10.0f * j, -10.0f * i)));
 			}
+			else if (chr == 'P') {
+				_objetos.emplace_back(Factoria::create(Objeto::obj_t::PILL, origen + Vector2D(10.0f * j, -10.0f * i)));
+			}
 				j++;
 			}
 			j = 0;
@@ -367,6 +370,15 @@ void Room::gestionarObjetos() {
 				 _playerPtr->_llaves++;
 			 else if (rtt == Objeto::obj_t::CORAZON)
 				 _playerPtr->recibeHerida(-1);
+			 else if (rtt == Objeto::obj_t::PILL)
+			 {
+				 switch (int pilltype = ETSIDI::lanzaDado(3))
+				 {
+				 case 1: {_playerPtr->modSpeed(20.0f); break;}
+				 case 2: {_playerPtr->modShootingSpeed(2.0f); break; }
+				 case 3: {_playerPtr->modShootDamage(2.0f); break; }
+				 }
+			 }
 
 		
 			_objetos[j]->eliminar(_objetos[j]);
