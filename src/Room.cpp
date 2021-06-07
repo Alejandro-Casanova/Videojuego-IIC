@@ -356,21 +356,32 @@ void BossRoom::gestionarDisparos(ListaProyectil& listaP)
 void Room::gestionarObjetos() {
 	for (int j = _objetos.size() - 1; j >= 0; j--) {
 		if (Interaccion::colision(*_objetos[j], *_playerPtr) == true) {
+			
+			Objeto::obj_t rtt;
+			rtt = _objetos[j]->type();
+
+			 if (rtt==Objeto::obj_t::MONEDA)
+				 _playerPtr->_dinero++;
+			 else if (rtt == Objeto::obj_t::LLAVE)
+				 _playerPtr->_llaves++;
+			 else if (rtt == Objeto::obj_t::CORAZON)
+				 _playerPtr->recibeHerida(-1);
+
+		
 			_objetos[j]->eliminar(_objetos[j]);
 			_objetos.erase(_objetos.begin() + j);
-
-
-			
 		}
+
+
 	}
+}
 
 bool BossRoom::juntoTrampilla()
 {
-	
+
 	if (Interaccion::colision(*_playerPtr, _trampilla.getHitBox()) && _trampilla.isOpen())
 		return true;
-	
+
 	return false;
 
 }
-

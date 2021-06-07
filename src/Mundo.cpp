@@ -77,7 +77,7 @@ void Mundo::tecla() {
 		}
 		else if (_piso->roomActual()->tipo() == Room::ROOM_TYPE::BOSS) {
 			BossRoom* aux = dynamic_cast<BossRoom*>(_piso->roomActual());
-			if (aux->juntoTrampilla()) siguientePiso();
+			//if (aux->juntoTrampilla()) siguientePiso();
 		}
 	}
 }

@@ -23,12 +23,12 @@ public:
 	Vector2D getHealth() const { return Vector2D{ _healthCounter, _healthStat }; }
 	int getLlaves() const { return _llaves; }
 	int getDinero() const { return _dinero; }
-
+	int _llaves = 0;
+	int _dinero = 0;
 	void flipPos(bool H, bool V);
 private:
 	float _healthStat = 2.0f; //Salud Máxima
-	int _llaves = 0;
-	int _dinero = 0;
+	
 	float _damageTimer = 0; //Controla el umbral de invulnerabilidad del jugador tras recibir daño
 	ETSIDI::SpriteSequence _body{ "res/texturas/isaac/body_sequence_full.png", 10, 2 };
 	ETSIDI::SpriteSequence _head{ "res/texturas/isaac/head_sequence.png", 8 };

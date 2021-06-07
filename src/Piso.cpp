@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Player.h"
 #include <fstream>
+#include "ETSIDI.h"
 
 Piso::Piso(Player* playerPtr, const char* ruta_de_layout) : _playerPtr(playerPtr)
 {
@@ -119,8 +120,24 @@ void Piso::setPiso()
 		for (int j = 0; j < _layout[i].size(); j++) {
 			switch (_layout[i][j]) {
 			case 'R':
+				
 				_roomLayout[i][j] = new Room(_rooms.size(), "res/texturas/rooms/Basement1.png", _playerPtr);
-				_roomLayout[i][j]->inicializa("res/rooms/1.txt");
+				switch (int p=ETSIDI::lanzaDado(14)) {
+				case 1: _roomLayout[i][j]->inicializa("res/rooms/1.txt"); break;
+				case 2: _roomLayout[i][j]->inicializa("res/rooms/2.txt"); break;
+				case 3: _roomLayout[i][j]->inicializa("res/rooms/3.txt"); break;
+				case 4: _roomLayout[i][j]->inicializa("res/rooms/4.txt"); break;
+				case 5: _roomLayout[i][j]->inicializa("res/rooms/5.txt"); break;
+				case 6: _roomLayout[i][j]->inicializa("res/rooms/6.txt"); break;
+				case 7: _roomLayout[i][j]->inicializa("res/rooms/7.txt"); break;
+				case 8: _roomLayout[i][j]->inicializa("res/rooms/8.txt"); break;
+				case 9: _roomLayout[i][j]->inicializa("res/rooms/9.txt"); break;
+				case 10: _roomLayout[i][j]->inicializa("res/rooms/10.txt"); break;
+				case 11: _roomLayout[i][j]->inicializa("res/rooms/11.txt"); break;
+				case 12: _roomLayout[i][j]->inicializa("res/rooms/12.txt"); break;
+				case 13: _roomLayout[i][j]->inicializa("res/rooms/13.txt"); break;
+				case 14: _roomLayout[i][j]->inicializa("res/rooms/14.txt"); break;
+				}
 				_rooms.push_back(_roomLayout[i][j]);
 				break;
 			case 'B':
