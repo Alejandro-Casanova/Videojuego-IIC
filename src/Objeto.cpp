@@ -14,6 +14,7 @@ void Objeto::dibuja()
 	Entidad::dibujaHitbox();
 	_sprite.setPos(_posicion.x, _posicion.y);
 	_sprite.draw();
+	
 }
 
 Objeto* Factoria::create(const Objeto& ob)
@@ -47,4 +48,11 @@ Objeto* Factoria::create(Objeto::obj_t t, Vector2D pos) {
 	}
 
 	return nullptr;
+}
+
+void Objeto::eliminar(Objeto* ob) {
+	Factoria::destroy(ob);
+	
+		
+	
 }

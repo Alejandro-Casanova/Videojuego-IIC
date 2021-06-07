@@ -27,9 +27,12 @@ protected:
 	ETSIDI::Sprite _sprite;
 };
 
+
 class Roca : public Obstaculo {
 public:
 	Roca(Vector2D posicion);
+	
+	ETSIDI::Sprite _sprite{ "res/texturas/rocas.png" };
 private:
 
 };
@@ -37,6 +40,8 @@ private:
 class Hueco : public Obstaculo {
 public:
 	Hueco(Vector2D posicion);
+	ETSIDI::Sprite _sprite{ "res/texturas/hole.png" };
 private:
 
 };
+

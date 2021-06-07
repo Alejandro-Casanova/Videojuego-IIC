@@ -43,6 +43,7 @@ public:
 	PuertaRoom* puertaActual();//Devuelve la puerta que está en contacto con el jugador, en caso de no haber ninguna, devuelve nullptr
 	void muerte(); //El jugador muere
 	virtual void gestionarDisparos(ListaProyectil& listaP); //Colisiones de los proyectiles con diferentes elementos de la room
+	void gestionarObjetos();
 
 	void setParedes(float ancho, float alto);
 	void setAncho(float ancho) { _ancho = ancho; }
@@ -57,6 +58,7 @@ protected:
 	float _ancho = ROOM_WIDTH;
 	float _alto = ROOM_HEIGHT;
 	bool _puertasAbiertas = true;
+	
 
 	Caja _paredes; //Hit-box de las paredes
 	ListaProyectil disparosEnemigos;

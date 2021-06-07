@@ -5,8 +5,14 @@ Obstaculo::Obstaculo(Vector2D posicion, const char* ruta_de_textura) : _sprite{ 
 {
 	_hitBox.setParedes(posicion, posicion + Vector2D(_ancho, _alto));
 	_posicion = posicion;
+
+	
+	
+	
+	
 	_sprite.setSize(TILE_WIDTH, TILE_WIDTH);
 	_sprite.setCenter(0.0f, 0.0f);
+
 }
 
 void Obstaculo::dibuja()
