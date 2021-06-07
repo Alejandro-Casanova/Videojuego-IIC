@@ -365,16 +365,16 @@ void Room::gestionarObjetos() {
 			rtt = _objetos[j]->type();
 
 			 if (rtt==Objeto::obj_t::MONEDA)
-				 _playerPtr->_dinero++;
+				 _playerPtr->masDinero();
 			 else if (rtt == Objeto::obj_t::LLAVE)
-				 _playerPtr->_llaves++;
+				 _playerPtr->masLlaves();
 			 else if (rtt == Objeto::obj_t::CORAZON)
 				 _playerPtr->recibeHerida(-1);
 			 else if (rtt == Objeto::obj_t::PILL)
 			 {
 				 switch (int pilltype = ETSIDI::lanzaDado(3))
 				 {
-				 case 1: {_playerPtr->modSpeed(20.0f); break;}
+				 case 1: {_playerPtr->modSpeed(40.0f); break;}
 				 case 2: {_playerPtr->modShootingSpeed(2.0f); break; }
 				 case 3: {_playerPtr->modShootDamage(2.0f); break; }
 				 }
