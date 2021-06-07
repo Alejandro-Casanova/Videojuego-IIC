@@ -10,8 +10,8 @@
 #include "Macros.h"
 #include "Enemigo.h"
 
-Room::Room(float indice, const char* ruta_de_textura, Player* playerPtr, ROOM_TYPE tipo) 
-	: _indice(indice), _sprite{ruta_de_textura}, _playerPtr(playerPtr), _tipo(tipo)
+Room::Room(size_t indice, const char* ruta_de_textura, Player* playerPtr, ROOM_TYPE tipo) 
+	: _indice(int(indice)), _sprite{ruta_de_textura}, _playerPtr(playerPtr), _tipo(tipo)
 {
 	_sprite.setPos(0, 0);
 	GestorSprites::dimensionaSprite(468, 285, _ancho + 2.0f * ROOM_BORDE_TEXTURA, _sprite); //Se ha estrechado un poco la textura para adaptarla a l hitbox de la habitacion
@@ -142,6 +142,7 @@ void Room::inicializa(const char* ruta_de_layout)
 		i->inicializa();
 	}
 	disparosEnemigos.setFriendly(false);
+	disparosEnemigos.destruirContenido();
 }
 
 void Room::cargaLayout(const char* ruta_de_archivo)
@@ -263,7 +264,7 @@ void Room::gestionarDisparos(ListaProyectil& listaP) {
 
 	if (listaP.isFriend()) {	//Interacciones de Proyectiles del Player
 		//ENEMIGOS
-		for (int j = _enemigos.size() - 1; j >= 0; j--) {
+		for (int j = int(_enemigos.size()) - 1; j >= 0; j--) {
 			Proyectil* auxi = listaP.impacto(*_enemigos[j]);
 			if (auxi != 0) {
 				listaP.eliminar(auxi);
@@ -277,7 +278,7 @@ void Room::gestionarDisparos(ListaProyectil& listaP) {
 	else{	//Interacciones de los Proyectiles de los Enemigos
 		Proyectil* auxi = listaP.impacto(*_playerPtr);
 		if (auxi != 0) {
-			if (_playerPtr->recibeHerida(auxi->getDamage())) {
+			if (_playerPtr->recibeHerida(float(auxi->getDamage()))) {
 				muerte();
 			}
 			listaP.eliminar(auxi);
@@ -307,7 +308,7 @@ PuertaRoom* Room::puertaActual()
 	return nullptr;
 }
 
-BossRoom::BossRoom(float indice, const char* ruta_de_textura, Player* playerPtr) 
+BossRoom::BossRoom(int indice, const char* ruta_de_textura, Player* playerPtr) 
 	: Room(indice, ruta_de_textura, playerPtr, ROOM_TYPE::BOSS), _gusano{ new BossGusano(playerPtr, this) }, _trampilla(Vector2D(0.0f, 0.0f))
 {
 	_enemigos.emplace_back(_gusano);
