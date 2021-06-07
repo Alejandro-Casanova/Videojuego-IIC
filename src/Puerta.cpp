@@ -3,27 +3,34 @@
 #include "Macros.h"
 #include <iostream>
 
-Puerta::Puerta(Room* room, TIPO t, const char* ruta, int pxW, int pxH, float maxDim, float offset) : _roomPtr(room), _tipo(t), _sprite{ ruta, 2 }
+Puerta::Puerta(Vector2D posicion) : _posicion(posicion)
+{
+
+}
+
+
+PuertaRoom::PuertaRoom(Room* room, ORIENTACION t, const char* ruta, int pxW, int pxH, float maxDim, float offset) 
+	: _roomPtr(room), _orientacion(t), _sprite{ ruta, 2 }
 {
 	//Gira y posiciona el sprite
 	switch (t) {
-	case TIPO::DOWN:
+	case ORIENTACION::DOWN:
 		_sprite.flip(false, true);
-		_posicion.set(0.0f, -(PUERTA_DIST_V + offset));
+		_posicion.setXY(0.0f, -(PUERTA_DIST_V + offset));
 		GestorSprites::dimensionaHitBox(pxW, pxH, maxDim, _posicion, _hitBox);
 		break;
-	case TIPO::LEFT:
+	case ORIENTACION::LEFT:
 		_sprite.setAngle(+90.0);
-		_posicion.set(-(PUERTA_DIST_H + offset), 0.0f);
+		_posicion.setXY(-(PUERTA_DIST_H + offset), 0.0f);
 		GestorSprites::dimensionaHitBox(pxW, pxH, maxDim, _posicion, _hitBox, true);
 		break;
-	case TIPO::RIGHT:
+	case ORIENTACION::RIGHT:
 		_sprite.setAngle(-90.0);
-		_posicion.set(PUERTA_DIST_H + offset, 0.0f);
+		_posicion.setXY(PUERTA_DIST_H + offset, 0.0f);
 		GestorSprites::dimensionaHitBox(pxW, pxH, maxDim, _posicion, _hitBox, true);
 		break;
-	case TIPO::UP:
-		_posicion.set(0.0f, PUERTA_DIST_V + offset);
+	case ORIENTACION::UP:
+		_posicion.setXY(0.0f, PUERTA_DIST_V + offset);
 		GestorSprites::dimensionaHitBox(pxW, pxH, maxDim, _posicion, _hitBox);
 		break;
 	default: std::cerr << "Tipo de puerta no previsto. \n";
@@ -35,11 +42,11 @@ Puerta::Puerta(Room* room, TIPO t, const char* ruta, int pxW, int pxH, float max
 	
 }
 
-Puerta::~Puerta()
+PuertaRoom::~PuertaRoom()
 {
 }
 
-void Puerta::dibuja()
+void PuertaRoom::dibuja()
 {
 	_hitBox.dibuja();
 
@@ -54,6 +61,27 @@ void Puerta::dibuja()
 	
 }
 
-PuertaBoss::PuertaBoss(Room* room, TIPO t) : Puerta(room, t, "res/texturas/puerta_boss.png", 61, 77, TILE_WIDTH * 2.0f, -3.0f) {
-
+PuertaBoss::PuertaBoss(Room* room, ORIENTACION t) : PuertaRoom(room, t, "res/texturas/puerta_boss.png", 61, 77, TILE_WIDTH * 2.0f, -3.0f) {
+	
 }
+
+Trampilla::Trampilla(Vector2D pos, const char* ruta_de_sprite, int pxW, int pxH, float maxDim)
+	: Puerta(pos), _sprite{ ruta_de_sprite }
+{
+	GestorSprites::dimensionaHitBox(pxW, pxH, maxDim, _posicion, _hitBox);
+	GestorSprites::dimensionaSprite(pxW, pxH, maxDim, _sprite);
+}
+
+void Trampilla::dibuja()
+{
+	_hitBox.dibuja();
+
+	glPushMatrix();
+	glTranslatef(_posicion.x, _posicion.y, 0);
+	glColor3f(1.0f, 1.0f, 1.0f);
+
+	_sprite.draw();
+
+	glPopMatrix();
+}
+

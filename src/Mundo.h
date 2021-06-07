@@ -13,6 +13,7 @@
 class Mundo{
 friend class ListaProyectil;
 
+
 public: 
 	Mundo();
 	virtual ~Mundo();
@@ -22,22 +23,27 @@ public:
 	void inicializa();
 	void mueve();
 	void dibuja();
-	int JuegoAcabado(); //devuelve un 0 si no se ha acabado, un 1 si se ha ganado y un 2 si se ha perdido
-	int Getfinal_juego() { return final_juego; } //0=juego sigue, 1=victoria, 2=derrota,
+	int JuegoAcabado(); //devuelve un 0 si no se ha acabado, un 1 si se ha perdido y un 2 si se ha ganado
 
+	
+
+
+	void siguientePiso(); //Pasa al siguiente piso
 
 private:
 	float x_ojo = 0;
 	float y_ojo = 0;
 	float z_ojo = 0;
-	int final_juego;
+	int final_juego = 0;
 
-	Piso _piso;
-	std::vector<Piso*> _pisos;
-	Player jugador;
-	GUI _gui{ &jugador };
+	//int _pisoActual = 0; //Indica el piso activo
+	//std::vector<Piso*> _pisos;
+	Player _jugador;
+	int _contadorPisos = 0;
+	Piso* _piso = nullptr;
+	GUI _gui{ &_jugador };
 	//Enemigo malapersona; //TEMPORAL
-	ListaProyectil disparosPlayer;
+	ListaProyectil _disparosPlayer;
 
 	//Room* _roomActual = nullptr;
 };

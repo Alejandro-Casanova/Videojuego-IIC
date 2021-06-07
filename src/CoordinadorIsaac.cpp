@@ -10,7 +10,7 @@
 
 CoordinadorIsaac:: CoordinadorIsaac()
 {
-	estado = INICIO;
+	estado = PREINICIO;
 } 
 
 CoordinadorIsaac::~CoordinadorIsaac()
@@ -18,128 +18,225 @@ CoordinadorIsaac::~CoordinadorIsaac()
 }
 
 void CoordinadorIsaac::dibuja() {
-	if (estado == INICIO) {
 
-		////Borrado de la pantalla	
-		glClearColor(1, 1, 1, 1);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	switch (estado)
+	{
+	case(PREINICIO):
 
 		//////Para definir el punto de vista
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
+		//glMatrixMode(GL_MODELVIEW);
+		//glLoadIdentity();
 		gluLookAt(0, 0, 30, 0, 0, 0, 0, 1, 0);
-		glEnable(GL_LIGHTING);
-		GestorSprites::dimensionaSprite(362, 103, 15, _sprite);
+		//glEnable(GL_LIGHTING);
+		GestorSprites::dimensionaSprite(1920, 1080, 33, _sprite);
 		_sprite.draw();
-		ETSIDI::setTextColor(0, 0, 0);
-		ETSIDI::setFont("res/font/upheavtt.ttf", 50);
-		ETSIDI::printxy("The Binding of Isaac", -10, 2);
-		ETSIDI::setTextColor(0.5, 0.5, 0.5);
-		ETSIDI::setFont("res/font/upheavtt.ttf", 12);
-		ETSIDI::printxy("Pulse 'Q' para empezar a jugar", -10, -3);
-		ETSIDI::printxy("Pulse 'R' para ver las maximas puntuaciones", -10, -4);
-		ETSIDI::printxy("Pulse 'L' para leer el leaderboard", -10, -5);
-		ETSIDI::printxy("Pulse 'S' para salir", -10, -6);
+		ETSIDI::setTextColor(1, 1, 1);
+		ETSIDI::setFont("res/font/upheavtt.ttf", 14);
+		ETSIDI::printxy("Pulse 'Q' para continuar", -5, -10);
 
-	}
-	else if (estado == JUEGO) {
+		break;
+				
+	case(INICIO):
 
-		//mundo.inicializa();
+		
+		//glMatrixMode(GL_MODELVIEW);
+		//glLoadIdentity();
+		gluLookAt(0, 0, 30, 0, 0, 0, 0, 1, 0);
+		//glEnable(GL_LIGHTING);
+		GestorSprites::dimensionaSprite(362, 103, 25, _spriteInicio);
+		_spriteInicio.draw();
+		ETSIDI::setTextColor(1, 1, 1);
+		ETSIDI::setFont("res/font/upheavtt.ttf", 13);
+		ETSIDI::printxy("Pulse J para empezar a jugar.", 0, -6);
+		ETSIDI::printxy("Pulse L para ver el leaderboard.", 0, -7);
+		ETSIDI::printxy("Pulse I para leer las instrucciones.", 0, -8);
+		ETSIDI::printxy("Pulse S para salir del juego.", 0, -9);
+
+		break;
+
+	case(JUEGO):
+
 		mundo.dibuja();
 
-		if (mundo.Getfinal_juego() == 1) {
+		/*if (mundo.Getfinal_juego() == 1) {
 			estado = FIN;
 		}
 
 		else if (mundo.Getfinal_juego() == 2) {
 			estado = GAMEOVER;
-		}
+		}*/
+
+		break;
+
+	case(GAMEOVER):
+		
+		gluLookAt(0, 0, 30, 0, 0, 0, 0, 1, 0);
+		ETSIDI::setTextColor(1, 1, 1);
+		ETSIDI::setFont("res/font/upheavtt.ttf", 30);
+		ETSIDI::printxy("GAMEOVER", -5, 9);
+		ETSIDI::setFont("res/font/upheavtt.ttf", 15);
+		ETSIDI::printxy("Te has quedado sin vidas.", -5, 8);
+		ETSIDI::printxy("Pulse R volver al menu de inicio.", -13, 5);
+		ETSIDI::printxy("Pulse S para salir del juego.", -13, 4);
+					
+		break;
+
+	case(FIN):
+		
+		gluLookAt(0, 0, 30, 0, 0, 0, 0, 1, 0);
+		ETSIDI::setTextColor(1, 1, 1);
+		ETSIDI::setFont("res/font/upheavtt.ttf", 30);
+		ETSIDI::printxy("FIN DEL JUEGO", -5, 9);
+		ETSIDI::setFont("res/font/upheavtt.ttf", 15);
+		ETSIDI::printxy("Te has pasado el juego, ENHORABUENA! .", -5, 8);
+		ETSIDI::printxy("Pulse R volver al menu de inicio.", -13, 5);
+		ETSIDI::printxy("Pulse S para salir del juego.", -13, 4);
+		
+		break;
+
+	case(PAUSA):
+
+		gluLookAt(0, 0, 30, 0, 0, 0, 0, 1, 0);
+		ETSIDI::setFont("res/font/upheavtt.ttf", 30);
+		ETSIDI::printxy("JUEGO EN PAUSA", -5, 9);
+		ETSIDI::setFont("res/font/upheavtt.ttf", 15);
+		ETSIDI::printxy("Pulse C para continuar con el juego", -13, 5);
+		ETSIDI::printxy("Pulse R para volver al menu de inicio", -13, 4);
+		ETSIDI::printxy("Advertencia: Al volver al menu de inicio se perdera el progeso de la partida", -18, -7);
+		
+		break;
+
+	case(INSTRUCCIONES):
+		
+		gluLookAt(0, 0, 30, 0, 0, 0, 0, 1, 0);
+		ETSIDI::setFont("res/font/upheavtt.ttf", 25);
+		ETSIDI::printxy("INSTRUCCIONES:", -5, 10);
+		ETSIDI::setFont("res/font/upheavtt.ttf", 15);
+		ETSIDI::printxy("1. Utilice W,A,S,D para mover el personaje.", -13, 8);
+		ETSIDI::printxy("2. Utilice las flechas para disparar.", -13, 6);
+		ETSIDI::printxy("3. Utilice la barra espaciadora cuando se encuentre", -13, 4);
+		ETSIDI::printxy("cerca de una puerta para utilizarla.", -13, 3);
+		ETSIDI::printxy("4. Si se pulsa P en cualquier momento del juego, se pausara", -13, 1);
+		ETSIDI::printxy("El juego consiste en avanzar por las mazmorras a la vez que se va derrotando  ", -18, -2);
+		ETSIDI::printxy("a los enemigos que aparecen en las diferentes habitaciones. ", -18, -3);
+		ETSIDI::printxy("El objetivo es bajar a la estancia mas profunda, para ello habra que derrotar", -18, -4);
+		ETSIDI::printxy("al jefe de cada piso.", -18, -5);
+		ETSIDI::printxy("Pulse 'R' para volver al menu de inicio", -13, -8);
+		
+		break;
+
+	case(LEADERBOARD):
+		//gestionar el dibujo del tablero de maximas puntuaciones
+		break;
+
 	}
-
-	else if (estado == GAMEOVER) {
-		//mundo.dibuja();
-	}
-
-	else if (estado == FIN) {
-		//mundo.dibuja();
-	}
-
-	else if (estado == PAUSA) {
-		//mundo.dibuja();
-
-	}
-
-	else if (estado==LEADERBOARD){}
-
 }
 
 
 void CoordinadorIsaac::tecla() {
-	
 
-	if (estado == INICIO) {
+
+	switch (estado)
+	{
+
+	case(PREINICIO):
+
 		if (GestorDeTeclado::isKeyPressed('q')) {
-			mundo.inicializa();
-			//mundo.tecla();
-			estado = JUEGO;
-		    
-		} 
-		else if (GestorDeTeclado::isKeyPressed('s')) {
-			exit(0);
-			//mundo.tecla();
-			//ExitThread(0);
+			estado = INICIO;
 		}
-		else if (GestorDeTeclado::isKeyPressed('l')) {
+			break;
+		
+		
+	case(INICIO):
 
-			//mundo.tecla();
+		if (GestorDeTeclado::isKeyPressed('j')) {
+			mundo.inicializa();
+			estado = JUEGO;
+		} 
+
+		else if (GestorDeTeclado::isKeyPressed('l')) {
 			estado = LEADERBOARD;
 		}
+
+		else if (GestorDeTeclado::isKeyPressed('i')) {
+			estado = INSTRUCCIONES;
 		}
-	
-	else if (estado == JUEGO) {
-		mundo.tecla();
-		if (GestorDeTeclado::isKeyPressed('p')) { //Para poner el juego en pausa
-			//mundo.tecla();
-			estado = PAUSA;
+
+		else if (GestorDeTeclado::isKeyPressed('s')) {
+			exit(0);
+			//ExitThread(0);
+		}
+		
+		break;
+
+	case(JUEGO):
+		if (mundo.JuegoAcabado() == 0) {
+			mundo.tecla();
+
+			if (GestorDeTeclado::isKeyPressed('p')) { //Para poner el juego en pausa
+				estado = PAUSA;
+			}
 
 		}
-	}
-	else if (estado == PAUSA) {
-			if (GestorDeTeclado::isKeyPressed('r')) {//Reanuda el juego
-				//mundo.tecla();
+		else if (mundo.JuegoAcabado() == 1)
+			estado =GAMEOVER;
+		else if (mundo.JuegoAcabado() == 2)
+			estado = FIN;
+		
+
+		break;
+
+	case(INSTRUCCIONES):
+
+		if (GestorDeTeclado::isKeyPressed('r')) {//Vuelve al menu inicial
+
+			estado = INICIO;
+		}
+		break;
+
+	case(PAUSA):
+	   
+			if (GestorDeTeclado::isKeyPressed('c')) {//Reanuda el juego
+
 				estado = JUEGO;
 			}
+			else if (GestorDeTeclado::isKeyPressed('r')) { //Vuelve al menu inicial
+
+				estado = INICIO;
+			}
+		break;
 		
-	}
-	else if (estado ==GAMEOVER) { 
+	case(GAMEOVER):
+	 
 		if (GestorDeTeclado::isKeyPressed('r')) {//Vuelve al menu inicial
-			//mundo.tecla();
+			
 			estado = INICIO;
 		}
-	}
-	else if (estado ==FIN) { 
+		if (GestorDeTeclado::isKeyPressed('s')) {//Sale del juego
+
+			exit(0);
+		}
+		break;
+
+	case(FIN):
+	 
 		if (GestorDeTeclado::isKeyPressed('r')) {//Vuelve al menu inicial
-			//mundo.tecla();
+			
 			estado = INICIO;
 		}
-	}
-	
+		if (GestorDeTeclado::isKeyPressed('s')) {//Sale del juego
+
+			exit(0);
+		}
+		break;
 
 	
+    }
 }
-
 
 void CoordinadorIsaac::mueve() {
 	if (estado ==JUEGO) { 
 		mundo.mueve(); 
-		/*if (mundo.getImpacto()) {
-			estado = Estado::GAMEOVER;
-			return;
-		}
-		if (mundo.getNumEsferas() == 0) { 
-			if (!mundo.cargarNivel()) 
-				estado = Estado::FIN; 
-		} */
 		
 	}
 }

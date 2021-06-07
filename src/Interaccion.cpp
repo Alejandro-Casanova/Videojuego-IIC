@@ -7,6 +7,7 @@
 #include "ListaProyectil.h"
 #include "Enemigo.h"
 #include "Vector2D.h"
+#include "Room.h"
 
 bool Interaccion::rebote(Entidad& p, Caja c, bool velMod)
 {	
@@ -30,8 +31,8 @@ bool Interaccion::rebote(Entidad& e, Pared p, bool velMod)
 	return false;
 }
 
-void Interaccion::rebote(Entidad& p, Obstaculo& o){
-	rebote(p, o._hitBox);
+bool Interaccion::rebote(Entidad& p, Obstaculo& o){
+	return rebote(p, o._hitBox);
 }
 
 bool Interaccion::rebote(Entidad& a, Entidad& b)
@@ -46,6 +47,16 @@ bool Interaccion::rebote(Entidad& a, Entidad& b)
 	}
 	return false;
 
+}
+
+bool Interaccion::rebote(Entidad& a, Room& b, bool velMod)
+{
+	bool hayRebote = false;
+	for (auto& i : b._obstaculos) {
+		if (Interaccion::rebote(a, i->getHitBox(), velMod)) hayRebote = true;
+	}
+	if (Interaccion::rebote(a, b._paredes, velMod)) hayRebote = true;
+	return hayRebote;
 }
 
 

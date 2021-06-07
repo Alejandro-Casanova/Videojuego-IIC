@@ -5,10 +5,11 @@
 class CoordinadorIsaac { 
 protected:
 	Mundo mundo;
-	enum  Estado { INICIO, JUEGO, GAMEOVER, FIN, PAUSA, LEADERBOARD };
+	enum  Estado {PREINICIO, INICIO, JUEGO, GAMEOVER, FIN, PAUSA, LEADERBOARD, INSTRUCCIONES };
 	Estado estado;
 	//ETSIDI::GLTexture _texturaInicial = { 0, 0, 0 };
-	ETSIDI::Sprite _sprite = "res/texturas/logo.png";
+	ETSIDI::Sprite _sprite = "res/texturas/Pantalla.png";
+	ETSIDI::Sprite _spriteInicio = "res/texturas/logo.png";
 
 	
 public:

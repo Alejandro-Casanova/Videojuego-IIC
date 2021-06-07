@@ -6,7 +6,7 @@
 class GestorSprites {
 public:
 	//Evita la deformación de los sprites, recibe las dimensiones de los sprites en pixeles, y la dimensión máxima en el mundo
-	static void dimensionaSprite(float pxWidth, float pxHeight, float maxDim, ETSIDI::Sprite& sprite)
+	static void dimensionaSprite(float pxWidth, float pxHeight, float maxDim, ETSIDI::Sprite& sprite, float centerOffsetY = 0)
 	{
 		float width, height;
 		if (pxWidth >= pxHeight) {
@@ -20,7 +20,7 @@ public:
 			height = maxDim;
 			sprite.setSize(width, height);
 		}
-		sprite.setCenter(width / 2.0f, height / 2.0f);
+		sprite.setCenter(width / 2.0f, height / 2.0f + centerOffsetY);
 	}
 	static void dimensionaHitBox(float pxWidth, float pxHeight, float maxDim, Vector2D centerPos, Caja& caja, bool rotate90 = false)
 	{

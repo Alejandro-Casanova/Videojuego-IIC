@@ -4,7 +4,13 @@
 #include "Macros.h"
 #include "GestorSprites.h"
 #include "Proyectil.h"
+#include <iostream>
 
+int sign(float x) {
+	if (x > 0) return 1;
+	if (x < 0) return -1;
+	return 0;
+}
 
 Player::Player()
 {
@@ -20,7 +26,11 @@ Player::~Player()
 
 void Player::tecla()
 {
-	
+	if ((_velocidad.x * _velocidad.y) != 0) { //Si el movimiento es diagonal, devuelve ambos componentes de velocidad a su valor máximo
+		_velocidad.x = _speedStat * sign(_velocidad.x);
+		_velocidad.y = _speedStat * sign(_velocidad.y);
+	}
+
 	//Movimiento
 	if (GestorDeTeclado::isKeyPressed('a')) {
 		_velocidad.x -= _speedStat;
@@ -47,9 +57,8 @@ void Player::tecla()
 		_velocidad.y += _speedStat;
 	}
 	
-	//Disparo
-	//ObjetoMovil::mueve(t);
-	//sprite.loop();
+	if (_velocidad.modulo() > _speedStat) //Si el módulo de la velocidad es mayor de lo que debe, realiza la corrección
+		_velocidad = _velocidad.unitario() * _speedStat;
 }
 
 void Player::teclaEspecial()
