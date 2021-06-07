@@ -87,7 +87,7 @@ void Vector2D::setXY(float nx, float ny)
 	y = ny;
 }
 
-void Vector2D::set(float modulo, float angulo) {
-	x = modulo * cosf(angulo * 2.0 * PI / 360.0f);
-	y = modulo * sinf(angulo * 2.0 * PI / 360.0f);
+void Vector2D::set(double modulo, double angulo) {
+	x = modulo * cosf(angulo * 2.0 * PI / 360.0);
+	y = modulo * sinf(angulo * 2.0 * PI / 360.0);
 }

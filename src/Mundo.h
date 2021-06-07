@@ -25,25 +25,18 @@ public:
 	void dibuja();
 	int JuegoAcabado(); //devuelve un 0 si no se ha acabado, un 1 si se ha perdido y un 2 si se ha ganado
 
-	
-
-
 	void siguientePiso(); //Pasa al siguiente piso
 
 private:
-	float x_ojo = 0;
+	float x_ojo = -10.0f;
 	float y_ojo = 0;
-	float z_ojo = 0;
+	float z_ojo = 140.0f;
 	int final_juego = 0;
 
-	//int _pisoActual = 0; //Indica el piso activo
-	//std::vector<Piso*> _pisos;
 	Player _jugador;
 	int _contadorPisos = 0;
 	Piso* _piso = nullptr;
 	GUI _gui{ &_jugador };
-	//Enemigo malapersona; //TEMPORAL
 	ListaProyectil _disparosPlayer;
 
-	//Room* _roomActual = nullptr;
 };

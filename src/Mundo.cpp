@@ -13,8 +13,7 @@ Mundo::Mundo() //: _piso{&jugador}
 {
 	_disparosPlayer.setFriendly(true);
 
-	//_pisos.resize(2);
-	_piso = new Piso(&_jugador, "res/pisos/1.txt");
+	//inicializa();
 	
 }
 
@@ -48,6 +47,7 @@ void Mundo::siguientePiso()
 	delete _piso;
 	_contadorPisos++;
 	_piso = new Piso(&_jugador, "res/pisos/2.txt");
+	_piso->inicializa();
 }
 
 void Mundo::mueve()
@@ -92,13 +92,19 @@ void Mundo::teclaEspecial()
 
 void Mundo::inicializa()
 {
-	x_ojo=-10.0f;
-	y_ojo=0.0f;
-	z_ojo=140.0f;
-	
 	//LLAMADAS DE INICIALIZACION
+	
+	if (_piso != nullptr) {
+		delete _piso;
+	}
+
+	_piso = new Piso(&_jugador, "res/pisos/1.txt");
+	_piso->inicializa();
+	_contadorPisos = 0;
+
 	_jugador.inicializa();
-	//_piso.inicializa(&jugador);
+	_disparosPlayer.destruirContenido();
+	
 	
 }
 

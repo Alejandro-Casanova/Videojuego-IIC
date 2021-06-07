@@ -27,7 +27,7 @@ class Room
 public:
 	enum class ROOM_TYPE { NORMAL, BOSS };
 
-	Room(float indice, const char* ruta_de_textura, Player* playerPtr, ROOM_TYPE tipo = ROOM_TYPE::NORMAL);
+	Room(size_t indice, const char* ruta_de_textura, Player* playerPtr, ROOM_TYPE tipo = ROOM_TYPE::NORMAL);
 	virtual ~Room();
 
 	virtual void mueve();
@@ -75,7 +75,7 @@ protected:
 
 class BossRoom : public Room {
 public:
-	BossRoom(float indice, const char* ruta_de_textura, Player* playerPtr);
+	BossRoom(int indice, const char* ruta_de_textura, Player* playerPtr);
 	~BossRoom();
 
 	void dibuja() override;
