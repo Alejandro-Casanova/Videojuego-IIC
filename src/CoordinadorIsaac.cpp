@@ -142,6 +142,7 @@ void CoordinadorIsaac::tecla() {
 
 		if (GestorDeTeclado::isKeyPressed('q')) {
 			estado = INICIO;
+			ETSIDI::playMusica("res/audio/ambience.mp3");
 		}
 		break;
 		

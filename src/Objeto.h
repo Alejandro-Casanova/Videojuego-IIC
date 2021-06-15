@@ -23,10 +23,9 @@ public:
 	virtual ~Objeto() {};//declaración virtual al dest. OBLIGATORIA!
 
 	void dibuja() override;
-	void eliminar(Objeto* ob);
 
 	obj_t type() const { return rtt; }
-	int getValor() { return _valor; }
+	int getValor() const { return _valor; }
 	
 
 	virtual std::ostream& print(std::ostream& o = std::cout) const = 0;

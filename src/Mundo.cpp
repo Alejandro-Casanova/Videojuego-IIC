@@ -48,6 +48,7 @@ void Mundo::siguientePiso()
 	_contadorPisos++;
 	_piso = new Piso(&_jugador, "res/pisos/2.txt");
 	_piso->inicializa();
+	ETSIDI::playMusica("res/audio/ambience.mp3");
 }
 
 void Mundo::mueve()
@@ -77,7 +78,7 @@ void Mundo::tecla() {
 		}
 		else if (_piso->roomActual()->tipo() == Room::ROOM_TYPE::BOSS) {
 			BossRoom* aux = dynamic_cast<BossRoom*>(_piso->roomActual());
-			//if (aux->juntoTrampilla()) siguientePiso();
+			if (aux->juntoTrampilla()) siguientePiso();
 		}
 	}
 }

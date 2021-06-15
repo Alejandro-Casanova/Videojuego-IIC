@@ -51,6 +51,7 @@ public:
 	int getIndice() const { return _indice; }
 	bool puertasAbiertas() const { return _puertasAbiertas; }
 	ROOM_TYPE tipo() const { return _tipo; }
+	bool hayEnemigos() const { return !_enemigos.empty(); }
 
 protected:
 	ROOM_TYPE _tipo;

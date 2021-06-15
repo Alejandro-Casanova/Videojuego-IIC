@@ -3,6 +3,7 @@
 #include "Player.h"
 #include <fstream>
 #include "ETSIDI.h"
+#include <sstream>
 
 Piso::Piso(Player* playerPtr, const char* ruta_de_layout) : _playerPtr(playerPtr)
 {
@@ -35,8 +36,13 @@ bool Piso::cambiaRoom()
 {
 	auto* puerta = roomActual()->puertaActual();
 	if (puerta != nullptr && puerta->isOpen()) {
-		setRoomActual(puerta->getNextRoom()->getIndice());
 		roomActual()->disparosEnemigos.destruirContenido();
+		setRoomActual(puerta->getNextRoom()->getIndice());
+
+		//Reproduce música de BOSS
+		if ((roomActual()->tipo() == Room::ROOM_TYPE::BOSS) && roomActual()->hayEnemigos())
+			ETSIDI::playMusica("res/audio/boss_fight.mp3", true);
+		
 
 		//Invierte la posicion del jugador para que aparezca al otro lado de la puerta
 		switch (puerta->getOrientacion()) {
@@ -130,27 +136,26 @@ void Piso::setPiso()
 	for (int i = 0; i < _layout.size(); i++) {
 		for (int j = 0; j < _layout[i].size(); j++) {
 			switch (_layout[i][j]) {
-			case 'R':
-				
-				_roomLayout[i][j] = new Room(_rooms.size(), "res/texturas/rooms/Basement1.png", _playerPtr);
-				switch (int p=ETSIDI::lanzaDado(14)) {
-				case 1: _roomLayout[i][j]->inicializa("res/rooms/1.txt"); break;
-				case 2: _roomLayout[i][j]->inicializa("res/rooms/2.txt"); break;
-				case 3: _roomLayout[i][j]->inicializa("res/rooms/3.txt"); break;
-				case 4: _roomLayout[i][j]->inicializa("res/rooms/4.txt"); break;
-				case 5: _roomLayout[i][j]->inicializa("res/rooms/5.txt"); break;
-				case 6: _roomLayout[i][j]->inicializa("res/rooms/6.txt"); break;
-				case 7: _roomLayout[i][j]->inicializa("res/rooms/7.txt"); break;
-				case 8: _roomLayout[i][j]->inicializa("res/rooms/8.txt"); break;
-				case 9: _roomLayout[i][j]->inicializa("res/rooms/9.txt"); break;
-				case 10: _roomLayout[i][j]->inicializa("res/rooms/10.txt"); break;
-				case 11: _roomLayout[i][j]->inicializa("res/rooms/11.txt"); break;
-				case 12: _roomLayout[i][j]->inicializa("res/rooms/12.txt"); break;
-				case 13: _roomLayout[i][j]->inicializa("res/rooms/13.txt"); break;
-				case 14: _roomLayout[i][j]->inicializa("res/rooms/14.txt"); break;
+			case 'R': {
+				std::stringstream buffer;
+				buffer << "res/texturas/rooms/";
+
+				//Carga textura aleatoria
+				switch (ETSIDI::lanzaDado(4)) {
+				case 1: buffer << "Basement1.png"; break;
+				case 2: buffer << "Catacombs1.png"; break;
+				case 3: buffer << "Necropolis1.png"; break;
+				case 4: buffer << "Caves1.png"; break;
+				default: std::cerr << "Valor inesperado en setPiso\n"; exit(0); break;
 				}
+				_roomLayout[i][j] = new Room(_rooms.size(), buffer.str().c_str(), _playerPtr);
+
+				//Carga layout aleatorio
+				buffer.str(""); //Reinicia el buffer
+				buffer << "res/rooms/" << ETSIDI::lanzaDado(14) << ".txt";
+				_roomLayout[i][j]->inicializa(buffer.str().c_str());
 				_rooms.push_back(_roomLayout[i][j]);
-				break;
+				break; }
 			case 'B':
 				_roomLayout[i][j] = new BossRoom(int(_rooms.size()), "res/texturas/rooms/Basement1.png", _playerPtr);
 				_roomLayout[i][j]->inicializa("res/rooms/B1.txt");
