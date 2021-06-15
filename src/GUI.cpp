@@ -55,4 +55,5 @@ void GUI::dibuja()
 	ETSIDI::printxy(buffer.str().c_str(), _origen.x + 5.0f, _origen.y - 16.0f);
 
 	//Dibuja Modificadores
+	_playerPtr->dibujaBonus(_origen.x, _origen.y - 21.0f);
 }

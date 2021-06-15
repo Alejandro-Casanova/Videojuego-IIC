@@ -213,6 +213,9 @@ void Room::setRoom()
 			else if (chr == 'M') {
 				_objetos.emplace_back(Factoria::create(Objeto::obj_t::MONEDA, origen + Vector2D(10.0f * j, -10.0f * i)));
 			}
+			else if (chr == 'B') {
+				_objetos.emplace_back(Factoria::dropBonus(origen + Vector2D(10.0f * j, -10.0f * i)));
+			}
 				j++;
 			}
 			j = 0;

@@ -6,7 +6,6 @@
 #define ROOM_HEIGHT 70.0F
 #define ROOM_BORDE_TEXTURA 18.0F //Ancho de la textura que queda detr�s de la hit-box de la pared
 #define T_CONST 0.025F	//Constante de tiempo para movimientos
-#define T_INVULNERABLE 0.75F //Tiempo de invulnerabilidad tras recibir daño
 #define PI 3.14159265358979323846	//pi
 
 //Parámetros del BOSS GUSANO
@@ -21,3 +20,7 @@ const float VELOCIDAD_JUGADOR = 35.0f;
 const float VEL_PROYECTIL_JUGADOR = 35.0f;
 const float VEL_DISPARO_JUGADOR = 1.0f;
 const float DAMAGE_DISPARO_JUGADOR = 1.0f;
+
+//Otros parámetros del jugador
+#define T_INVULNERABLE 0.75F //Tiempo de invulnerabilidad tras recibir daño
+const float T_BONUS = 1.5f; //Tiempo que dura la animación de recibir un bonus

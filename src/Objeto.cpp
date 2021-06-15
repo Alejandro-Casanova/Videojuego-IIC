@@ -1,6 +1,7 @@
 #include "Objeto.h"
 #include "Macros.h"
 #include "GestorSprites.h"
+#include <sstream>
 
 Objeto::Objeto(const char* ruta_de_textura, Vector2D posicion, obj_t t) : rtt(t), _sprite{ ruta_de_textura }
 {
@@ -39,7 +40,7 @@ Objeto* Factoria::create(Objeto::obj_t t, Vector2D pos) {
 	case Objeto::obj_t::CORAZON:
 		return new Corazon(pos);
 	case Objeto::obj_t::MONEDA:
-		return new Moneda(pos);
+		return dropCoin(pos);
 	case Objeto::obj_t::LLAVE:
 		return new Llave(pos);
 	default:
@@ -48,4 +49,31 @@ Objeto* Factoria::create(Objeto::obj_t t, Vector2D pos) {
 	}
 
 	return nullptr;
+}
+
+Objeto* Factoria::dropCoin(Vector2D pos)
+{
+	double valor = ETSIDI::lanzaDado();
+	if (valor < 0.1) return new Nickel(pos);
+	else if (valor < 0.4) return new Dime(pos);
+	else return new Penny(pos);
+}
+
+Objeto* Factoria::dropBonus(Vector2D pos)
+{
+	//Elige textura y tipo de bonus aleatorios
+	std::stringstream ruta;
+	int valor = ETSIDI::lanzaDado(9);
+	ruta << "res/texturas/pills/" << valor << ".png";
+	Bonus::TIPO tipo = Bonus::TIPO::HEALTH;
+
+	switch (ETSIDI::lanzaDado(4)) {
+	case 1: tipo = Bonus::TIPO::HEALTH; break;
+	case 2: tipo = Bonus::TIPO::DAMAGE; break;
+	case 3: tipo = Bonus::TIPO::SHOT_SPEED; break;
+	case 4: tipo = Bonus::TIPO::SPEED; break;
+	}
+
+	if (valor > 6) return new Bonus(pos, ruta.str().c_str(), tipo, 23, 32);
+	else return new Bonus(pos, ruta.str().c_str(), tipo);
 }
