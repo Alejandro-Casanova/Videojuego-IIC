@@ -20,8 +20,8 @@ public:
 	
 protected:
 	Mundo mundo;
-	enum Estado { PREINICIO, INICIO, JUEGO, GAMEOVER, FIN, PAUSA, LEADERBOARD, INSTRUCCIONES };
-	Estado estado = PREINICIO;
+	enum class Estado { PREINICIO, INICIO, JUEGO, GAMEOVER, FIN, PAUSA, LEADERBOARD, INSTRUCCIONES };
+	Estado estado = Estado::PREINICIO;
 
 	ETSIDI::Sprite _sprite = "res/texturas/Pantalla.png";
 	ETSIDI::Sprite _spriteInicio = "res/texturas/logo.png";

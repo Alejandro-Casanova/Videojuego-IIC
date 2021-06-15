@@ -8,6 +8,7 @@
 #include "iostream"
 #include "Personaje.h"
 #include "GestorDeTeclado.h"
+#include <sstream>
 
 Mundo::Mundo() //: _piso{&jugador}
 {
@@ -46,9 +47,14 @@ void Mundo::siguientePiso()
 {
 	delete _piso;
 	_contadorPisos++;
-	_piso = new Piso(&_jugador, "res/pisos/2.txt");
+
+	std::stringstream buffer;
+	buffer << "res/pisos/" << (_contadorPisos % 5) << ".txt";
+
+	//_piso = new Piso(&_jugador, "res/pisos/2.txt");
+	_piso = new Piso(&_jugador, buffer.str().c_str());
 	_piso->inicializa();
-	ETSIDI::playMusica("res/audio/ambience.mp3");
+	ETSIDI::playMusica("res/audio/ambience.mp3", true);
 }
 
 void Mundo::mueve()
@@ -99,7 +105,7 @@ void Mundo::inicializa()
 		delete _piso;
 	}
 
-	_piso = new Piso(&_jugador, "res/pisos/1.txt");
+	_piso = new Piso(&_jugador, "res/pisos/0.txt");
 	_piso->inicializa();
 	_contadorPisos = 0;
 

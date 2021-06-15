@@ -40,7 +40,7 @@ public:
 // MONEDA y DERIVADAS //////////////////
 class Moneda : public Objeto {
 public:
-	Moneda(Vector2D pos, const char* ruta_de_textura) : Objeto("res/texturas/dime.png", pos, obj_t::MONEDA) { GestorSprites::dimensionaSprite(24, 14, TILE_WIDTH / 2.0f, _sprite); }
+	Moneda(Vector2D pos, const char* ruta_de_textura = "res/texturas/penny.png") : Objeto(ruta_de_textura, pos, obj_t::MONEDA) { GestorSprites::dimensionaSprite(24, 14, TILE_WIDTH / 2.0f, _sprite); }
 	
 };
 
@@ -97,7 +97,11 @@ public:
 	static Objeto* create(const Objeto&);	//equivalente al constructor copia, pero en un ámbito de enlace dinámico
 	static void destroy(Objeto* p) { delete p;  p = nullptr; }
 
+	static Objeto* dropRandom(Vector2D pos); //Devuelve un objeto aleatorio
+
+private:
 	static Objeto* dropCoin(Vector2D pos); //Devuelve una moneda de valor aleatorio
 	static Objeto* dropBonus(Vector2D pos); //Devuelve un bonus aleatorio
+	
 };
 

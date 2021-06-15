@@ -39,12 +39,14 @@ Room::~Room()
 
 void Room::mueve()
 {
+	//Se cierran las puertas al entrar
 	if (_puertasAbiertas && !_enemigos.empty()) {
 		for (auto& i : _puertas) i->close();
 		_puertasAbiertas = false;
 		ETSIDI::play("res/audio/door_close.wav");
 	}
-	if (_enemigos.empty() && !_puertasAbiertas) { //Se abren las puertas al morir todos los enemigos
+	//Se abren las puertas al morir todos los enemigos
+	if (_enemigos.empty() && !_puertasAbiertas) {
 		for (auto& i : _puertas) i->open();
 		_puertasAbiertas = true;
 		ETSIDI::play("res/audio/door_open.wav");
@@ -64,8 +66,10 @@ void Room::mueve()
 	//Colisiones enemigos con paredes y obstáculos
 	for (auto &i : _enemigos) {
 		Interaccion::rebote(*i, _paredes);
-		for (auto &c : _obstaculos) {
-			Interaccion::rebote(*i, *c);
+		if (!i->vuela()) { //Colisiona con los obstáculos sólo si el enemigo no vuela
+			for (auto& c : _obstaculos) {
+				Interaccion::rebote(*i, *c);
+			}
 		}
 	}
 
@@ -83,6 +87,18 @@ void Room::mueve()
 		if (Interaccion::rebote(*_playerPtr, *i))
 			if (_playerPtr->recibeHerida(i->getMeleeDamage()))
 				muerte();
+	}
+
+	//Mantiene los enemigos dentro de la room
+	for (auto& i : _enemigos) {
+		Interaccion::insideBox(*i, _paredes, true);
+	}
+
+	//Mantiene los enemigos fuera de los obstáculos
+	for (auto& i : _enemigos) {
+		for (auto& c : _obstaculos) {
+			//Interaccion::outsideBox(*i, c->getHitBox(), true);
+		}
 	}
 
 	Room::disparos();
@@ -173,51 +189,59 @@ void Room::setRoom()
 	int i = 0, j = 0;
 
 	//Para facilitar el dibujado se sitúa el origen en la esquina superior izquierda
-	Vector2D origen(-_ancho / 2.0f, +_alto / 2.0f - TILE_WIDTH);//10 es el ancho (magic number)
+	Vector2D origen(-_ancho / 2.0f, +_alto / 2.0f - TILE_WIDTH);
+	Vector2D offset(TILE_WIDTH / 2.0f, TILE_WIDTH / 2.0f); //Compensación para enemigos y objetos
 	for (auto str : _layout) {
 		for (auto chr : str) {
 			//std::cout << chr;
-			if (chr == 'R') {
+			if (chr == '#') {
 				_obstaculos.emplace_back(new Roca(origen + Vector2D(10.0f * j, -10.0f * i)));
 			}
-			else if (chr == 'H') {
+			else if (chr == '@') {
 				_obstaculos.emplace_back(new Hueco(origen + Vector2D(10.0f * j, -10.0f * i)));
 			}
 			else if (chr == 'F') {
-				_enemigos.emplace_back(new Fatty(origen+Vector2D(10.0f * j, -10.0f * i), _playerPtr, this));
-			}
-			else if (chr == 'A') {
-				_enemigos.emplace_back(new Mosca(origen + Vector2D(10.0f * j, -10.0f * i), _playerPtr, this));
-			}
-			else if (chr == 'N') {
-				_enemigos.emplace_back(new Naranja(origen + Vector2D(10.0f * j, -10.0f * i), _playerPtr, this));
-			}
-			else if (chr == 'E') {
-				_enemigos.emplace_back(new Esqueleto(origen + Vector2D(10.0f * j, -10.0f * i), _playerPtr, this));
-			}
-			else if (chr == 'W') {
-				_enemigos.emplace_back(new Weeper(origen + Vector2D(10.0f * j, -10.0f * i), _playerPtr, this));
-			}
-			else if (chr == 'C') {
-				_enemigos.emplace_back(new Caca(origen + Vector2D(10.0f * j, -10.0f * i), _playerPtr, this));
-			}
-			else if (chr == 'Z') {
-				_enemigos.emplace_back(new Zombie(origen + Vector2D(10.0f * j, -10.0f * i), _playerPtr, this));
-			}
-			else if (chr == 'L') {
-				_objetos.emplace_back(Factoria::create(Objeto::obj_t::LLAVE, origen + Vector2D(10.0f * j, -10.0f * i)));
-			}
-			else if (chr == 'S') {
-				_objetos.emplace_back(Factoria::create(Objeto::obj_t::CORAZON, origen + Vector2D(10.0f * j, -10.0f * i)));
+				_enemigos.emplace_back(new Fatty(origen + offset + Vector2D(10.0f * j, -10.0f * i), _playerPtr, this));
 			}
 			else if (chr == 'M') {
-				_objetos.emplace_back(Factoria::create(Objeto::obj_t::MONEDA, origen + Vector2D(10.0f * j, -10.0f * i)));
+				_enemigos.emplace_back(new Mosca(origen + offset + Vector2D(10.0f * j, -10.0f * i), _playerPtr, this));
 			}
-			else if (chr == 'B') {
-				_objetos.emplace_back(Factoria::dropBonus(origen + Vector2D(10.0f * j, -10.0f * i)));
+			else if (chr == 'N') {
+				_enemigos.emplace_back(new Naranja(origen + offset + Vector2D(10.0f * j, -10.0f * i), _playerPtr, this));
+			}
+			else if (chr == 'S') {
+				_enemigos.emplace_back(new Esqueleto(origen + offset + Vector2D(10.0f * j, -10.0f * i), _playerPtr, this));
+			}
+			else if (chr == 'W') {
+				_enemigos.emplace_back(new Weeper(origen + offset + Vector2D(10.0f * j, -10.0f * i), _playerPtr, this));
+			}
+			else if (chr == 'C') {
+				_enemigos.emplace_back(new Caca(origen + offset + Vector2D(10.0f * j, -10.0f * i), _playerPtr, this));
+			}
+			else if (chr == 'Z') {
+				_enemigos.emplace_back(new Zombie(origen + offset + Vector2D(10.0f * j, -10.0f * i), _playerPtr, this));
+			}
+			else if (chr == '!') {
+				_objetos.emplace_back(Factoria::create(Objeto::obj_t::LLAVE, origen + offset + Vector2D(10.0f * j, -10.0f * i)));
+			}
+			else if (chr == '%') {
+				_objetos.emplace_back(Factoria::create(Objeto::obj_t::CORAZON, origen + offset + Vector2D(10.0f * j, -10.0f * i)));
+			}
+			else if (chr == '$') {
+				_objetos.emplace_back(Factoria::create(Objeto::obj_t::MONEDA, origen + offset + Vector2D(10.0f * j, -10.0f * i)));
+			}
+			else if (chr == '?') {
+				_objetos.emplace_back(Factoria::create(Objeto::obj_t::BONUS, origen + offset + Vector2D(10.0f * j, -10.0f * i)));
+			}
+			else if (chr == '.') {
+				//NADA
+			}
+			else {
+				std::cerr << "Caracter desconocido: \'" << chr << "\' en el layout de la room" << std::endl;
+				exit(0);
 			}
 				j++;
-			}
+		}
 			j = 0;
 			//std::cout << std::endl;
 			i++;
@@ -226,18 +250,6 @@ void Room::setRoom()
 
 void Room::disparos() {
 	for (auto i : _enemigos){
-		//if (i->puedeDisparar()) {		//Indica si el enemigo está listo para disparar
-		//// Creacion de un proyectil
-		//	Proyectil* d = new Proyectil();
-		//	//	proyectil.setOrigen(Vector2D.player)
-		//	Vector2D pos = i->getPos();
-		//	d->setPos(pos.x, pos.y);
-		//	d->setColor(200, 20, 20);
-		//	disparosEnemigos.agregar(d);
-		//	Vector2D target = _playerPtr->getPos() - pos;
-		//	Vector2D dir = target.unitario();
-		//	d->setVel(15*dir.x , 15*dir.y);
-		//}
 		auto aux = i->dispara();
 		if (aux != nullptr) disparosEnemigos.agregar(aux);
 	}
@@ -257,9 +269,6 @@ void Room::setParedes(float ancho, float alto)
 void Room::muerte()
 {
 	
-	std::cout << "\n\n\nMORISTEEEEEEEEEEEEEEEEEEEEEEE\n\n\n"; //PROVISIONAL
-	
-	//exit(0);
 }
 
 void Room::gestionarDisparos(ListaProyectil& listaP) {
@@ -272,6 +281,9 @@ void Room::gestionarDisparos(ListaProyectil& listaP) {
 			if (auxi != 0) {
 				listaP.eliminar(auxi);
 				if (_enemigos[j]->recibeHerida(_playerPtr->getShotDamage())) {
+					//Enemigo Muere
+					Objeto* newObj = Factoria::dropRandom(_enemigos[j]->getPos());
+					if (newObj != nullptr) _objetos.push_back(newObj);
 					delete _enemigos[j];
 					_enemigos.erase(_enemigos.begin() + j);
 				}
@@ -356,7 +368,8 @@ void BossRoom::gestionarDisparos(ListaProyectil& listaP)
 {
 	Room::gestionarDisparos(listaP);
 	if (_gusano != nullptr) { //Si el gusano sigue vivo
-		_gusano->gestionarDisparos(listaP);
+		Objeto* aux = _gusano->gestionarDisparos(listaP);
+		if (aux != nullptr) _objetos.push_back(aux);
 	}
 }
 

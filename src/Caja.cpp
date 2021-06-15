@@ -5,7 +5,7 @@ Caja::Caja()
 
 }
 
-Caja::Caja(Vector2D vert1, Vector2D vert2)
+Caja::Caja(Vector2D vert1, Vector2D vert2) : _lim1(vert1), _lim2(vert2)
 {
 	setParedes(vert1, vert2);
 }
@@ -23,6 +23,8 @@ void Caja::dibuja() const{
 
 void Caja::setParedes(Vector2D vert1, Vector2D vert2)
 {
+	_lim1 = vert1;
+	_lim2 = vert2;
 	_izq.setLimites(vert1.x, vert1.y, vert1.x, vert2.y);
 	_dcha.setLimites(vert2.x, vert1.y, vert2.x, vert2.y);
 	_sup.setLimites(vert1.x, vert2.y, vert2.x, vert2.y);

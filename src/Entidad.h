@@ -5,6 +5,7 @@
 class Entidad {
 public:
 	Entidad();
+	Entidad(Vector2D pos, float radio);
 	virtual ~Entidad();
 
 	virtual void dibuja() = 0;

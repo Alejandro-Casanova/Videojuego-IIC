@@ -21,6 +21,7 @@ public:
 	virtual void mueve(float) override;
 
 	virtual bool recibeHerida(float damage) override;
+	void sonidoMuerte() override;
 	bool recibeObjeto(Objeto& obj);
 	bool recibeBonus(const Bonus& bon);
 	void dibujaBonus(int x, int y) const; //Dibuja un indicador de qué tipo de bonus se ha recibido, esta función será empleada por la GUI

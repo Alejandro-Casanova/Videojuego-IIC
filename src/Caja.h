@@ -20,4 +20,6 @@ private:
 	Pared _sup;
 	Pared _izq;
 	Pared _dcha;
+
+	Vector2D _lim1 = 0, _lim2 = 0;
 };
