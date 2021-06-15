@@ -5,6 +5,9 @@
 #include "GestorDeTeclado.h"
 #include "GestorSprites.h"
 #include <iostream>
+#include <fstream>
+#include <algorithm>
+#include <ctime>
 
 
 
@@ -14,6 +17,7 @@ CoordinadorIsaac:: CoordinadorIsaac()
 
 CoordinadorIsaac::~CoordinadorIsaac()
 {
+	guardaPuntuaciones("res/leaderboards/puntos.txt", "res/leaderboards/datos.txt");
 }
 
 void CoordinadorIsaac::dibuja() {
@@ -125,7 +129,22 @@ void CoordinadorIsaac::dibuja() {
 		break;
 
 	case(LEADERBOARD):
-		//gestionar el dibujo del tablero de maximas puntuaciones
+		gluLookAt(0, 0, 30, 0, 0, 0, 0, 1, 0);
+		ETSIDI::setTextColor(1, 1, 0);
+		ETSIDI::setFont("res/font/upheavtt.ttf", 25);
+		ETSIDI::printxy("MAYORES PUNTUACIONES:", -7, 9);
+		ETSIDI::setFont("res/font/upheavtt.ttf", 15);
+		ETSIDI::printxy("Puntos  |  Pisos Superados  |  Fecha de la Partida", -10, 7);
+		ETSIDI::setTextColor(1, 1, 1);
+		for (size_t i = 0; i < _puntuaciones.size() || i < 9; i++) {
+			ETSIDI::printxy(std::to_string(_puntuaciones[i]).c_str(), -9, 5 - i);
+			char pisos[] = { _datos[i][0] , '\0'};
+			ETSIDI::printxy(pisos, -3, 5 - i);
+			ETSIDI::printxy(&_datos[i][2], 2, 5 - i);
+		}
+		ETSIDI::setTextColor(1, 1, 0);
+		ETSIDI::printxy("Pulse 'R' para volver al menu de inicio", -8, -9);
+		ETSIDI::setTextColor(1, 1, 1);
 		break;
 
 	}
@@ -178,8 +197,11 @@ void CoordinadorIsaac::tecla() {
 			}
 
 		}
-		else if (mundo.JuegoAcabado() == 1)
+		else if (mundo.JuegoAcabado() == 1) {
 			estado = GAMEOVER;
+			ETSIDI::play("res/audio/death.wav");
+			nuevaPuntuacion(); //Guarda la puntuacion
+		}
 		else if (mundo.JuegoAcabado() == 2)
 			estado = FIN;
 		
@@ -232,6 +254,12 @@ void CoordinadorIsaac::tecla() {
 			exit(0);
 		}
 		break;
+	case(LEADERBOARD):
+		if (GestorDeTeclado::isKeyPressed('r')) {//Vuelve al menu inicial
+
+			estado = INICIO;
+		}
+		break;
 
 	
     }
@@ -247,6 +275,117 @@ void CoordinadorIsaac::mueve() {
 void CoordinadorIsaac::teclaEspecial() {
 	if (estado == JUEGO)
 		mundo.teclaEspecial();
+}
+
+void CoordinadorIsaac::inicializa()
+{
+	mundo.inicializa(); cargaPuntuaciones("res/leaderboards/puntos.txt", "res/leaderboards/datos.txt");
+}
+
+void CoordinadorIsaac::cargaPuntuaciones(const char* ruta_de_archivo_puntos, const char* ruta_de_archivo_datos)
+{
+	std::ifstream puntos, datos;
+	puntos.open(ruta_de_archivo_puntos);
+	datos.open(ruta_de_archivo_datos);
+
+	//Comprobación (ruta de archivo válida)
+	if (puntos.fail()) {
+		std::cerr << "No se pudo abrir el archivo: " << ruta_de_archivo_puntos << "\n";
+		exit(0);
+	}
+	if (datos.fail()) {
+		std::cerr << "No se pudo abrir el archivo: " << ruta_de_archivo_datos << "\n";
+		exit(0);
+	}
+
+	//Registra la lista de datos
+	std::string temp;
+	while (std::getline(datos, temp)) {
+		_datos.emplace_back(temp);
+		//std::cout << temp << std::endl;
+	}
+
+	//Registra sólo las puntuaciones 
+	temp.clear();
+	while (std::getline(puntos, temp)) {
+		_puntuaciones.emplace_back(std::stoi(temp));
+		//std::cout << temp << std::endl;
+	}
+
+	//Comprobación
+	if (_puntuaciones.size() != _datos.size()) {
+		std::cerr << "Archivos corruptos: " << ruta_de_archivo_puntos << ", " << ruta_de_archivo_datos << std::endl;
+		exit(0);
+	}
+
+	ordenaPuntuaciones();
+
+	//for (auto& i : _puntuaciones) { std::cout << i << std::endl; }
+	//for (auto& i : _datos) { std::cout << i << std::endl; }
+
+	//Comprobación por terminal
+	/*for (auto i : _layout) {
+		std::cout << i << std::endl;
+	}*/
+}
+
+void CoordinadorIsaac::guardaPuntuaciones(const char* ruta_de_archivo_puntos, const char* ruta_de_archivo_datos)
+{
+	std::ofstream puntos, datos;
+	puntos.open(ruta_de_archivo_puntos);
+	datos.open(ruta_de_archivo_datos);
+
+	//Comprobación (ruta de archivo válida)
+	if (puntos.fail()) {
+		std::cerr << "No se pudo abrir el archivo: " << ruta_de_archivo_puntos << "\n";
+		exit(0);
+	}
+	if (datos.fail()) {
+		std::cerr << "No se pudo abrir el archivo: " << ruta_de_archivo_datos << "\n";
+		exit(0);
+	}
+
+	ordenaPuntuaciones();
+
+	//Guarda los puntos y los datos
+	for (auto& i : _puntuaciones) {
+		puntos << i << std::endl;
+	}
+	for (auto& i : _datos) {
+		datos << i << std::endl;
+	}
+}
+
+void CoordinadorIsaac::ordenaPuntuaciones()
+{
+	//Ordena las puntuaciones
+	bool move;
+	do {
+		move = false;
+		for (size_t i = 1; i < _puntuaciones.size(); i++) {
+			if (_puntuaciones[i] > _puntuaciones[i - 1]) {
+				std::iter_swap(_puntuaciones.begin() + i - 1, _puntuaciones.begin() + i);
+				std::iter_swap(_datos.begin() + i - 1, _datos.begin() + i);
+				move = true;
+			}
+		}
+	} while (move == true);
+}
+
+void CoordinadorIsaac::nuevaPuntuacion()
+{
+	int nPuntuacion = 0;
+	nPuntuacion += mundo.getContadorPisos() * 100;
+	nPuntuacion += mundo.getPlayer().getDinero() * 10;
+
+	_puntuaciones.push_back(nPuntuacion);
+
+	time_t now = time(0);
+	char* dt = ctime(&now);
+	std::string time = std::string(dt);
+	time.pop_back(); //Elimina el "\n" sobrante
+	_datos.push_back(std::to_string(mundo.getContadorPisos()) + " " + time);
+
 }
 
 //void CoordinadorIsaac::dibuja()

@@ -4,6 +4,8 @@
 #include "freeglut.h"
 #include "Entidad.h"
 
+
+
 class Personaje : public Entidad
 {
 public:
@@ -25,11 +27,13 @@ public:
 
 protected:
 	
-	float _healthCounter = 2.0f; //Contador de salud
+	
 	float _speedStat = 10.0f; //Velocidad de desplazamiento
 	float _shootSpeed = 1.0f; //Segundos entre disparos
+	float _shotDamage = 1.0f; //Daño del disparo
+	float _bulletSpeed = 15.0f; //Velocidad del disparo
+
 	float _shootCounter = 0.0f; //Contador para controlar la frecuencia de disparo
-	float _shotDamage = 1.0f;
-	float _bulletSpeed = 15.0f;
+	float _healthCounter = 2.0f; //Contador de salud
 };
 

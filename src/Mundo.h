@@ -11,9 +11,6 @@
 
 
 class Mundo{
-friend class ListaProyectil;
-
-
 public: 
 	Mundo();
 	virtual ~Mundo();
@@ -23,15 +20,17 @@ public:
 	void inicializa();
 	void mueve();
 	void dibuja();
-	int JuegoAcabado(); //devuelve un 0 si no se ha acabado, un 1 si se ha perdido y un 2 si se ha ganado
 
 	void siguientePiso(); //Pasa al siguiente piso
+
+	int JuegoAcabado(); //devuelve un 0 si no se ha acabado, un 1 si se ha perdido y un 2 si se ha ganado
+	int getContadorPisos() const { return _contadorPisos; }
+	const Player& getPlayer() const { return _jugador; }
 
 private:
 	float x_ojo = -10.0f;
 	float y_ojo = 0;
 	float z_ojo = 140.0f;
-	int final_juego = 0;
 
 	Player _jugador;
 	int _contadorPisos = 0;

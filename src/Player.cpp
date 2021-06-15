@@ -6,6 +6,7 @@
 #include "Proyectil.h"
 #include <iostream>
 #include "Objeto.h"
+#include <sstream>
 
 int sign(float x) {
 	if (x > 0) return 1;
@@ -133,11 +134,17 @@ void Player::dibuja()
 		if (_shootCounter > 0.2f) _head.setState(6);
 		else _head.setState(7);
 	}
-	if (_shootCounter > 0.2f && (_head.getState() % 2)) _head.setState(_head.getState() - 1); //Evita que se quede con los ojos cerrados
+	if ((_shootCounter > 0.2f || (_shootCounter == _shootSpeed)) && (_head.getState() % 2)) _head.setState(_head.getState() - 1); //Evita que se quede con los ojos cerrados
 
+	//ANIMACIONES ESPECIALES
 	if (_damageTimer != 0) {
 		_especial.setState(1);
 		_especial.draw();
+	}
+	else if (_bonusTimer != 0) {
+		_especial.setState(0);
+		_especial.draw();
+
 	}
 	else {
 		_head.draw();
@@ -176,9 +183,12 @@ void Player::mueve(float t)
 	_body.loop();
 
 	//Gestion de la invulnerabilidad
-	_damageTimer -= t;
+	if(_damageTimer > 0) _damageTimer -= t;
 	if (_damageTimer < 0) _damageTimer = 0;
-	//std::cout << _damageTimer << "   " << _healthCounter << std::endl;
+	
+	//Animación del bonus
+	if (_bonusTimer > 0) _bonusTimer -= t;
+	if (_bonusTimer < 0) _bonusTimer = 0;
 }
 
 bool Player::recibeHerida(float damage)
@@ -192,25 +202,79 @@ bool Player::recibeHerida(float damage)
 	
 }
 
-bool Player::recibeObjeto(const Objeto& obj)
+bool Player::recibeObjeto(Objeto& obj)
 {
 	switch (obj.type()) {
 	case Objeto::obj_t::CORAZON:
 		if (_healthCounter == _healthStat) return false; //Si ya tiene salud máxima
 		_healthCounter += obj.getValor();
 		if (_healthCounter > _healthStat) _healthCounter = _healthStat;
+		ETSIDI::play("res/audio/salud.wav");
 		break;
 	case Objeto::obj_t::LLAVE:
 		_llaves += obj.getValor();
+		ETSIDI::play("res/audio/coin.wav");
 		break;
 	case Objeto::obj_t::MONEDA:
 		_dinero += obj.getValor();
+		ETSIDI::play("res/audio/coin.wav");
 		break;
+	case Objeto::obj_t::BONUS: {
+		recibeBonus(dynamic_cast<Bonus&>(obj));
+		break; 
+	}
 	default:
-		std::cerr << "Se ha recogido un objeto indefinido.\n";
+		std::cerr << "Se ha recogido un objeto indefinido.\n"; exit(0);
 		break;
 	}
 	return true;
+}
+
+bool Player::recibeBonus(const Bonus& bon)
+{
+	switch (bon.bonusType()) {
+	case Bonus::TIPO::DAMAGE: 
+		_shotDamage *= bon.getValor(); 
+		break;
+	case Bonus::TIPO::SPEED: 
+		_speedStat *= bon.getValor(); 
+		break;
+	case Bonus::TIPO::SHOT_SPEED: 
+		_shootSpeed *= bon.getValor(); 
+		break;
+	case Bonus::TIPO::HEALTH: 
+		_healthStat += bon.getValor(); 
+		break;
+	default: std::cerr << "El jugador recibe un bonus desconocido.\n"; exit(0);
+	}
+
+	ETSIDI::play("res/audio/bonus.wav");
+	_ultimoBonus = bon.bonusType();
+	_bonusTimer = T_BONUS;
+}
+
+void Player::dibujaBonus(int x, int y) const
+{
+	if (_bonusTimer == 0) return;
+	ETSIDI::setTextColor(1, 0, 1);
+	ETSIDI::setFont("res/font/upheavtt.ttf", 12);
+	switch (_ultimoBonus) {
+	case Bonus::TIPO::DAMAGE:
+		ETSIDI::printxy("DAMAGE", x, y);
+		break;
+	case Bonus::TIPO::SPEED:
+		ETSIDI::printxy("SPEED", x, y);
+		break;
+	case Bonus::TIPO::SHOT_SPEED:
+		ETSIDI::printxy("SHOT SPEED", x, y);
+		break;
+	case Bonus::TIPO::HEALTH:
+		ETSIDI::printxy("HEALTH", x, y);
+		break;
+	default: std::cerr << "El jugador recibe un bonus desconocido.\n"; exit(0);
+	}
+	
+	
 }
 
 Proyectil* Player::dispara()
@@ -240,11 +304,7 @@ Proyectil* Player::dispara()
 
 		}
 	}
-	/*if (Personaje::dispara()) {
-		ETSIDI::play("res/audio/agua.wav");
-		return true;
-	}
-	return false;*/
+	
 	return nullptr;
 }
 
@@ -253,57 +313,3 @@ void Player::flipPos(bool H, bool V)
 	if (H) _posicion.x *= -1;
 	if (V) _posicion.y *= -1;
 }
-
-
-/*
-//				INTENTO FALLIDO DE LOGRAR UN MOVIMIENTO DIRECCIONAL
-
-	int a = 0, w = 0, s = 0, d = 0, nteclas = 0;
-	float angulo1 = 0, angulo2 = 0, angulo3 = 0, angulo4 = 0, angulot = 0;
-	if (GestorDeTeclado::isKeyPressed('a')){
-		a = 1;
-		angulo1 = PI;
-	}
-	if (GestorDeTeclado::isKeyUnPressed('a')) {
-		a = 0;
-		angulo1 = 0;
-	}
-
-	if (GestorDeTeclado::isKeyPressed('w')) {
-		w = 1;
-		angulo2 = PI/2;
-	}
-	if (GestorDeTeclado::isKeyUnPressed('w')) {
-		w = 0;
-		angulo2 = 0;
-	}
-
-	if (GestorDeTeclado::isKeyPressed('d')) {
-		d = 1;
-		angulo3 = 2*PI;
-	}
-	if (GestorDeTeclado::isKeyUnPressed('d')) {
-		d = 0;
-		angulo3 = 0;
-	}
-
-	if (GestorDeTeclado::isKeyPressed('s')) {
-		s = 1;
-		angulo4 = PI*1.5F;
-	}
-	if (GestorDeTeclado::isKeyUnPressed('s')) {
-		s = 0;
-		angulo4 = 0;
-	}
-
-	nteclas = a + w + d + s;
-	angulot = angulo1 + angulo2 + angulo3 + angulo4;
-	if (nteclas != 0) {
-		_velocidad.x = _speedStat * cos(angulot/nteclas);
-		_velocidad.y = _speedStat * sin(angulot/nteclas);
-
-	}
-	else if (nteclas == 0 && angulot == 0) {
-		_velocidad = 0, 0;
-	}
-*/

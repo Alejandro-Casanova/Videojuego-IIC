@@ -2,8 +2,9 @@
 
 #include "Personaje.h"
 #include "ETSIDI.h"
+#include "Objeto.h"
 class Proyectil;
-class Objeto;
+
 
 class Player : public Personaje
 {
@@ -20,7 +21,9 @@ public:
 	virtual void mueve(float) override;
 
 	virtual bool recibeHerida(float damage) override;
-	bool recibeObjeto(const Objeto& obj);
+	bool recibeObjeto(Objeto& obj);
+	bool recibeBonus(const Bonus& bon);
+	void dibujaBonus(int x, int y) const; //Dibuja un indicador de qué tipo de bonus se ha recibido, esta función será empleada por la GUI
 	virtual Proyectil* dispara();  //Devuelve un proyectil si se produce el disparo, en caso contrario devuelve nullptr
 
 	Vector2D getHealth() const { return Vector2D{ _healthCounter, _healthStat }; }
@@ -32,8 +35,10 @@ private:
 	int _llaves = 0;
 	int _dinero = 0;
 	float _damageTimer = 0; //Controla el umbral de invulnerabilidad del jugador tras recibir daño
+	float _bonusTimer = 0; //Controla la animación de recibir un bonus
 	ETSIDI::SpriteSequence _body{ "res/texturas/isaac/body_sequence_full.png", 10, 2 };
 	ETSIDI::SpriteSequence _head{ "res/texturas/isaac/head_sequence.png", 8 };
 	ETSIDI::SpriteSequence _especial{ "res/texturas/isaac/especial.png", 3 };
+	Bonus::TIPO _ultimoBonus = Bonus::TIPO::DAMAGE;
 };
 
