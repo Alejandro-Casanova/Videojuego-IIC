@@ -49,11 +49,13 @@ bool Interaccion::rebote(Entidad& a, Entidad& b)
 
 }
 
-bool Interaccion::rebote(Entidad& a, Room& b, bool velMod)
+bool Interaccion::rebote(Entidad& a, Room& b, bool velMod, bool skipObstaculos)
 {
 	bool hayRebote = false;
-	for (auto& i : b._obstaculos) {
-		if (Interaccion::rebote(a, i->getHitBox(), velMod)) hayRebote = true;
+	if (!skipObstaculos) {
+		for (auto& i : b._obstaculos) {
+			if (Interaccion::rebote(a, i->getHitBox(), velMod)) hayRebote = true;
+		}
 	}
 	if (Interaccion::rebote(a, b._paredes, velMod)) hayRebote = true;
 	return hayRebote;
@@ -93,4 +95,50 @@ bool Interaccion::colision(const Entidad& p, const Entidad& e) {
 	float dentro = d - (p._radio + e._radio);
 	if (dentro < 0.0f) return true;
 	return false;
+}
+
+bool Interaccion::insideBox(Entidad& p, const Caja& c, bool corrige)
+{
+	bool result = true;
+	if (p.getPos().x < c._lim1.x) {
+		result = false;
+		if (corrige) p._posicion.x = c._lim1.x + p._radio;
+	}
+	if (p.getPos().x > c._lim2.x) {
+		result = false;
+		if (corrige) p._posicion.x = c._lim2.x - p._radio;
+	}
+	if (p.getPos().y < c._lim1.y) {
+		result = false;
+		if (corrige) p._posicion.y = c._lim1.y + p._radio;
+	}
+	if (p.getPos().y > c._lim2.y) {
+		result = false;
+		if (corrige) p._posicion.y = c._lim2.y - p._radio;
+	}
+		
+	return result;
+}
+
+bool Interaccion::outsideBox(Entidad& p, const Caja& c, bool corrige)
+{
+	bool result = true;
+	if (p.getPos().x > c._lim1.x) {
+		result = false;
+		if (corrige) p._posicion.x = c._lim1.x - p._radio;
+	}
+	if (p.getPos().x < c._lim2.x) {
+		result = false;
+		if (corrige) p._posicion.x = c._lim2.x + p._radio;
+	}
+	if (p.getPos().y > c._lim1.y) {
+		result = false;
+		if (corrige) p._posicion.y = c._lim1.y - p._radio;
+	}
+	if (p.getPos().y < c._lim2.y) {
+		result = false;
+		if (corrige) p._posicion.y = c._lim2.y + p._radio;
+	}
+
+	return result;
 }

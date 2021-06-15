@@ -141,7 +141,7 @@ void Piso::setPiso()
 				buffer << "res/texturas/rooms/";
 
 				//Carga textura aleatoria
-				switch (ETSIDI::lanzaDado(4)) {
+				switch (ETSIDI::lanzaDado(5)) { //Nunca devuelve 5 (máximo)
 				case 1: buffer << "Basement1.png"; break;
 				case 2: buffer << "Catacombs1.png"; break;
 				case 3: buffer << "Necropolis1.png"; break;
@@ -152,7 +152,7 @@ void Piso::setPiso()
 
 				//Carga layout aleatorio
 				buffer.str(""); //Reinicia el buffer
-				buffer << "res/rooms/" << ETSIDI::lanzaDado(14) << ".txt";
+				buffer << "res/rooms/" << ETSIDI::lanzaDado(15) << ".txt"; //Nunca devuelve 15 (máximo)
 				_roomLayout[i][j]->inicializa(buffer.str().c_str());
 				_rooms.push_back(_roomLayout[i][j]);
 				break; }

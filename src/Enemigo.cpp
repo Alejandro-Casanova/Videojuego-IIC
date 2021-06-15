@@ -12,7 +12,7 @@ Enemigo::~Enemigo() {
 
 }
 
-Enemigo::Enemigo(Vector2D posicion, Player* playerPtr, Room* roomPtr) :  _playerPtr(playerPtr) , _roomPtr(roomPtr){
+Enemigo::Enemigo(Vector2D posicion, float radio, Player* playerPtr, Room* roomPtr) : Personaje(posicion, radio), _playerPtr(playerPtr) , _roomPtr(roomPtr){
 	_posicion = posicion;
 }
 
@@ -61,13 +61,13 @@ void Enemigo::mov_erratico() {
 		if (distr1(gen)) {
 			target = _playerPtr->getPos() - _posicion;
 			_velocidad = target.unitario() * _speedStat;
-			std::cout << "IN " << target.x << " " << target.y << std::endl;
+			//std::cout << "IN " << target.x << " " << target.y << std::endl;
 		}
 		else {
 			target.x = _posicion.x + distrx(gen);
 			target.y = _posicion.y + distry(gen);
 			_velocidad = target.unitario() * _speedStat;
-			std::cout << "OUT " << target.x << " " << target.y << std::endl;
+			//std::cout << "OUT " << target.x << " " << target.y << std::endl;
 		}
 		intervalo = 100;
 	}
@@ -91,18 +91,18 @@ void Enemigo::stalk(Entidad* ptr, float distance)
 
 void Enemigo::roam(float prob)
 {
-	if(ETSIDI::lanzaDado() < prob * double(T_CONST)){ //Probabilidad del 20% cada segundo
+	if(ETSIDI::lanzaDado() < prob * double(T_CONST)){ //Probabilidad cada segundo
 		double angulo = ETSIDI::lanzaDado(360.0); //Ángulo aleatorio entre 0 y 360
 		_velocidad.set(_speedStat, angulo); //Dirección aleatoria
 	}
-	Interaccion::rebote(*this, *_roomPtr, true);
+	Interaccion::rebote(*this, *_roomPtr, true, vuela());
 }
 
 
 //SUBCLASES DE ENEMIGOS (ABSTRACTAS) Definidas según el tipo de animación
 
-EnemigoA::EnemigoA(Vector2D posicion, Player* playerPtr, Room* roomPtr, const char* ruta_de_textura) 
-	: Enemigo(posicion, playerPtr, roomPtr), _sprite{ ruta_de_textura } {
+EnemigoA::EnemigoA(Vector2D posicion, float radio, Player* playerPtr, Room* roomPtr, const char* ruta_de_textura) 
+	: Enemigo(posicion, radio, playerPtr, roomPtr), _sprite{ ruta_de_textura } {
 }
 
 void EnemigoA::dibuja() {
@@ -111,8 +111,8 @@ void EnemigoA::dibuja() {
 	_sprite.draw();
 }
 
-EnemigoB::EnemigoB(Vector2D posicion, Player* playerPtr, Room* roomPtr, const char* ruta_body, int body_sprite_cols, const char* ruta_head, int head_sprite_cols, int animation_ms_step, int body_sprite_rows)
-	: Enemigo(posicion, playerPtr, roomPtr), _body{ ruta_body, body_sprite_cols, body_sprite_rows, animation_ms_step }, _head{ ruta_head, head_sprite_cols, 1, animation_ms_step } {
+EnemigoB::EnemigoB(Vector2D posicion, float radio, Player* playerPtr, Room* roomPtr, const char* ruta_body, int body_sprite_cols, const char* ruta_head, int head_sprite_cols, int animation_ms_step, int body_sprite_rows)
+	: Enemigo(posicion, radio, playerPtr, roomPtr), _body{ ruta_body, body_sprite_cols, body_sprite_rows, animation_ms_step }, _head{ ruta_head, head_sprite_cols, 1, animation_ms_step } {
 }
 
 void EnemigoB::dibuja() {
@@ -164,8 +164,8 @@ void EnemigoB::dibuja() {
 	glPopMatrix();
 }
 
-EnemigoC::EnemigoC(Vector2D posicion, Player* playerPtr, Room* roomPtr, const char* ruta_de_textura, int sprite_cols, int spriteRows, int animation_ms_step)
-	: Enemigo(posicion, playerPtr, roomPtr), _sprite{ ruta_de_textura, sprite_cols, spriteRows, animation_ms_step }
+EnemigoC::EnemigoC(Vector2D posicion, float radio, Player* playerPtr, Room* roomPtr, const char* ruta_de_textura, int sprite_cols, int spriteRows, int animation_ms_step)
+	: Enemigo(posicion, radio, playerPtr, roomPtr), _sprite{ ruta_de_textura, sprite_cols, spriteRows, animation_ms_step }
 {
 }
 
@@ -190,11 +190,11 @@ void EnemigoC::dibuja()
 }
 
 //// ZOMBIE /////////////////////////
-Zombie::Zombie(Vector2D pos, Player* playerPtr, Room* roomPtr) :EnemigoB(pos, playerPtr, roomPtr, "res/texturas/enemigos/zombie_body_full.png", 10, "res/texturas/enemigos/zombie_head.png", 1){
+Zombie::Zombie(Vector2D pos, Player* playerPtr, Room* roomPtr) : EnemigoB(pos, ZOMBIE_RAD, playerPtr, roomPtr, "res/texturas/enemigos/zombie_body_full.png", 10, "res/texturas/enemigos/zombie_head.png", 1){
 	GestorSprites::dimensionaSprite(38, 35, TILE_WIDTH * 1.25f, _head);
 	GestorSprites::dimensionaSprite(26, 22, TILE_WIDTH, _body, 4);
 	_dispara = false;
-	_radio = 5.0f;
+	_healthCounter = ZOMBIE_SALUD;
 }
 
 void Zombie::mueve(float t) {
@@ -204,12 +204,12 @@ void Zombie::mueve(float t) {
 }
 
 //// ESQUELETO /////////////////////////
-Esqueleto::Esqueleto(Vector2D pos, Player* playerPtr, Room* roomPtr) :EnemigoB(pos, playerPtr, roomPtr, "res/texturas/enemigos/skelly_full_body.png", 10, "res/texturas/enemigos/skelly_head.png", 3) {
+Esqueleto::Esqueleto(Vector2D pos, Player* playerPtr, Room* roomPtr) :EnemigoB(pos, ESQUELETO_RAD, playerPtr, roomPtr, "res/texturas/enemigos/skelly_full_body.png", 10, "res/texturas/enemigos/skelly_head.png", 3) {
 	GestorSprites::dimensionaSprite(32, 33, TILE_WIDTH * 1.2f, _head);
 	GestorSprites::dimensionaSprite(26, 22, TILE_WIDTH, _body, 5);
 	_dispara = true;
-	_radio = 5.0f;
-	_bulletSpeed = 40.0f;
+	_bulletSpeed = ESQUELETO_BULLET_SPEED;
+	_healthCounter = ESQUELETO_SALUD;
 }
 
 Proyectil* Esqueleto::dispara() {
@@ -237,14 +237,14 @@ void Esqueleto::mueve(float t) {
 // WEEPER ///////////////
 
 Weeper::Weeper(Vector2D pos, Player* playerPtr, Room* roomPtr)
-	: EnemigoB(pos, playerPtr, roomPtr, "res/texturas/enemigos/weeper_body_full.png", 10, "res/texturas/enemigos/weeper_head.png", 6) {
+	: EnemigoB(pos, WEEPER_RAD, playerPtr, roomPtr, "res/texturas/enemigos/weeper_body_full.png", 10, "res/texturas/enemigos/weeper_head.png", 6) {
 
-	_radio = 5.0f;
 	GestorSprites::dimensionaSprite(44, 42, TILE_WIDTH * 1.2f, _head);
 	GestorSprites::dimensionaSprite(66, 39, TILE_WIDTH, _body, 5.0f);
-	_speedStat = 12.5f;
+	_speedStat = WEEPER_SPEED;
 	_headAnimation = 1;
 	_dispara = true;
+	_healthCounter = WEEPER_SALUD;
 
 }
 
@@ -261,21 +261,30 @@ Fatty::~Fatty(){
 
 }
 
-Fatty::Fatty(Vector2D pos, Player* playerPtr, Room* roomPtr)
-	: EnemigoB(pos, playerPtr, roomPtr, "res/texturas/enemigos/fatty_body_full.png", 12, "res/texturas/enemigos/fatty_head.png", 6, 200) {
+bool Fatty::recibeHerida(float damage)
+{
+	if (!_hostil) _hostil = true;
+	return Personaje::recibeHerida(damage);
+}
 
-	//_sprite.setSize(_dims.x, _dims.y);
-	//_sprite.setCenter(_dims.x / 2.0f, _dims.y / 2.0f);
-	_radio = 7.0f;
+Fatty::Fatty(Vector2D pos, Player* playerPtr, Room* roomPtr)
+	: EnemigoB(pos, FATTY_RAD, playerPtr, roomPtr, "res/texturas/enemigos/fatty_body_full.png", 12, "res/texturas/enemigos/fatty_head.png", 6, 200) {
+	
+	_velocidad.set(_speedStat, ETSIDI::lanzaDado(360));
 	GestorSprites::dimensionaSprite(34, 30, TILE_WIDTH * 1.2f, _head, -4.0f);
 	GestorSprites::dimensionaSprite(66, 39, TILE_WIDTH * 2.0f, _body, 2.5f);
-	_speedStat = 7.5f;
+	_speedStat = FATTY_SPEED;
 	_headAnimation = 1;
+	_hostil = false;
+	_healthCounter = FATTY_SALUD;
 }
 
 void Fatty::mueve(float t) {
 	Personaje::mueve(t);
-	follow(_playerPtr);
+
+	if (_hostil) follow(_playerPtr);
+	else roam(0.3f); //30% de probabilidad de cambiar su trayectoria cada segundo
+
 	_body.loop();
 	_head.loop();
 
@@ -283,9 +292,8 @@ void Fatty::mueve(float t) {
 
 /// NARANJA ///////////////////
 Naranja::Naranja(Vector2D pos, Player* const playerPtr, Room* roomPtr)
-	: EnemigoC(pos, playerPtr, roomPtr, "res/texturas/enemigos/orange.png", 4, 3)
+	: EnemigoC(pos, NARANJA_RAD, playerPtr, roomPtr, "res/texturas/enemigos/orange.png", 4, 3)
 {
-	_radio = 1;
 	GestorSprites::dimensionaSprite(32, 32, TILE_WIDTH, _sprite, -1.0f);
 }
 
@@ -330,19 +338,20 @@ void Naranja::mueve(float t)
 bool Naranja::recibeHerida(float damage)
 {
 	if (_contador < _tFase) return Personaje::recibeHerida(damage);
-	_contador -= (damage * 4 / _tFase);
+	_contador -= (damage * NARANJA_MULTIPLICADOR / _tFase / NARANJA_SALUD);
 	return false;
 }
 
 // MOSCA /////////////////////
 Mosca::Mosca(Vector2D pos, Player* const playerPtr, Room* roomPtr)
-	: EnemigoC(pos, playerPtr, roomPtr, "res/texturas/enemigos/fly.png", 2)
+	: EnemigoC(pos, MOSCA_RAD, playerPtr, roomPtr, "res/texturas/enemigos/fly.png", 2)
 {
 	_velocidad.set(_speedStat, ETSIDI::lanzaDado(360));
-	_radio = 2.0f;
-	_shootSpeed = 2.0f;
+	_shootSpeed = MOSCA_SHOOT_SPEED;
 	_dispara = true;
 	GestorSprites::dimensionaSprite(32, 32, TILE_WIDTH, _sprite);
+	_vuela = true;
+	_healthCounter = MOSCA_SALUD;
 }
 
 void Mosca::mueve(float t)
@@ -353,18 +362,18 @@ void Mosca::mueve(float t)
 }
 
 ///////////// CACA ////////////////////////
-Caca::Caca(Vector2D pos, Player* const playerPtr, Room* roomPtr) : EnemigoA(pos, playerPtr, roomPtr, "res/texturas/enemigos/caca.png")
+Caca::Caca(Vector2D pos, Player* const playerPtr, Room* roomPtr) : EnemigoA(pos, CACA_RAD, playerPtr, roomPtr, "res/texturas/enemigos/caca.png")
 {
 	_sprite.setSize(13, 13);
 	_sprite.setCenter(13 / 2.0f, 13 / 2.0f);
-	_radio = 5.0f;
 	_dispara = false;
+	_healthCounter = CACA_SALUD;
 }
 
 void Caca::mueve(float t) 
 {
 	Personaje::mueve(t);
-	mov_erratico();
+	roam(0.3f);
 	//follow(_playerPtr);
 	//_spriteCaca.loop();
 }
@@ -375,17 +384,15 @@ Caca::~Caca()
 
 /// BOSS GUSANO /////////////////////////////////////
 
-BossGusano::BossGusano(Player* playerPtr, Room* roomPtr) : Enemigo(Vector2D{ 0.0f, 0.0f }, playerPtr, roomPtr)
+BossGusano::BossGusano(Player* playerPtr, Room* roomPtr) : Enemigo(Vector2D{ 0.0f, 0.0f }, BOSS_GUSANO_RAD, playerPtr, roomPtr)
 {
-	_speedStat = 25.0f;
+	_speedStat = BOSS_GUSANO_SPEED;
 	_dispara = false;
-	_velocidad.y = _speedStat;
-	_velocidad.x = 0.0f;
-	_radio = 6.0f;
+	_velocidad.setXY(0.0f, _speedStat);
 	GestorSprites::dimensionaSprite(39, 36, TILE_WIDTH * 1.5f, _head);
 	GestorSprites::dimensionaSprite(39, 36, TILE_WIDTH * 1.5f, _headRoja);
 	_modulos.resize(N_MODULOS);
-	_healthCounter = SALUD_MAX;
+	_healthCounter = BOSS_GUSANO_SALUD_MAX;
 }
 
 void BossGusano::dibuja()
@@ -518,29 +525,36 @@ bool BossGusano::recibeHerida(float damage)
 	
 	if (!_modulos.empty()) {//Impacto a la cabeza causa daño a todos los módulos
 		for (int i = (int)_modulos.size() - 1; i >= 0; i--) {
-			if (_modulos[i].recibeHerida(damage / N_MODULOS))
-				_modulos.erase(_modulos.begin() + i);
+			_modulos[i].recibeHerida(damage / N_MODULOS); //Nunca se eliminan módulos por impactos a la cabeza
+				//_modulos.erase(_modulos.begin() + i);
 		}
 
 	}
-	if (_healthCounter <= 0 && _modulos.empty()) return true;
+	if (_healthCounter <= 0 && _modulos.empty()) {
+		return true;
+		sonidoMuerte();
+	}
 	return false;
 }
 
-bool BossGusano::gestionarDisparos(ListaProyectil& listaP)
+Objeto* BossGusano::gestionarDisparos(ListaProyectil& listaP)
 {
 	bool hit = false;
+	Objeto* nObj = nullptr;
 	//Impactos en los modulos
 	for (int i = (int)_modulos.size() - 1; i >= 0; i--) {
 		Proyectil* aux = listaP.impacto(_modulos[i]);
 		if (aux != nullptr) {
-			if (_modulos[i].recibeHerida((float)aux->getDamage()))
+			if (_modulos[i].recibeHerida((float)aux->getDamage())) {
+				nObj = Factoria::dropRandom(_modulos[i].getPos());
 				_modulos.erase(_modulos.begin() + i);
+			}
 			listaP.eliminar(aux);
 			hit = true;
 		}
 	}
-	return hit;
+	if (hit) return nObj;
+	return nullptr;
 }
 
 bool BossGusano::rebote(Player& player)

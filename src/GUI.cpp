@@ -35,7 +35,7 @@ void GUI::dibuja()
 {
 	ETSIDI::setTextColor(1, 1, 0);
 	ETSIDI::setFont("res/font/upheavtt.ttf", 14);
-	ETSIDI::printxy("ISAAC", _origen.x, _origen.y);
+	ETSIDI::printxy("ISAAC", int(_origen.x), (_origen.y));
 
 	//Dibuja iconos
 	for (auto i : _sprites) {
@@ -55,5 +55,6 @@ void GUI::dibuja()
 	ETSIDI::printxy(buffer.str().c_str(), _origen.x + 5.0f, _origen.y - 16.0f);
 
 	//Dibuja Modificadores
-	_playerPtr->dibujaBonus(_origen.x, _origen.y - 21.0f);
+	ETSIDI::printxy("Bonus:", _origen.x, _origen.y - 22.0f);
+	_playerPtr->dibujaBonus(int(_origen.x - 1.0f), int(_origen.y - 27.0f));
 }

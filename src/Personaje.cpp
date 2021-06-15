@@ -1,8 +1,13 @@
 #include "Personaje.h"
 #include <iostream>
+#include <ETSIDI.h>
 
 Personaje::Personaje(){
 
+}
+
+Personaje::Personaje(Vector2D pos, float radio) : Entidad(pos, radio)
+{
 }
 
 Personaje::~Personaje(){
@@ -21,8 +26,16 @@ bool Personaje::puedeDisparar()
 bool Personaje::recibeHerida(float daño)
 {
 	_healthCounter -= daño;
-	if (_healthCounter <= 0) return true;
+	if (_healthCounter <= 0) {
+		sonidoMuerte();
+		return true;
+	}
 	return false;
+}
+
+void Personaje::sonidoMuerte()
+{
+	ETSIDI::play("res/audio/monster_death.wav");
 }
 
 void Personaje::inicializa()

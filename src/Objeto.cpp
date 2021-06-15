@@ -3,10 +3,8 @@
 #include "GestorSprites.h"
 #include <sstream>
 
-Objeto::Objeto(const char* ruta_de_textura, Vector2D posicion, obj_t t) : rtt(t), _sprite{ ruta_de_textura }
+Objeto::Objeto(const char* ruta_de_textura, Vector2D posicion, obj_t t) : Entidad(posicion, TILE_WIDTH / 4.0f), rtt(t), _sprite{ ruta_de_textura }
 {
-	_radio = TILE_WIDTH / 4.0f;
-	_posicion = posicion + Vector2D{TILE_WIDTH / 2.0f, TILE_WIDTH / 2.0f};
 	
 }
 
@@ -43,6 +41,8 @@ Objeto* Factoria::create(Objeto::obj_t t, Vector2D pos) {
 		return dropCoin(pos);
 	case Objeto::obj_t::LLAVE:
 		return new Llave(pos);
+	case Objeto::obj_t::BONUS:
+		return dropBonus(pos);
 	default:
 		std::cerr << "incorrect type-factory::create()" << std::endl;
 		return nullptr;
@@ -63,17 +63,31 @@ Objeto* Factoria::dropBonus(Vector2D pos)
 {
 	//Elige textura y tipo de bonus aleatorios
 	std::stringstream ruta;
-	int valor = ETSIDI::lanzaDado(9);
+	int valor = ETSIDI::lanzaDado(10);
 	ruta << "res/texturas/pills/" << valor << ".png";
 	Bonus::TIPO tipo = Bonus::TIPO::HEALTH;
 
-	switch (ETSIDI::lanzaDado(4)) {
+	switch (ETSIDI::lanzaDado(5)) {
 	case 1: tipo = Bonus::TIPO::HEALTH; break;
 	case 2: tipo = Bonus::TIPO::DAMAGE; break;
 	case 3: tipo = Bonus::TIPO::SHOT_SPEED; break;
 	case 4: tipo = Bonus::TIPO::SPEED; break;
+	case 5: //lanzaDado nunca devuelve el valor max
+		std::cerr << "ERROR en Factoria::dropBonus" << std::endl;
+		exit(0);
+		break;
 	}
 
 	if (valor > 6) return new Bonus(pos, ruta.str().c_str(), tipo, 23, 32);
 	else return new Bonus(pos, ruta.str().c_str(), tipo);
+}
+
+Objeto* Factoria::dropRandom(Vector2D pos)
+{
+	double valor = ETSIDI::lanzaDado();
+	if (valor >= 0.5) return nullptr; //50% NADA
+	else if (valor < 0.2) return create(Objeto::obj_t::CORAZON, pos); //20% Corazón
+	else if (valor < 0.35) return dropCoin(pos); //15% Moneda
+	else if (valor < 0.45) return dropBonus(pos); //10% Bonus
+	else if (valor < 0.5) return create(Objeto::obj_t::LLAVE, pos); //5% Llave
 }

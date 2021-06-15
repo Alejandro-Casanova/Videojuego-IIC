@@ -10,6 +10,7 @@ class Player;
 class ListaProyectil;
 class Proyectil;
 class Room;
+class Objeto;
 
 //CLASE ENEMIGO GENÉRICA///////////////////////////////////////////////////
 
@@ -17,7 +18,7 @@ class Enemigo : public Personaje
 {
 	friend class Interaccion;
 public:
-	Enemigo(Vector2D posicion, Player* playerPtr, Room* roomPtr); //Almacena posicion y un puntero al jugador
+	Enemigo(Vector2D posicion, float radio, Player* playerPtr, Room* roomPtr); //Almacena posicion y un puntero al jugador
 	virtual ~Enemigo();
 
 	virtual void dibuja() override = 0;
@@ -26,6 +27,7 @@ public:
 	
 	virtual bool puedeDisparar() override;
 	float getMeleeDamage() const { return _meleeDamage; }
+	bool vuela() const { return _vuela; }
 	virtual Proyectil* dispara();
 
 protected:
@@ -40,6 +42,8 @@ protected:
 	Entidad* _playerPtr = nullptr; //Almacena un puntero al jugador para poder seguirlo
 	Room* _roomPtr = nullptr; //Almacena puntero a la room actual para gestionar colisiones y pathfinding
 	bool _dispara = false; //Indica si el enemigo dispara
+	bool _vuela = false; //Indica si el enemigo vuela
+	bool _hostil = true; //Indica si el enemigo es hostil
 	float _meleeDamage = 1.0f;
 	
 
@@ -47,7 +51,7 @@ protected:
 
 class EnemigoA : public Enemigo { //Tiene un único sprite
 public:
-	EnemigoA(Vector2D posicion, Player* playerPtr, Room* roomPtr, const char* ruta_de_textura);
+	EnemigoA(Vector2D posicion, float radio, Player* playerPtr, Room* roomPtr, const char* ruta_de_textura);
 	virtual void dibuja() override;
 	virtual void mueve(float t) override = 0;
 protected:
@@ -56,7 +60,7 @@ protected:
 
 class EnemigoB : public Enemigo { //Tiene una secuencia de sprites para el cuerpo y una para la cabeza
 public:
-	EnemigoB(Vector2D posicion, Player* playerPtr, Room* roomPtr, const char* ruta_body, int body_sprite_cols, const char* ruta_head, int head_sprite_cols, int animation_ms_step = 50, int body_sprite_rows = 2);
+	EnemigoB(Vector2D posicion, float radio, Player* playerPtr, Room* roomPtr, const char* ruta_body, int body_sprite_cols, const char* ruta_head, int head_sprite_cols, int animation_ms_step = 50, int body_sprite_rows = 2);
 	virtual void dibuja() override;
 	virtual void mueve(float t) override = 0;
 protected:
@@ -66,7 +70,7 @@ protected:
 
 class EnemigoC : public Enemigo { //Tiene un único spriteSequence
 public:
-	EnemigoC(Vector2D posicion, Player* playerPtr, Room* roomPtr, const char* ruta_de_textura, int sprite_cols, int spriteRows = 1, int animation_ms_step = 50);
+	EnemigoC(Vector2D posicion, float radio, Player* playerPtr, Room* roomPtr, const char* ruta_de_textura, int sprite_cols, int spriteRows = 1, int animation_ms_step = 50);
 	virtual void dibuja() override;
 	virtual void mueve(float t) override = 0;
 protected:
@@ -98,6 +102,8 @@ class Weeper : public EnemigoB {
 public:
 	Weeper(Vector2D pos, Player* playerPtr, Room* roomPtr);
 	void mueve(float t) override;
+	void sonidoMuerte() override { ETSIDI::play("res/audio/monster_death2.wav"); }
+
 private:
 
 };
@@ -107,6 +113,7 @@ class Fatty : public EnemigoB {
 public:
 	Fatty(const Vector2D pos, Player* const PlayerPtr, Room* roomPtr);
 	virtual ~Fatty();
+	bool recibeHerida(float damage) override;
 
 	void mueve(float t) override;
 
@@ -121,6 +128,7 @@ public:
 	virtual void dibuja() override;
 	virtual void mueve(float t) override;
 	bool recibeHerida(float damage) override;
+	void sonidoMuerte() override { ETSIDI::play("res/audio/splash.wav"); }
 
 private:
 	float _contador = 0;
@@ -133,8 +141,8 @@ class Mosca : public EnemigoC {
 public:
 	Mosca(Vector2D pos, Player* const playerPtr, Room* roomPtr);
 
-	//virtual void dibuja() override;
 	virtual void mueve(float t) override;
+	void sonidoMuerte() override { ETSIDI::play("res/audio/splash.wav"); }
 
 private:
 };
@@ -146,6 +154,7 @@ public:
 	Caca(Vector2D pos, Player* const playerPtr, Room* roomPtr);
 	virtual ~Caca();
 
+	void sonidoMuerte() override { ETSIDI::play("res/audio/splash.wav"); }
 	virtual void mueve(float t) override;
 
 private:
@@ -160,10 +169,9 @@ class BossGusano : public Enemigo {
 	//SUBCLASE MÓDULO
 	class Modulo : public Entidad{
 	public:
-		Modulo() { 
+		Modulo() : Entidad(Vector2D{ 0.0f, 0.0f }, MODULO_RAD) {
 			GestorSprites::dimensionaSprite(29, 26, TILE_WIDTH, _sprite); 
 			GestorSprites::dimensionaSprite(29, 26, TILE_WIDTH, _spriteRojo);
-			_radio = 4.0f;
 		}
 		void dibuja() override{
 			Entidad::dibujaHitbox();
@@ -188,13 +196,16 @@ class BossGusano : public Enemigo {
 		bool recibeHerida(float damage) { 
 			_contador = 0;
 			_salud -= damage;
-			if (_salud <= 0) return true;
+			if (_salud <= 0) {
+				_salud = 0;
+				return true;
+			}
 			return false;
 		}
 		void avanza(Vector2D desplazamiento) { _posicion += desplazamiento; }
 		float getSalud() const { return _salud; }
 	private:
-		float _salud = (SALUD_MAX / N_MODULOS);
+		float _salud = (BOSS_GUSANO_SALUD_MAX / N_MODULOS);
 		float _contador = T_INVULNERABLE; //Se usa para la animación del daño recibido
 		ETSIDI::SpriteSequence _sprite{ "res/texturas/boss/gusano_body.png", 2 , 1, 75};
 		ETSIDI::SpriteSequence _spriteRojo{ "res/texturas/boss/gusano_body_r.png", 2 , 1, 75 };
@@ -207,7 +218,8 @@ public:
 	void mueve(float t, Caja& cajaRoom); //El gusano se desplaza aleatoriamente por la room NOTA: NO SOBREESCRIBE LA FUNCION "MUEVE" DE ENEMIGO
 	void mueveCadena(); //Se encarga del movimiento relativo entre los módulos del robot
 	bool recibeHerida(float damage) override; //Devuelve true al morir el boss
-	bool gestionarDisparos(ListaProyectil& listaP); //Gestiona los disparos con los módulos del boss, devuelve true al destruir alguno
+	void sonidoMuerte() override { ETSIDI::play("res/audio/roar.wav"); }
+	Objeto* gestionarDisparos(ListaProyectil& listaP); //Gestiona los disparos con los módulos del boss, puede devolver un objeto al destruir uno
 	bool rebote(Player& player); //Gestiona la colision de los módulos con el jugador
 private:
 	ETSIDI::SpriteSequence _head{ "res/texturas/boss/gusano_cabeza.png", 6 , 1, 75};

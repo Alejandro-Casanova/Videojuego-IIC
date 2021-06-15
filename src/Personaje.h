@@ -10,6 +10,7 @@ class Personaje : public Entidad
 {
 public:
 	Personaje();
+	Personaje(Vector2D pos, float radio);
 	virtual ~Personaje();
 
 	virtual void dibuja() override = 0; //Personaje es una clase abstracta
@@ -18,6 +19,7 @@ public:
 
 	virtual bool puedeDisparar(); //Indica si el personaje está listo para disparar
 	virtual bool recibeHerida(float daño); //Devuelve true si se ha producido la muerte
+	virtual void sonidoMuerte(); //Reproduce el sonido de morir
 
 	
 	float getShotDamage() const { return _shotDamage; }

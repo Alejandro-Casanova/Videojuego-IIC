@@ -202,6 +202,11 @@ bool Player::recibeHerida(float damage)
 	
 }
 
+void Player::sonidoMuerte()
+{
+	ETSIDI::play("res/audio/death.wav");
+}
+
 bool Player::recibeObjeto(Objeto& obj)
 {
 	switch (obj.type()) {
@@ -212,11 +217,11 @@ bool Player::recibeObjeto(Objeto& obj)
 		ETSIDI::play("res/audio/salud.wav");
 		break;
 	case Objeto::obj_t::LLAVE:
-		_llaves += obj.getValor();
+		_llaves += (int)obj.getValor();
 		ETSIDI::play("res/audio/coin.wav");
 		break;
 	case Objeto::obj_t::MONEDA:
-		_dinero += obj.getValor();
+		_dinero += (int)obj.getValor();
 		ETSIDI::play("res/audio/coin.wav");
 		break;
 	case Objeto::obj_t::BONUS: {
@@ -266,7 +271,8 @@ void Player::dibujaBonus(int x, int y) const
 		ETSIDI::printxy("SPEED", x, y);
 		break;
 	case Bonus::TIPO::SHOT_SPEED:
-		ETSIDI::printxy("SHOT SPEED", x, y);
+		ETSIDI::printxy("SHOT", x, y);
+		ETSIDI::printxy("SPEED", x, y - 2.0f);
 		break;
 	case Bonus::TIPO::HEALTH:
 		ETSIDI::printxy("HEALTH", x, y);
