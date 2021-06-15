@@ -3,6 +3,7 @@
 #include "Personaje.h"
 #include "ETSIDI.h"
 class Proyectil;
+class Objeto;
 
 class Player : public Personaje
 {
@@ -19,13 +20,12 @@ public:
 	virtual void mueve(float) override;
 
 	virtual bool recibeHerida(float damage) override;
+	bool recibeObjeto(const Objeto& obj);
 	virtual Proyectil* dispara();  //Devuelve un proyectil si se produce el disparo, en caso contrario devuelve nullptr
 
 	Vector2D getHealth() const { return Vector2D{ _healthCounter, _healthStat }; }
 	int getLlaves() const { return _llaves; }
 	int getDinero() const { return _dinero; }
-	int _llaves = 0;
-	int _dinero = 0;
 	void flipPos(bool H, bool V);
 private:
 	float _healthStat = SALUD_JUGADOR; //Salud Máxima

@@ -48,10 +48,10 @@ void GUI::dibuja()
 	buffer << health.x << "/" << health.y;
 	ETSIDI::printxy(buffer.str().c_str(), _origen.x + 5.0f, _origen.y - 6.0f);
 	buffer.str("");
-	buffer << _playerPtr->getLlaves();
+	buffer << _playerPtr->getDinero();
 	ETSIDI::printxy(buffer.str().c_str(), _origen.x + 5.0f, _origen.y - 11.0f);
 	buffer.str("");
-	buffer << _playerPtr->getDinero();
+	buffer << _playerPtr->getLlaves();
 	ETSIDI::printxy(buffer.str().c_str(), _origen.x + 5.0f, _origen.y - 16.0f);
 
 	//Dibuja Modificadores

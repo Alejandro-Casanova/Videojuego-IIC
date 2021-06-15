@@ -266,9 +266,9 @@ Fatty::Fatty(Vector2D pos, Player* playerPtr, Room* roomPtr)
 
 	//_sprite.setSize(_dims.x, _dims.y);
 	//_sprite.setCenter(_dims.x / 2.0f, _dims.y / 2.0f);
-	_radio = 5.0f;
-	GestorSprites::dimensionaSprite(34, 30, TILE_WIDTH * 1.2f, _head);
-	GestorSprites::dimensionaSprite(66, 39, TILE_WIDTH * 2.0f, _body, 5.5f);
+	_radio = 7.0f;
+	GestorSprites::dimensionaSprite(34, 30, TILE_WIDTH * 1.2f, _head, -4.0f);
+	GestorSprites::dimensionaSprite(66, 39, TILE_WIDTH * 2.0f, _body, 2.5f);
 	_speedStat = 7.5f;
 	_headAnimation = 1;
 }

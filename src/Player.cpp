@@ -5,6 +5,7 @@
 #include "GestorSprites.h"
 #include "Proyectil.h"
 #include <iostream>
+#include "Objeto.h"
 
 int sign(float x) {
 	if (x > 0) return 1;
@@ -189,6 +190,27 @@ bool Player::recibeHerida(float damage)
 	}
 	return false;
 	
+}
+
+bool Player::recibeObjeto(const Objeto& obj)
+{
+	switch (obj.type()) {
+	case Objeto::obj_t::CORAZON:
+		if (_healthCounter == _healthStat) return false; //Si ya tiene salud máxima
+		_healthCounter += obj.getValor();
+		if (_healthCounter > _healthStat) _healthCounter = _healthStat;
+		break;
+	case Objeto::obj_t::LLAVE:
+		_llaves += obj.getValor();
+		break;
+	case Objeto::obj_t::MONEDA:
+		_dinero += obj.getValor();
+		break;
+	default:
+		std::cerr << "Se ha recogido un objeto indefinido.\n";
+		break;
+	}
+	return true;
 }
 
 Proyectil* Player::dispara()

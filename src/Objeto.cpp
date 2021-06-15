@@ -49,10 +49,3 @@ Objeto* Factoria::create(Objeto::obj_t t, Vector2D pos) {
 
 	return nullptr;
 }
-
-void Objeto::eliminar(Objeto* ob) {
-	Factoria::destroy(ob);
-	
-		
-	
-}

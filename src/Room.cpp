@@ -328,12 +328,15 @@ void BossRoom::dibuja()
 
 void BossRoom::mueve()
 {
-	if (_enemigos.empty() && _gusano != nullptr) {
+	//Si el gusano acaba de morir
+	if (_enemigos.empty() && _gusano != nullptr) { 
 		_gusano = nullptr;
+		ETSIDI::stopMusica();
 		ETSIDI::play("res/audio/victory.wav");
 		_trampilla.open();
 	}
 
+	//Si el gusano sigue vivo
 	else if (_gusano != nullptr) {
 		_gusano->mueve(T_CONST, _paredes); // Movimiento del gusano
 		if (_gusano->rebote(*_playerPtr)){ //Gusano tiene una funcion interna para gestionar la colision con todos sus módulos
@@ -357,23 +360,11 @@ void BossRoom::gestionarDisparos(ListaProyectil& listaP)
 void Room::gestionarObjetos() {
 	for (int j = _objetos.size() - 1; j >= 0; j--) {
 		if (Interaccion::colision(*_objetos[j], *_playerPtr) == true) {
-			
-			Objeto::obj_t rtt;
-			rtt = _objetos[j]->type();
-
-			 if (rtt==Objeto::obj_t::MONEDA)
-				 _playerPtr->_dinero++;
-			 else if (rtt == Objeto::obj_t::LLAVE)
-				 _playerPtr->_llaves++;
-			 else if (rtt == Objeto::obj_t::CORAZON)
-				 _playerPtr->recibeHerida(-1);
-
-		
-			_objetos[j]->eliminar(_objetos[j]);
-			_objetos.erase(_objetos.begin() + j);
+			if(_playerPtr->recibeObjeto(*_objetos[j])){
+				 Factoria::destroy(_objetos[j]);
+				 _objetos.erase(_objetos.begin() + j);
+			}
 		}
-
-
 	}
 }
 
