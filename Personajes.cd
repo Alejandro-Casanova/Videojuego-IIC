@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BossGusano" Collapsed="true">
+    <Position X="2" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAQBBAAAAACAAAAkIAEAIAAAAAAAAgAAAAAgABAAA=</HashCode>
+      <FileName>src\Enemigo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Caca" Collapsed="true">
+    <Position X="4" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAACAAAAAAAAAAAAAAAAAAAAAAACgAAAAA=</HashCode>
+      <FileName>src\Enemigo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Enemigo" Collapsed="true">
+    <Position X="8.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAEAIEAAAAAACAGACAAiSAgIAABAQAAAQAwQAAAA=</HashCode>
+      <FileName>src\Enemigo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemigoA" Collapsed="true">
+    <Position X="4" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAEAAAAAAAAAAAAAAAAEAAgAAAAA=</HashCode>
+      <FileName>src\Enemigo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemigoB" Collapsed="true">
+    <Position X="8.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAgABEEA=</HashCode>
+      <FileName>src\Enemigo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemigoC" Collapsed="true">
+    <Position X="14" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgEAAAAAAAAAAAAAAAAEAAgAAAAA=</HashCode>
+      <FileName>src\Enemigo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Esqueleto" Collapsed="true">
+    <Position X="9.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAgAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>src\Enemigo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fatty" Collapsed="true">
+    <Position X="11" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAAAAAAABAAAAAgAAAEA=</HashCode>
+      <FileName>src\Enemigo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Mosca" Collapsed="true">
+    <Position X="13" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAACAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>src\Enemigo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Naranja" Collapsed="true">
+    <Position X="14.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAACAAACkAAAAEAAAAgAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>src\Enemigo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Personaje" Collapsed="true">
+    <Position X="13.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAIBAAAEACAACAEACAhAQAAAgCAAAAEAAAgFAAAg=</HashCode>
+      <FileName>src\Personaje.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Player" Collapsed="true">
+    <Position X="16.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABBAAAACAACIEABIAAAAgAAEAAoIoBAQwIDMBI=</HashCode>
+      <FileName>src\Player.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Weeper" Collapsed="true">
+    <Position X="5.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAIAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>src\Enemigo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Zombie" Collapsed="true">
+    <Position X="7.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>src\Enemigo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

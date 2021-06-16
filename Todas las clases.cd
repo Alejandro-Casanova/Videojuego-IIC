@@ -1,0 +1,383 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Bonus" Collapsed="true">
+    <Position X="5.75" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAABAAAAAAAAAgABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\Objeto.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BossGusano" Collapsed="true">
+    <Position X="20" Y="18.25" Width="1.5" />
+    <NestedTypes>
+      <Class Name="BossGusano::Modulo" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>src\Enemigo.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AABAQBBAAAAACAAAAkIAEAIAAAAAAAAgAAAAAgABAAA=</HashCode>
+      <FileName>src\Enemigo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Caca" Collapsed="true">
+    <Position X="22.25" Y="19.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAACAAAAAAAAAAAAAAAAAAAAAAACgAAAAA=</HashCode>
+      <FileName>src\Enemigo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Caja">
+    <Position X="43.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACABAAAAAAQAAAEAAAACAAAAAAIBAgAAQAQAIAAA=</HashCode>
+      <FileName>src\Caja.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CoordinadorIsaac">
+    <Position X="43.5" Y="0.75" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="CoordinadorIsaac::Estado" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>src\CoordinadorIsaac.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>gAAACCCAAAAAAAICAEICAAAAAAAgEAAAABUAQgAAAAI=</HashCode>
+      <FileName>src\CoordinadorIsaac.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Corazon" Collapsed="true">
+    <Position X="7.75" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\Objeto.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Dime" Collapsed="true">
+    <Position X="10" Y="11.5" Width="1.5" />
+    <InheritanceLine Type="Moneda">
+      <InheritanceModifierLabel ManuallyPlaced="true">
+        <Position X="-0.593" Y="0.07" />
+      </InheritanceModifierLabel>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>src\Objeto.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Enemigo">
+    <Position X="26.75" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAEAIEAAAAAACAGACAAiSAgIAABAQAAAQAwQAAAA=</HashCode>
+      <FileName>src\Enemigo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemigoA" Collapsed="true">
+    <Position X="22.25" Y="18.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAEAAAAAAAAAAAAAAAAEAAgAAAAA=</HashCode>
+      <FileName>src\Enemigo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemigoB" Collapsed="true">
+    <Position X="27.75" Y="18.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAgABEEA=</HashCode>
+      <FileName>src\Enemigo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EnemigoC" Collapsed="true">
+    <Position X="35" Y="18.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgEAAAAAAAAAAAAAAAAEAAgAAAAA=</HashCode>
+      <FileName>src\Enemigo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Entidad">
+    <Position X="19" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAQAKgAAAIAAACAEAAAAAAAAAIAABAAABCggAIEAA=</HashCode>
+      <FileName>src\Entidad.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Esqueleto" Collapsed="true">
+    <Position X="31" Y="19.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAgAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>src\Enemigo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Factoria">
+    <Position X="50.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAEAAgAAAAAAAAABAAEAAAAA=</HashCode>
+      <FileName>src\Objeto.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Fatty" Collapsed="true">
+    <Position X="24.25" Y="19.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAAAAAAABAAAAAgAAAEA=</HashCode>
+      <FileName>src\Enemigo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestorDeTeclado">
+    <Position X="46.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAIAAAAAAAAkAAAgAAQAAAgBgAhIEBAhAAAAgAEQAA=</HashCode>
+      <FileName>src\GestorDeTeclado.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GestorSprites">
+    <Position X="48.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>src\GestorSprites.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GUI">
+    <Position X="48.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAQAAAAAAAAAAEAAAAAABBIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\GUI.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Hueso" Collapsed="true">
+    <Position X="15.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACAEAAAAAAAAAAAAAAAAEAAgAAAAA=</HashCode>
+      <FileName>src\Proyectil.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Interaccion">
+    <Position X="50.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIABAIAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAA=</HashCode>
+      <FileName>src\Interaccion.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ListaProyectil">
+    <Position X="47" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABBIAAAAAAEAAAAEAEAAAAAAAAEIAiAAAAAAEpBIAAA=</HashCode>
+      <FileName>src\ListaProyectil.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Llave" Collapsed="true">
+    <Position X="3.75" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\Objeto.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Moneda" Collapsed="true">
+    <Position X="10" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\Objeto.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Mosca" Collapsed="true">
+    <Position X="33.75" Y="19.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAACAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>src\Enemigo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Mundo">
+    <Position X="41.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAQACAcAgAAAAAAAEABAIAEAgYoAEAEI=</HashCode>
+      <FileName>src\Mundo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Naranja" Collapsed="true">
+    <Position X="36" Y="19.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAACAAACkAAAAEAAAAgAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>src\Enemigo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Nickel" Collapsed="true">
+    <Position X="8" Y="11.5" Width="1.5" />
+    <InheritanceLine Type="Moneda">
+      <InheritanceModifierLabel ManuallyPlaced="true">
+        <Position X="-0.55" Y="0.057" />
+      </InheritanceModifierLabel>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>src\Objeto.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Objeto" Collapsed="true">
+    <Position X="7.75" Y="6.75" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="Objeto::obj_t" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>src\Objeto.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgBAAEAAAABAAABBABAAAAEAAAAAAAA=</HashCode>
+      <FileName>src\Objeto.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Pared">
+    <Position X="45" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAIAAAAAEAAAAAQAQAAAAAAAAAAAgAIQAI=</HashCode>
+      <FileName>src\Pared.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Penny" Collapsed="true">
+    <Position X="12" Y="11.5" Width="1.5" />
+    <InheritanceLine Type="Moneda">
+      <InheritanceModifierLabel ManuallyPlaced="true">
+        <Position X="-0.593" Y="0.079" />
+      </InheritanceModifierLabel>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>src\Objeto.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Personaje">
+    <Position X="25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAIBAAAEACAACAEACAhAQAAAgCAAAAEAAAgFAAAg=</HashCode>
+      <FileName>src\Personaje.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Piso">
+    <Position X="41.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAABAAACAAACAERCACgAEAIAAiABAAAAAgAAAAA=</HashCode>
+      <FileName>src\Piso.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Player" Collapsed="true">
+    <Position X="23.25" Y="12" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABBAAAACAACIEABIAAAAgAAEAAoIoBAQwIDMBI=</HashCode>
+      <FileName>src\Player.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Proyectil" Collapsed="true">
+    <Position X="15.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACARAAgAAAAACAkAAAAAgAAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>src\Proyectil.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vector2D">
+    <Position X="48.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAEAAEAAQAAQAAAAAgAAAAAABgAAAAAAg=</HashCode>
+      <FileName>src\Vector2D.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Weeper" Collapsed="true">
+    <Position X="26.25" Y="19.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAIAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>src\Enemigo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Zombie" Collapsed="true">
+    <Position X="28.75" Y="19.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>src\Enemigo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Hueco">
+    <Position X="35.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>src\Obstaculo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Obstaculo">
+    <Position X="36.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAEAAABoCAAEAEgAAAACAAAAAAAAAAEAgAABAAA=</HashCode>
+      <FileName>src\Obstaculo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Puerta">
+    <Position X="37.25" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAABAAAAAICAAAAAAAAAAAAAAAIAAgiAAAAA=</HashCode>
+      <FileName>src\Puerta.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PuertaBoss">
+    <Position X="38.5" Y="15.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>src\Puerta.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PuertaRoom">
+    <Position X="38.5" Y="11.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="PuertaRoom::ORIENTACION" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>src\Puerta.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAGAAAAACAAIAAAAIAIEAAACBAAA=</HashCode>
+      <FileName>src\Puerta.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Roca">
+    <Position X="38.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
+      <FileName>src\Obstaculo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Trampilla">
+    <Position X="35.75" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAACAAAAAAAEAACAAAAA=</HashCode>
+      <FileName>src\Puerta.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BossRoom">
+    <Position X="32" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAACAQAAAAAEAAAAAAAAAIAAAAAAAAAgAIBAA=</HashCode>
+      <FileName>src\Room.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Room">
+    <Position X="29.5" Y="1.25" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="Room::ROOM_TYPE" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>src\Room.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAwZAAAEFQwmEACAFAAAAgABEIJAuACBEFQBgAAAAA=</HashCode>
+      <FileName>src\Room.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="ColorRGB">
+    <Position X="50.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAQBAAAQAAAAAAAIAQABAAAAAAA=</HashCode>
+      <FileName>src\ColorRGB.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
