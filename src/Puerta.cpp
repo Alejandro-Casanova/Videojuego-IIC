@@ -48,7 +48,7 @@ PuertaRoom::~PuertaRoom()
 
 void PuertaRoom::dibuja()
 {
-	_hitBox.dibuja();
+	//_hitBox.dibuja();
 
 	glPushMatrix();
 	glTranslatef(_posicion.x, _posicion.y, 0);

@@ -10,7 +10,7 @@ Objeto::Objeto(const char* ruta_de_textura, Vector2D posicion, obj_t t) : Entida
 
 void Objeto::dibuja()
 {
-	Entidad::dibujaHitbox();
+	//Entidad::dibujaHitbox();
 	_sprite.setPos(_posicion.x, _posicion.y);
 	_sprite.draw();
 	

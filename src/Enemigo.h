@@ -174,7 +174,7 @@ class BossGusano : public Enemigo {
 			GestorSprites::dimensionaSprite(29, 26, TILE_WIDTH, _spriteRojo);
 		}
 		void dibuja() override{
-			Entidad::dibujaHitbox();
+			//Entidad::dibujaHitbox();
 			
 			if (_contador > T_INVULNERABLE) {
 				_sprite.setPos(_posicion.x, _posicion.y);

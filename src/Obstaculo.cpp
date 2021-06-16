@@ -17,7 +17,7 @@ Obstaculo::Obstaculo(Vector2D posicion, const char* ruta_de_textura) : _sprite{ 
 
 void Obstaculo::dibuja()
 {
-	_hitBox.dibuja();
+	//_hitBox.dibuja();
 	_sprite.setPos(_posicion.x, _posicion.y);
 	_sprite.draw();
 }
