@@ -35,7 +35,7 @@ void GUI::dibuja()
 {
 	ETSIDI::setTextColor(1, 1, 0);
 	ETSIDI::setFont("res/font/upheavtt.ttf", 14);
-	ETSIDI::printxy("ISAAC", int(_origen.x), (_origen.y));
+	ETSIDI::printxy("ISAAC", int(_origen.x), int(_origen.y));
 
 	//Dibuja iconos
 	for (auto i : _sprites) {

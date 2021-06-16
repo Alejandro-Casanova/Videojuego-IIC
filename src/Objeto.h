@@ -72,7 +72,7 @@ public:
 	enum class TIPO {HEALTH, DAMAGE, SPEED, SHOT_SPEED};
 	Bonus(Vector2D pos, const char* ruta_de_textura, TIPO tipo, int ancho_de_textura = 26, int alto_de_textura = 29)
 		: Objeto(ruta_de_textura, pos, obj_t::BONUS), _tipo(tipo) {
-		GestorSprites::dimensionaSprite((float)ancho_de_textura, (float)alto_de_textura, TILE_WIDTH / 2.0f, _sprite);
+		GestorSprites::dimensionaSprite(ancho_de_textura, alto_de_textura, TILE_WIDTH / 2.0f, _sprite);
 
 		//Ajusta los valores del bonus
 		switch (tipo) {

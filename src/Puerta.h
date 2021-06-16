@@ -54,6 +54,5 @@ public:
 
 private:
 	ETSIDI::Sprite _sprite;
-	Piso* _pisoPtr = nullptr;
 
 };

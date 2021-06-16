@@ -90,4 +90,5 @@ Objeto* Factoria::dropRandom(Vector2D pos)
 	else if (valor < 0.35) return dropCoin(pos); //15% Moneda
 	else if (valor < 0.45) return dropBonus(pos); //10% Bonus
 	else if (valor < 0.5) return create(Objeto::obj_t::LLAVE, pos); //5% Llave
+	return nullptr;
 }

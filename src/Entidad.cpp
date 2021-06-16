@@ -29,13 +29,13 @@ void Entidad::dibujaHitbox() const
 	glBegin(GL_LINES);
 	glColor3f(1.0f, 1.0f, 1.0f);
 
-	x += (float)_radio * cosf(359 * PI / 180.0f);
-	y += (float)_radio * sinf(359 * PI / 180.0f);
+	x += (float)(_radio * cos(359.0 * PI / 180.0));
+	y += (float)(_radio * sin(359.0 * PI / 180.0));
 	for (int j = 0; j < 360; j++)
 	{
 		glVertex2f(x, y);
-		x = _posicion.x + (float)_radio * cosf(j * PI / 180.0f);
-		y = _posicion.y + (float)_radio * sinf(j * PI / 180.0f);
+		x = _posicion.x + (float)(_radio * cos(j * PI / 180.0));
+		y = _posicion.y + (float)(_radio * sin(j * PI / 180.0));
 		glVertex2f(x, y);
 	}
 	glEnd();
