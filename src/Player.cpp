@@ -236,7 +236,7 @@ bool Player::recibeObjeto(Objeto& obj)
 	return true;
 }
 
-bool Player::recibeBonus(const Bonus& bon)
+void Player::recibeBonus(const Bonus& bon)
 {
 	switch (bon.bonusType()) {
 	case Bonus::TIPO::DAMAGE: 

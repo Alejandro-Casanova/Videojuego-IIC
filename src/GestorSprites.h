@@ -6,7 +6,7 @@
 class GestorSprites {
 public:
 	//Evita la deformación de los sprites, recibe las dimensiones de los sprites en pixeles, y la dimensión máxima en el mundo
-	static void dimensionaSprite(float pxWidth, float pxHeight, float maxDim, ETSIDI::Sprite& sprite, float centerOffsetY = 0)
+	static void dimensionaSprite(int pxWidth, int pxHeight, float maxDim, ETSIDI::Sprite& sprite, float centerOffsetY = 0)
 	{
 		float width, height;
 		if (pxWidth >= pxHeight) {

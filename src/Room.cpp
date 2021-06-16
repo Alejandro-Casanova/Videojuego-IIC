@@ -367,7 +367,7 @@ void BossRoom::gestionarDisparos(ListaProyectil& listaP)
 }
 
 void Room::gestionarObjetos() {
-	for (int j = _objetos.size() - 1; j >= 0; j--) {
+	for (int j = int(_objetos.size()) - 1; j >= 0; j--) {
 		if (Interaccion::colision(*_objetos[j], *_playerPtr) == true) {
 			if(_playerPtr->recibeObjeto(*_objetos[j])){
 				 Factoria::destroy(_objetos[j]);
