@@ -38,6 +38,7 @@ const float ESQUELETO_SALUD = 4.0f;
 const float WEEPER_RAD = TILE_WIDTH / 2.0f;
 const float WEEPER_SPEED = 12.5f;
 const float WEEPER_SALUD = 3.5f;
+const float WEEPER_SHOOT_SPEED = 2.5f;
 
 const float FATTY_RAD = 7.0f;
 const float FATTY_SPEED = 7.5f;
@@ -48,7 +49,7 @@ const float NARANJA_SALUD = 1.5f;
 const float NARANJA_MULTIPLICADOR = 4.0f; //Relaciona el daño recibido con el tiempo que tarda en regenerarse 
 
 const float MOSCA_RAD = 2.0f;
-const float MOSCA_SHOOT_SPEED = 3.0f;
+const float MOSCA_SHOOT_SPEED = 3.5f;
 const float MOSCA_SALUD = 2.0f;
 
 const float CACA_RAD = TILE_WIDTH / 2.0f;

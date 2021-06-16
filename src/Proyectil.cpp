@@ -43,7 +43,7 @@ Hueso::Hueso()
 
 void Hueso::dibuja()
 {
-	dibujaHitbox();
+	//dibujaHitbox();
 	glTranslatef(_posicion.x, _posicion.y, 0);
 	_color.ponColor();
 	_sprite.draw();

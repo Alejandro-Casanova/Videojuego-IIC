@@ -106,7 +106,7 @@ EnemigoA::EnemigoA(Vector2D posicion, float radio, Player* playerPtr, Room* room
 }
 
 void EnemigoA::dibuja() {
-	dibujaHitbox();
+	//dibujaHitbox();
 	_sprite.setPos(_posicion.x, _posicion.y);
 	_sprite.draw();
 }
@@ -116,7 +116,7 @@ EnemigoB::EnemigoB(Vector2D posicion, float radio, Player* playerPtr, Room* room
 }
 
 void EnemigoB::dibuja() {
-	dibujaHitbox();
+	//dibujaHitbox();
 
 	glPushMatrix();
 	glTranslatef(_posicion.x, _posicion.y, 0);
@@ -178,7 +178,7 @@ void EnemigoC::dibuja()
 		_sprite.flip(true, false);
 	
 
-	dibujaHitbox();
+	//dibujaHitbox();
 
 	glPushMatrix();
 	glTranslatef(_posicion.x, _posicion.y, 0);
@@ -245,6 +245,7 @@ Weeper::Weeper(Vector2D pos, Player* playerPtr, Room* roomPtr)
 	_headAnimation = 1;
 	_dispara = true;
 	_healthCounter = WEEPER_SALUD;
+	_shootSpeed = WEEPER_SHOOT_SPEED;
 
 }
 
@@ -263,7 +264,10 @@ Fatty::~Fatty(){
 
 bool Fatty::recibeHerida(float damage)
 {
-	if (!_hostil) _hostil = true;
+	if (!_hostil) { 
+		_hostil = true; 
+		sonidoMuerte();
+	}
 	return Personaje::recibeHerida(damage);
 }
 
@@ -305,7 +309,7 @@ void Naranja::dibuja()
 	else if (fase < _nFases - 1) {
 		_sprite.setState(_nFases -1 - fase);
 	}
-	dibujaHitbox();
+	//dibujaHitbox();
 
 	glPushMatrix();
 	glTranslatef(_posicion.x, _posicion.y, 0);
@@ -437,7 +441,7 @@ void BossGusano::dibuja()
 		}
 	}
 
-	Entidad::dibujaHitbox(); //De la cabeza
+	//Entidad::dibujaHitbox(); //De la cabeza
 
 	if (_contador > T_INVULNERABLE) {
 		_head.setPos(_posicion.x, _posicion.y);

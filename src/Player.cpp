@@ -76,7 +76,7 @@ void Player::teclaEspecial()
 
 void Player::dibuja()
 {
-	dibujaHitbox();
+	//dibujaHitbox();
 
 	glPushMatrix();
 	glTranslatef(_posicion.x, _posicion.y, 0);
@@ -175,6 +175,7 @@ void Player::inicializaStats()
 	_shotDamage = DAMAGE_DISPARO_JUGADOR;
 	_damageTimer = 0;
 	_shootCounter = 0;
+	_bonusTimer = 0;
 }
 
 void Player::mueve(float t)

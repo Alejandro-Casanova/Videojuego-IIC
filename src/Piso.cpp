@@ -27,7 +27,7 @@ void Piso::mueve()
 
 void Piso::dibuja()
 {
-	_rooms[_roomActual]->dibujaHitBox();
+	//_rooms[_roomActual]->dibujaHitBox();
 	_rooms[_roomActual]->dibuja();
 
 }

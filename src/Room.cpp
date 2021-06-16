@@ -94,16 +94,9 @@ void Room::mueve()
 		Interaccion::insideBox(*i, _paredes, true);
 	}
 
-	//Mantiene los enemigos fuera de los obstáculos
-	for (auto& i : _enemigos) {
-		for (auto& c : _obstaculos) {
-			//Interaccion::outsideBox(*i, c->getHitBox(), true);
-		}
-	}
-
-	Room::disparos();
+	disparos();
 	disparosEnemigos.mueve(T_CONST);
-	Room::gestionarDisparos(disparosEnemigos);
+	gestionarDisparos(disparosEnemigos);
 }
 
 void Room::dibujaHitBox() const
@@ -141,8 +134,8 @@ void Room::dibuja()
 
 
 	disparosEnemigos.dibuja();
-	Room::gestionarDisparos(disparosEnemigos);
-	Room::gestionarObjetos();
+	gestionarDisparos(disparosEnemigos);
+	gestionarObjetos();
 
 
 
